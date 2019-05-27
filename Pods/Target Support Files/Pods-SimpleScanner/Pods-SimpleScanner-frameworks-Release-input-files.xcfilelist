@@ -1,0 +1,8 @@
+${PODS_ROOT}/Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner-frameworks.sh
+${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework
+${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
+${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
+${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
+${BUILT_PRODUCTS_DIR}/SimplePDFViewer/SimplePDFViewer.framework
+${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
+${BUILT_PRODUCTS_DIR}/WeScan/WeScan.framework

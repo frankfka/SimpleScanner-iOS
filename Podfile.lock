@@ -1,0 +1,42 @@
+PODS:
+  - ReSwift (4.1.1)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
+  - SimplePDFViewer (0.1.0):
+    - SnapKit (~> 5.0.0)
+  - SnapKit (5.0.0)
+  - WeScan (1.1.0)
+
+DEPENDENCIES:
+  - ReSwift
+  - RxCocoa (~> 5)
+  - RxSwift (~> 5)
+  - SimplePDFViewer
+  - WeScan (>= 0.9)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ReSwift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - SimplePDFViewer
+    - SnapKit
+    - WeScan
+
+SPEC CHECKSUMS:
+  ReSwift: d925be0033558f55bd73d92869961230dfe19d52
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  SimplePDFViewer: 69a9bde5e2288667dd3eae0813af6c12a6e6f884
+  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
+  WeScan: 7ebe08c966fbd7321be2be1a962423c237e3e2ec
+
+PODFILE CHECKSUM: d575f1c1b578e8e295164712d25710b7dda3593b
+
+COCOAPODS: 1.7.0

@@ -3,25 +3,33 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ABC8DC892E7D5DE5B55CEDB /* Pods_SimpleScanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00238A3F5E34A8D116FD231F /* Pods_SimpleScanner.framework */; };
 		11CA42E0229B2F1600648670 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CA42DF229B2F1600648670 /* AppDelegate.swift */; };
-		11CA42E2229B2F1600648670 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11CA42E1229B2F1600648670 /* ViewController.swift */; };
 		11CA42E5229B2F1600648670 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11CA42E3229B2F1600648670 /* Main.storyboard */; };
 		11CA42E7229B2F1800648670 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11CA42E6229B2F1800648670 /* Assets.xcassets */; };
 		11CA42EA229B2F1800648670 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11CA42E8229B2F1800648670 /* LaunchScreen.storyboard */; };
+		9E04B3D8FB6196F3A7040BB1 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B94C89CFCEB2536DAF75 /* AppStore.swift */; };
+		9E04B43A3E35CAAE6AA0188D /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B0FD31D5EBEE2548788A /* AppState.swift */; };
+		9E04BC526BBA4D17234DBD8E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BD62F1EF9A07F421A937 /* HomeController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00238A3F5E34A8D116FD231F /* Pods_SimpleScanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleScanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		11CA42DC229B2F1600648670 /* SimpleScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11CA42DF229B2F1600648670 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		11CA42E1229B2F1600648670 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		11CA42E4229B2F1600648670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11CA42E6229B2F1800648670 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11CA42E9229B2F1800648670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		11CA42EB229B2F1800648670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D016F448152ABE76EE812B0 /* Pods-SimpleScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleScanner.release.xcconfig"; path = "Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner.release.xcconfig"; sourceTree = "<group>"; };
+		9E04B0FD31D5EBEE2548788A /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		9E04B94C89CFCEB2536DAF75 /* AppStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		9E04BD62F1EF9A07F421A937 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		A845416816E72C69C0F486A3 /* Pods-SimpleScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleScanner.debug.xcconfig"; path = "Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ABC8DC892E7D5DE5B55CEDB /* Pods_SimpleScanner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +49,8 @@
 			children = (
 				11CA42DE229B2F1600648670 /* SimpleScanner */,
 				11CA42DD229B2F1600648670 /* Products */,
+				F3520F764487C5513D10E1CD /* Pods */,
+				C1973A30EE01EF12E2FC2DBC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +65,73 @@
 		11CA42DE229B2F1600648670 /* SimpleScanner */ = {
 			isa = PBXGroup;
 			children = (
+				11CA42F1229B347400648670 /* Redux */,
 				11CA42DF229B2F1600648670 /* AppDelegate.swift */,
-				11CA42E1229B2F1600648670 /* ViewController.swift */,
 				11CA42E3229B2F1600648670 /* Main.storyboard */,
 				11CA42E6229B2F1800648670 /* Assets.xcassets */,
 				11CA42E8229B2F1800648670 /* LaunchScreen.storyboard */,
 				11CA42EB229B2F1800648670 /* Info.plist */,
+				9E04B8D94BF8F7ABE391FDE8 /* Screen */,
 			);
 			path = SimpleScanner;
+			sourceTree = "<group>";
+		};
+		11CA42F1229B347400648670 /* Redux */ = {
+			isa = PBXGroup;
+			children = (
+				9E04B0FD31D5EBEE2548788A /* AppState.swift */,
+				9E04B94C89CFCEB2536DAF75 /* AppStore.swift */,
+				9E04BE6EC52B11F39F8362CD /* State */,
+				9E04B79B62B5E69A5E4CBED1 /* Action */,
+			);
+			path = Redux;
+			sourceTree = "<group>";
+		};
+		9E04B79B62B5E69A5E4CBED1 /* Action */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Action;
+			sourceTree = "<group>";
+		};
+		9E04B8D94BF8F7ABE391FDE8 /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				9E04BDA7442AB61AA499D301 /* Home */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		9E04BDA7442AB61AA499D301 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				9E04BD62F1EF9A07F421A937 /* HomeController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		9E04BE6EC52B11F39F8362CD /* State */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
+		C1973A30EE01EF12E2FC2DBC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00238A3F5E34A8D116FD231F /* Pods_SimpleScanner.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F3520F764487C5513D10E1CD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A845416816E72C69C0F486A3 /* Pods-SimpleScanner.debug.xcconfig */,
+				9D016F448152ABE76EE812B0 /* Pods-SimpleScanner.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +141,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 11CA42EE229B2F1800648670 /* Build configuration list for PBXNativeTarget "SimpleScanner" */;
 			buildPhases = (
+				9784CEE051DD9ED6442F40CC /* [CP] Check Pods Manifest.lock */,
 				11CA42D8229B2F1600648670 /* Sources */,
 				11CA42D9229B2F1600648670 /* Frameworks */,
 				11CA42DA229B2F1600648670 /* Resources */,
+				584BCE98A231931BE9B92ED3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -130,13 +202,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		584BCE98A231931BE9B92ED3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9784CEE051DD9ED6442F40CC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SimpleScanner-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		11CA42D8229B2F1600648670 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11CA42E2229B2F1600648670 /* ViewController.swift in Sources */,
 				11CA42E0229B2F1600648670 /* AppDelegate.swift in Sources */,
+				9E04B43A3E35CAAE6AA0188D /* AppState.swift in Sources */,
+				9E04B3D8FB6196F3A7040BB1 /* AppStore.swift in Sources */,
+				9E04BC526BBA4D17234DBD8E /* HomeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +396,7 @@
 		};
 		11CA42EF229B2F1800648670 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A845416816E72C69C0F486A3 /* Pods-SimpleScanner.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -298,6 +415,7 @@
 		};
 		11CA42F0229B2F1800648670 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9D016F448152ABE76EE812B0 /* Pods-SimpleScanner.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
