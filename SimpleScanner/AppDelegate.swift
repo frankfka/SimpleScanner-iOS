@@ -14,11 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Set the first view controller
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(
+        // Set up main navigation
+        let mainNavController = UINavigationController(
                 rootViewController: HomeController()
         )
+        UINavigationBar.appearance().prefersLargeTitles = true
+        window?.rootViewController = mainNavController
         window?.makeKeyAndVisible()
         return true
     }

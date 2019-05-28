@@ -16,6 +16,7 @@ DEPENDENCIES:
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
   - SimplePDFViewer
+  - SnapKit (~> 5.0.0)
   - WeScan (>= 0.9)
 
 SPEC REPOS:
@@ -37,6 +38,6 @@ SPEC CHECKSUMS:
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   WeScan: 7ebe08c966fbd7321be2be1a962423c237e3e2ec
 
-PODFILE CHECKSUM: d575f1c1b578e8e295164712d25710b7dda3593b
+PODFILE CHECKSUM: 3a450ce45ec6f61a58953a8227a128fbe4c4ca84
 
 COCOAPODS: 1.7.0
