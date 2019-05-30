@@ -9,6 +9,8 @@ class Color {
 
     static let Primary = UIColor(red: 0, green: 120.0 / 255, blue: 200.0 / 255, alpha: 1.0)
     static let BodyBackground = UIColor.white
+    static let BodyBackgroundContrast = UIColor.gray
+    static let Border = UIColor.gray
     static let Button = Primary
 
 }

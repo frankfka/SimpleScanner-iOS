@@ -8,7 +8,11 @@ import Foundation
 class Text {
 
     // Home Page
-    static let HomeViewTitle = "SimpleScanner"
+    static let HomeViewTitle = "Documents"
     static let NewScanButton = "New Scan"
+    static let PastScansHeader = "Past Scans"
+
+    // New Scan Page
+    static let NewScanTitle = "New Scan"
 
 }

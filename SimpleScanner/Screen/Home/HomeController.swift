@@ -25,13 +25,17 @@ class HomeController: UIViewController {
     
     override func loadView() {
         self.title = Text.HomeViewTitle
-        homeView = HomeView()
+        homeView = HomeView(viewModel: HomeViewModel(test: ["Item 1", "Item 2"]), newScanTapped: newScanTapped)
         self.view = homeView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+
+    private func newScanTapped() {
+        navigationController?.pushViewController(NewScanController(), animated: true)
     }
 
 }
