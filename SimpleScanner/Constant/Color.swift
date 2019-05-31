@@ -7,10 +7,12 @@ import UIKit
 
 class Color {
 
-    static let Primary = UIColor(red: 0, green: 120.0 / 255, blue: 200.0 / 255, alpha: 1.0)
+    static let Primary = UIColor.black
     static let BodyBackground = UIColor.white
-    static let BodyBackgroundContrast = UIColor.gray
+    static let BodyBackgroundContrast = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)
     static let Border = UIColor.gray
     static let Button = Primary
+    static let ButtonText = UIColor.white
+    static let NavTint = UIColor.black
 
 }

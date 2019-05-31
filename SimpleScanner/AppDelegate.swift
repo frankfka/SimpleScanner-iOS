@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 rootViewController: HomeController()
         )
         UINavigationBar.appearance().prefersLargeTitles = true
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().backgroundColor = Color.BodyBackgroundContrast
+        UINavigationBar.appearance().tintColor = Color.NavTint
         window?.rootViewController = mainNavController
         window?.makeKeyAndVisible()
         return true

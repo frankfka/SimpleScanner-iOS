@@ -46,7 +46,7 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return View.CollectionViewSize(frameWidth: collectionView.frame.width)
+        return View.DocumentCollectionViewSize(frameWidth: collectionView.frame.width)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,7 +95,7 @@ extension HomeView {
 
     private func initDocumentCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = View.CollectionViewSectionInsets
+        flowLayout.sectionInset = View.DocumentCollectionViewSectionInsets
         documentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         documentCollectionView.backgroundColor = Color.BodyBackground
         documentCollectionView.delegate = self

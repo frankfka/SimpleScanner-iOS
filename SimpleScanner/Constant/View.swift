@@ -26,15 +26,29 @@ class View {
     static let ButtonFont: UIFont = .systemFont(ofSize: 20)
     static let HeaderFont: UIFont = .systemFont(ofSize: 36)
 
-    // Collection View
-    static let CollectionViewItemsPerRow: CGFloat = 2
-    static let CollectionViewSectionInsets = UIEdgeInsets(top: SectionVerticalMargin, left: ViewPadding, bottom: SectionVerticalMargin, right: ViewPadding)
-    static func CollectionViewSize(frameWidth: CGFloat) -> CGSize {
-        let paddingSpace = CollectionViewSectionInsets.left * (CollectionViewItemsPerRow + 1)
-        let availableWidth = frameWidth - paddingSpace
-        let widthPerItem = availableWidth / CollectionViewItemsPerRow
+    // Document Collection View
+    static let DocumentCollectionViewItemsPerRow: CGFloat = 2
+    static let DocumentCollectionViewSectionInsets = UIEdgeInsets(top: SectionVerticalMargin, left: ViewPadding, bottom: SectionVerticalMargin, right: ViewPadding)
+    static func DocumentCollectionViewSize(frameWidth: CGFloat) -> CGSize {
+        let widthPerItem = computeCollectionViewCellWidth(frameWidth: frameWidth, insets: DocumentCollectionViewSectionInsets, itemsPerRow: DocumentCollectionViewItemsPerRow)
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     static let DocumentCollectionCellReuseID: String = "DocumentCell"
 
+    // Pages Collection View
+    static let PagesCollectionViewItemsPerRow: CGFloat = 4
+    static let PagesCollectionViewSectionInsets = UIEdgeInsets(top: SectionVerticalMargin, left: ViewPadding, bottom: SectionVerticalMargin, right: ViewPadding)
+    static func PagesCollectionViewSize(frameWidth: CGFloat) -> CGSize {
+        let widthPerItem = computeCollectionViewCellWidth(frameWidth: frameWidth, insets: PagesCollectionViewSectionInsets, itemsPerRow: PagesCollectionViewItemsPerRow)
+        return CGSize(width: widthPerItem, height: widthPerItem)
+    }
+    static let PageCollectionCellReuseID: String = "PageCell"
+    static let AddPageCollectionCellReuseID: String = "AddPageCell" // Not being used
+
+    // Computes width of a collection view cell
+    private static func computeCollectionViewCellWidth(frameWidth: CGFloat, insets: UIEdgeInsets, itemsPerRow: CGFloat) -> CGFloat {
+        let paddingSpace = insets.left * (itemsPerRow + 1)
+        let availableWidth = frameWidth - paddingSpace
+        return availableWidth / itemsPerRow
+    }
 }

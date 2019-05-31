@@ -14,5 +14,6 @@ class Text {
 
     // New Scan Page
     static let NewScanTitle = "New Scan"
+    static let AddPageButton = "Add Page"
 
 }

@@ -23,7 +23,7 @@ class TextButton: UIView {
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         // Normal State
         button.setTitle(text, for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(Color.ButtonText, for: .normal)
         button.sizeToFit()
         addSubview(button)
 
