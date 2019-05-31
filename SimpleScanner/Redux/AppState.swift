@@ -8,9 +8,11 @@ import ReSwift
 
 public struct AppState: StateType {
 
-    func reduce(action: Action, state: AppState?) -> AppState {
-        return AppState(
+    let homeState: HomeState
 
+    func reduce(action: Action, state: AppState) -> AppState {
+        return AppState(
+                homeState: homeState.reduce(action: action, state: state.homeState)
         )
     }
 }

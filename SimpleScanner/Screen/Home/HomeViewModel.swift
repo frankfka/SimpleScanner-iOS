@@ -7,10 +7,10 @@ import UIKit
 
 class HomeViewModel {
 
-    let test: [String]
+    let documents: [String]
 
-    init(test: [String]) {
-        self.test = test
+    init(state: HomeState) {
+        self.documents = state.documents
     }
 
 }

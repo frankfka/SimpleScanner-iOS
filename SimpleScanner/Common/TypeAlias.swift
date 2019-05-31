@@ -6,3 +6,4 @@
 import Foundation
 
 public typealias VoidCallback = () -> ()
+public typealias TapIndexCallback = (Int) -> ()

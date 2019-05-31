@@ -14,7 +14,7 @@ public let appStore = AppStore(reducer: appReducer, state: nil)
 func appReducer(action: Action, state: AppState?) -> AppState {
     // Default state if state does not exist
     let state = state ?? AppState(
-
+        homeState: HomeState()
     )
     return state.reduce(action: action, state: state)
 }

@@ -29,14 +29,12 @@ class View {
     // Collection View
     static let CollectionViewItemsPerRow: CGFloat = 2
     static let CollectionViewSectionInsets = UIEdgeInsets(top: SectionVerticalMargin, left: ViewPadding, bottom: SectionVerticalMargin, right: ViewPadding)
-    static let CollectionViewSize: CGSize = {
-        get {
-            let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-            let availableWidth = view.frame.width - paddingSpace
-            let widthPerItem = availableWidth / itemsPerRow
-
-            return CGSize(width: widthPerItem, height: widthPerItem)
-        }
+    static func CollectionViewSize(frameWidth: CGFloat) -> CGSize {
+        let paddingSpace = CollectionViewSectionInsets.left * (CollectionViewItemsPerRow + 1)
+        let availableWidth = frameWidth - paddingSpace
+        let widthPerItem = availableWidth / CollectionViewItemsPerRow
+        return CGSize(width: widthPerItem, height: widthPerItem)
     }
+    static let DocumentCollectionCellReuseID: String = "DocumentCell"
 
 }

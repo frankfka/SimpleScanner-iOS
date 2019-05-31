@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import ReSwift
 
 class HomeController: UIViewController {
 
@@ -25,18 +26,64 @@ class HomeController: UIViewController {
     
     override func loadView() {
         self.title = Text.HomeViewTitle
-        homeView = HomeView(viewModel: HomeViewModel(test: ["Item 1", "Item 2"]), newScanTapped: newScanTapped)
+        homeView = HomeView(
+                viewModel: HomeViewModel(state: store.state.homeState),
+                newScanTapped: newScanTapped,
+                itemTapped: itemTapped
+        )
         self.view = homeView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self) {
+            $0.select {
+                $0.homeState
+            }
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.unsubscribe(self)
     }
 
     private func newScanTapped() {
-        navigationController?.pushViewController(NewScanController(), animated: true)
+        store.dispatch(AddNewDocumentTappedAction())
+    }
+
+    private func itemTapped(index: Int) {
+        store.dispatch(DocumentTappedAction(index: index))
     }
 
 }
+
+// Redux Extension
+extension HomeController: StoreSubscriber {
+
+    public func newState(state: HomeState) {
+
+        // Present new scan screen if state calls for it
+        if state.showAddDocument {
+            self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true) { [weak self] in
+                self?.store.dispatch(DidNavigateAwayAction())
+            }
+        }
+
+        // Present PDF if state calls for it
+        if let docIndex = state.showDocumentWithIndex {
+            self.store.dispatch(DidNavigateAwayAction())
+        }
+
+        // Update Views
+        homeView.update(viewModel: HomeViewModel(state: state))
+
+    }
+
+}
+
 

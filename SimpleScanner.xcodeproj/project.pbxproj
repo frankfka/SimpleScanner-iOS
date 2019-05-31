@@ -15,6 +15,7 @@
 		9E04B2B124FBCD83AC383B9F /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BF36B80CD96B067CC262 /* Text.swift */; };
 		9E04B3D8FB6196F3A7040BB1 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B94C89CFCEB2536DAF75 /* AppStore.swift */; };
 		9E04B43A3E35CAAE6AA0188D /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B0FD31D5EBEE2548788A /* AppState.swift */; };
+		9E04B4702EC2958221A1B946 /* HomeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B8175178719E51E94022 /* HomeAction.swift */; };
 		9E04B63EC45E8A9CDB7EA576 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BE3B98EE1903F8109383 /* HomeViewModel.swift */; };
 		9E04B6CCC1F5BB2142CC81C3 /* NewScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B3CBA9AD2F2805B61AA8 /* NewScanController.swift */; };
 		9E04B7379326CC3F426DEC11 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B33BC071885CC1FC11FC /* View.swift */; };
@@ -22,6 +23,7 @@
 		9E04B87E33C1BFE1D2CCEC89 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B2D900256F50CB23B4D8 /* HomeView.swift */; };
 		9E04BB22843A1193CEE08A9A /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BF9490C73C86266D98EF /* TextButton.swift */; };
 		9E04BC526BBA4D17234DBD8E /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BD62F1EF9A07F421A937 /* HomeController.swift */; };
+		9E04BC8228E151697531252F /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BA706303AC9C17924E81 /* HomeState.swift */; };
 		9E04BFB9572504855D8AF039 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BB0CB53C787C4A107133 /* TypeAlias.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +40,9 @@
 		9E04B33BC071885CC1FC11FC /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		9E04B34FB0867314FA274D65 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		9E04B3CBA9AD2F2805B61AA8 /* NewScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanController.swift; sourceTree = "<group>"; };
+		9E04B8175178719E51E94022 /* HomeAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeAction.swift; sourceTree = "<group>"; };
 		9E04B94C89CFCEB2536DAF75 /* AppStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		9E04BA706303AC9C17924E81 /* HomeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
 		9E04BB0CB53C787C4A107133 /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
 		9E04BC479B0A06D4C7085624 /* NewScanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanView.swift; sourceTree = "<group>"; };
 		9E04BD62F1EF9A07F421A937 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 		9E04B79B62B5E69A5E4CBED1 /* Action */ = {
 			isa = PBXGroup;
 			children = (
+				9E04B8175178719E51E94022 /* HomeAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -169,6 +174,7 @@
 		9E04BE6EC52B11F39F8362CD /* State */ = {
 			isa = PBXGroup;
 			children = (
+				9E04BA706303AC9C17924E81 /* HomeState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -317,6 +323,8 @@
 				9E04B6CCC1F5BB2142CC81C3 /* NewScanController.swift in Sources */,
 				9E04B7BD98B7D676C19371B6 /* NewScanView.swift in Sources */,
 				9E04B63EC45E8A9CDB7EA576 /* HomeViewModel.swift in Sources */,
+				9E04BC8228E151697531252F /* HomeState.swift in Sources */,
+				9E04B4702EC2958221A1B946 /* HomeAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
