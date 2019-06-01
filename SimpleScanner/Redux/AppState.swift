@@ -9,10 +9,12 @@ import ReSwift
 public struct AppState: StateType {
 
     let homeState: HomeState
+    let newScanState: NewScanState
 
     func reduce(action: Action, state: AppState) -> AppState {
         return AppState(
-                homeState: homeState.reduce(action: action, state: state.homeState)
+                homeState: homeState.reduce(action: action, state: state.homeState),
+                newScanState: newScanState.reduce(action: action, state: state.newScanState)
         )
     }
 }

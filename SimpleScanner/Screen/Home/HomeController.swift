@@ -70,13 +70,14 @@ extension HomeController: StoreSubscriber {
         // Present new scan screen if state calls for it
         if state.showAddDocument {
             self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true) { [weak self] in
-                self?.store.dispatch(DidNavigateAwayAction())
+                self?.store.dispatch(HomeNavigateAwayAction())
             }
         }
 
         // Present PDF if state calls for it
         if let docIndex = state.showDocumentWithIndex {
-            self.store.dispatch(DidNavigateAwayAction())
+            // TODO present PDF
+            self.store.dispatch(HomeNavigateAwayAction())
         }
 
         // Update Views

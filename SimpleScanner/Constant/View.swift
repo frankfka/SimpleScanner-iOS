@@ -36,7 +36,7 @@ class View {
     static let DocumentCollectionCellReuseID: String = "DocumentCell"
 
     // Pages Collection View
-    static let PagesCollectionViewItemsPerRow: CGFloat = 4
+    static let PagesCollectionViewItemsPerRow: CGFloat = 2
     static let PagesCollectionViewSectionInsets = UIEdgeInsets(top: SectionVerticalMargin, left: ViewPadding, bottom: SectionVerticalMargin, right: ViewPadding)
     static func PagesCollectionViewSize(frameWidth: CGFloat) -> CGSize {
         let widthPerItem = computeCollectionViewCellWidth(frameWidth: frameWidth, insets: PagesCollectionViewSectionInsets, itemsPerRow: PagesCollectionViewItemsPerRow)

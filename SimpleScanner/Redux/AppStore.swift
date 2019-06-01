@@ -8,13 +8,14 @@ import ReSwift
 
 public typealias AppStore = Store<AppState>
 // Main store for the application state
-public let appStore = AppStore(reducer: appReducer, state: nil)
+public let appStore = AppStore(reducer: appReducer, state: nil, middleware: [loggerMiddleware])
 
 // Primary reducer for the application
 func appReducer(action: Action, state: AppState?) -> AppState {
     // Default state if state does not exist
     let state = state ?? AppState(
-        homeState: HomeState()
+            homeState: HomeState(),
+            newScanState: NewScanState()
     )
     return state.reduce(action: action, state: state)
 }

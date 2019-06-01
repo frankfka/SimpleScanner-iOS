@@ -81,8 +81,8 @@ extension HomeView {
         newScanButton.snp.makeConstraints { (make) in
             make.top.equalToSuperview().inset(View.SectionVerticalMargin)
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(View.SectionVerticalMargin)
-            make.left.greaterThanOrEqualToSuperview().inset(View.ViewPadding)
-            make.right.lessThanOrEqualToSuperview().inset(View.ViewPadding)
+            make.left.equalToSuperview().inset(View.ViewPadding)
+            make.right.equalToSuperview().inset(View.ViewPadding)
             make.centerX.equalToSuperview()
         }
         bottomBar.sizeToFit()

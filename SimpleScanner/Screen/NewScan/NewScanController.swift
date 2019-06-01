@@ -5,6 +5,7 @@
 
 import UIKit
 import WeScan
+import ReSwift
 
 class NewScanController: UIViewController {
 
@@ -29,7 +30,7 @@ class NewScanController: UIViewController {
         self.saveBarButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped))
         navigationItem.leftBarButtonItem = cancelBarButton
         navigationItem.rightBarButtonItem = saveBarButton
-        newScanView = NewScanView(viewModel: NewScanViewModel(), newPageTapped: newPageTapped)
+        newScanView = NewScanView(viewModel: NewScanViewModel(from: store.state.newScanState), newPageTapped: newPageTapped, scannedPageTapped: scannedPageTapped)
         self.view = newScanView
     }
 
@@ -37,20 +38,35 @@ class NewScanController: UIViewController {
         super.viewDidLoad()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        store.subscribe(self) {
+            $0.select {
+                $0.newScanState
+            }
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        store.dispatch(NewScanNavigateAwayAction())
+        store.unsubscribe(self)
+    }
+
     private func newPageTapped() {
-        // Create and launch a WeScan controller
-        let scannerVC = ImageScannerController()
-        scannerVC.navigationBar.backgroundColor = .white
-        scannerVC.imageScannerDelegate = self
-        present(scannerVC, animated: true)
+        store.dispatch(AddPagePressedAction())
+    }
+
+    private func scannedPageTapped(index: Int) {
+        store.dispatch(PageIconTappedAction(index: index))
     }
 
     @objc private func cancelTapped() {
-        print("cancel")
+        store.dispatchFunction(CancelNewScanAction())
     }
 
     @objc private func saveTapped() {
-        print("save")
+        store.dispatch(SaveDocumentPressedAction())
     }
 
 }
@@ -59,22 +75,49 @@ class NewScanController: UIViewController {
 extension NewScanController: ImageScannerControllerDelegate {
 
     func imageScannerController(_ scanner: ImageScannerController, didFailWithError error: Error) {
-        // You are responsible for carefully handling the error
-        print(error)
+        store.dispatch(AddPageErrorAction(error: error))
     }
 
     func imageScannerController(_ scanner: ImageScannerController, didFinishScanningWithResults results: ImageScannerResults) {
-        // The user successfully scanned an image, which is available in the ImageScannerResults
-        // You are responsible for dismissing the ImageScannerController
+        let newPage: UIImage
+        if let enhancedImage = results.enhancedImage {
+            newPage = enhancedImage
+        } else {
+            newPage = results.scannedImage
+        }
+        store.dispatch(AddPageSuccessAction(new: newPage))
         scanner.dismiss(animated: true)
     }
 
     func imageScannerControllerDidCancel(_ scanner: ImageScannerController) {
-        // The user tapped 'Cancel' on the scanner
-        // You are responsible for dismissing the ImageScannerController
+        print("User cancelled scanning")
         scanner.dismiss(animated: true)
     }
 }
 
 // Extension for Store Subscriber
-extension NewScanController {}
+extension NewScanController: StoreSubscriber {
+
+    public func newState(state: NewScanState) {
+
+        //TODO handle activity state
+
+        // Handle navigation
+        if state.dismissNewScanVC {
+            navigationController?.dismiss(animated: true)
+        } else if state.showScanVC {
+            // Create and launch a WeScan controller
+            let scannerVC = ImageScannerController()
+            scannerVC.navigationBar.backgroundColor = .white
+            scannerVC.navigationBar.prefersLargeTitles = false
+            scannerVC.imageScannerDelegate = self
+            present(scannerVC, animated: true)
+        } else if let pageIndex = state.showPageWithIndex {
+            print("Show \(pageIndex)")
+        }
+
+        // Update Views
+        newScanView.update(viewModel: NewScanViewModel(from: state))
+    }
+
+}

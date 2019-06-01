@@ -9,7 +9,7 @@ import ReSwift
 // Add document tapped on home screen
 struct AddNewDocumentTappedAction: Action { }
 // Called when anything is presented/pushed onto Home screen
-struct DidNavigateAwayAction: Action { }
+struct HomeNavigateAwayAction: Action { }
 // When document tapped in UICollectionView
 struct DocumentTappedAction: Action {
     let index: Int

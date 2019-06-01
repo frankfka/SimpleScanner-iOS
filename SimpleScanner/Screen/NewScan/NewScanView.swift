@@ -7,6 +7,17 @@ import UIKit
 import SnapKit
 import WeScan
 
+// Simple VM for the class
+class NewScanViewModel {
+    let enableEdit: Bool
+    let pages: [UIImage]
+
+    init(from state: NewScanState) {
+        self.pages = state.pages
+        self.enableEdit = state.state == .none
+    }
+}
+
 class NewScanView: UIView {
 
     private var vm: NewScanViewModel
@@ -18,10 +29,12 @@ class NewScanView: UIView {
 
     // Callbacks
     private let newPageTapped: VoidCallback
+    private let scannedPageTapped: TapIndexCallback
 
-    init(viewModel: NewScanViewModel, newPageTapped: @escaping VoidCallback) {
+    init(viewModel: NewScanViewModel, newPageTapped: @escaping VoidCallback, scannedPageTapped: @escaping TapIndexCallback) {
         self.vm = viewModel
         self.newPageTapped = newPageTapped
+        self.scannedPageTapped = scannedPageTapped
         super.init(frame: CGRect.zero)
         initSubviews()
     }
@@ -32,7 +45,8 @@ class NewScanView: UIView {
 
     func update(viewModel: NewScanViewModel) {
         self.vm = viewModel
-        // Do other updating here
+        newScanButton.isUserInteractionEnabled = vm.enableEdit
+        pagesCollectionView.reloadData()
     }
 
 }
@@ -50,13 +64,14 @@ extension NewScanView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.PageCollectionCellReuseID, for: indexPath)
-        myCell.backgroundColor = UIColor.blue
-        return myCell
+        let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.PageCollectionCellReuseID, for: indexPath) as! PageCollectionViewCell
+        let cellModel = PageCollectionViewCellModel(image: vm.pages[indexPath.row])
+        pageCell.loadCell(with: cellModel)
+        return pageCell
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        self.itemTapped(indexPath.row)
+        scannedPageTapped(indexPath.row)
     }
 }
 
@@ -80,8 +95,8 @@ extension NewScanView {
         newScanButton.snp.makeConstraints { (make) in
             make.top.equalToSuperview().inset(View.SectionVerticalMargin)
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(View.SectionVerticalMargin)
-            make.left.greaterThanOrEqualToSuperview().inset(View.ViewPadding)
-            make.right.lessThanOrEqualToSuperview().inset(View.ViewPadding)
+            make.left.equalToSuperview().inset(View.ViewPadding)
+            make.right.equalToSuperview().inset(View.ViewPadding)
             make.centerX.equalToSuperview()
         }
         bottomBar.sizeToFit()
@@ -99,7 +114,7 @@ extension NewScanView {
         pagesCollectionView.backgroundColor = Color.BodyBackground
         pagesCollectionView.delegate = self
         pagesCollectionView.dataSource = self
-        pagesCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: View.PageCollectionCellReuseID)
+        pagesCollectionView.register(PageCollectionViewCell.self, forCellWithReuseIdentifier: View.PageCollectionCellReuseID)
         addSubview(pagesCollectionView)
         pagesCollectionView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()

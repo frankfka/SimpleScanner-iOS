@@ -8,8 +8,8 @@ import UIKit
 class Color {
 
     static let Primary = UIColor.black
-    static let BodyBackground = UIColor.white
-    static let BodyBackgroundContrast = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)
+    static let BodyBackground = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.0)
+    static let BodyBackgroundContrast = UIColor.white
     static let Border = UIColor.gray
     static let Button = Primary
     static let ButtonText = UIColor.white

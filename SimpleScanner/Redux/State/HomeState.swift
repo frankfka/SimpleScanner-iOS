@@ -25,11 +25,12 @@ struct HomeState {
 
     func reduce(action: Action, state: HomeState) -> HomeState {
         switch action {
+        // TODO need to specify all fields
         case _ as AddNewDocumentTappedAction:
             return HomeState(showAddDocument: true)
         case let action as DocumentTappedAction:
             return HomeState(showDocumentWithIndex: action.index)
-        case _ as DidNavigateAwayAction:
+        case _ as HomeNavigateAwayAction:
             return didNavigateAway()
         default:
             return self
