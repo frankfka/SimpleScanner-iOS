@@ -8,16 +8,26 @@ import ReSwift
 
 // Add Page pressed
 struct AddPagePressedAction: Action { }
-// Add Page returned OK
-struct AddPageSuccessAction: Action {
-    // Not ideal to pass around UIImage, but it doesn't make sense to save transient images to pass state as URL
+// Scan was successful
+struct AddPageScanSuccessAction: Action {
     let new: UIImage
+}
+// Add page process was successful
+struct AddPageSuccessAction: Action, CustomStringConvertible {
+    let new: TempFile
+    var description: String {
+        return "AddPageSuccessAction: \(new.url.absoluteString)"
+    }
 }
 // Add Page returned error
 struct AddPageErrorAction: Action, CustomStringConvertible {
-    let error: Error
+    let error: Error?
     var description: String {
-        return "AddPageErrorAction: \(error.localizedDescription)"
+        if let error = error as? WriteTempPageError {
+            return "AddPageErrorAction: State: \(error.state) | Message: \(error.innerError?.localizedDescription)"
+        } else {
+            return "AddPageErrorAction: \(error?.localizedDescription)"
+        }
     }
 }
 // Page icon was tapped
@@ -28,11 +38,24 @@ struct PageIconTappedAction: Action, CustomStringConvertible {
     }
 }
 // Save Pressed Action
-struct SaveDocumentPressedAction: Action { }
+struct SaveDocumentPressedAction: Action, CustomStringConvertible {
+    let pages: [TempFile]
+    let fileName: String
+    var description: String {
+        return "SaveDocumentPressedAction: Saving \(pages.count) pages to \(fileName).pdf"
+    }
+}
 // Save Complete Action
-struct SaveDocumentSuccessAction: Action { }
+struct SaveDocumentSuccessAction: Action {
+    let pdf: PDFFile
+}
 // Save Error Action
-struct SaveDocumentErrorAction: Action { }
+struct SaveDocumentErrorAction: Action, CustomStringConvertible {
+    let error: WritePDFError?
+    var description: String {
+        return "SaveDocumentErrorAction: State: \(error?.state) | Errored Pages: \(error?.erroredPages)"
+    }
+}
 // User cancelled scan
 struct CancelNewScanAction: Action { }
 // Navigated away

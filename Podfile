@@ -6,6 +6,7 @@ target 'SimpleScanner' do
 
   # Pods for SimpleScanner
     pod 'WeScan', '>= 0.9'
+    pod 'Kingfisher', '~> 5.0'
     pod 'SimplePDFViewer'
     pod 'ReSwift'
     pod 'RxSwift', '~> 5'

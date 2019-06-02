@@ -10,11 +10,11 @@ import WeScan
 // Simple VM for the class
 class NewScanViewModel {
     let enableEdit: Bool
-    let pages: [UIImage]
+    let pages: [TempFile]
 
     init(from state: NewScanState) {
         self.pages = state.pages
-        self.enableEdit = state.state == .none
+        self.enableEdit = true // TODO: (state.state == .none)
     }
 }
 
@@ -65,7 +65,7 @@ extension NewScanView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.PageCollectionCellReuseID, for: indexPath) as! PageCollectionViewCell
-        let cellModel = PageCollectionViewCellModel(image: vm.pages[indexPath.row])
+        let cellModel = PageCollectionViewCellModel(imageFile: vm.pages[indexPath.row])
         pageCell.loadCell(with: cellModel)
         return pageCell
     }

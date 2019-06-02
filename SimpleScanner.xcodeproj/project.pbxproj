@@ -15,9 +15,13 @@
 		9E04B23DA14A575521803572 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B34FB0867314FA274D65 /* Color.swift */; };
 		9E04B2B124FBCD83AC383B9F /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BF36B80CD96B067CC262 /* Text.swift */; };
 		9E04B3A5BD9D6A0FC3419D67 /* NewScanState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B488F419124E63B19ED2 /* NewScanState.swift */; };
+		9E04B3AEC26301D837B189A3 /* ExportPDFMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B859DCE0DAB794242753 /* ExportPDFMiddleware.swift */; };
+		9E04B3CA7175996DD1C8E864 /* DocumentCreationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BAE4BDBC6C1B664FF3DA /* DocumentCreationService.swift */; };
 		9E04B3D8FB6196F3A7040BB1 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B94C89CFCEB2536DAF75 /* AppStore.swift */; };
 		9E04B43A3E35CAAE6AA0188D /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B0FD31D5EBEE2548788A /* AppState.swift */; };
 		9E04B4702EC2958221A1B946 /* HomeActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B8175178719E51E94022 /* HomeActions.swift */; };
+		9E04B5227DCFDCE23632C3C5 /* WritePageToFileMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B0914A6C42829FA028F0 /* WritePageToFileMiddleware.swift */; };
+		9E04B55E0B411879F919DD7D /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B886CAA0AF31367B95B4 /* Error.swift */; };
 		9E04B63EC45E8A9CDB7EA576 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BE3B98EE1903F8109383 /* HomeViewModel.swift */; };
 		9E04B6A534F061C913DA769A /* ActivityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B0896DD00485D71EF225 /* ActivityState.swift */; };
 		9E04B6CCC1F5BB2142CC81C3 /* NewScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B3CBA9AD2F2805B61AA8 /* NewScanController.swift */; };
@@ -30,6 +34,7 @@
 		9E04BC8228E151697531252F /* HomeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BA706303AC9C17924E81 /* HomeState.swift */; };
 		9E04BFB9572504855D8AF039 /* TypeAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BB0CB53C787C4A107133 /* TypeAlias.swift */; };
 		9E04BFC1D9EFD7906DD0D210 /* NewScanActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BD9924ADCDDFAA5B63E2 /* NewScanActions.swift */; };
+		9E04BFFA63C3C38F5CC54F0E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BA56644CFEAEAB1939B4 /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +46,7 @@
 		11CA42EB229B2F1800648670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D016F448152ABE76EE812B0 /* Pods-SimpleScanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleScanner.release.xcconfig"; path = "Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner.release.xcconfig"; sourceTree = "<group>"; };
 		9E04B0896DD00485D71EF225 /* ActivityState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityState.swift; sourceTree = "<group>"; };
+		9E04B0914A6C42829FA028F0 /* WritePageToFileMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WritePageToFileMiddleware.swift; sourceTree = "<group>"; };
 		9E04B0FD31D5EBEE2548788A /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		9E04B2D900256F50CB23B4D8 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		9E04B33BC071885CC1FC11FC /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
@@ -49,8 +55,12 @@
 		9E04B488F419124E63B19ED2 /* NewScanState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanState.swift; sourceTree = "<group>"; };
 		9E04B5B8CB0B0B39483D94B5 /* LoggerMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerMiddleware.swift; sourceTree = "<group>"; };
 		9E04B8175178719E51E94022 /* HomeActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeActions.swift; sourceTree = "<group>"; };
+		9E04B859DCE0DAB794242753 /* ExportPDFMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportPDFMiddleware.swift; sourceTree = "<group>"; };
+		9E04B886CAA0AF31367B95B4 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		9E04B94C89CFCEB2536DAF75 /* AppStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		9E04BA56644CFEAEAB1939B4 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		9E04BA706303AC9C17924E81 /* HomeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeState.swift; sourceTree = "<group>"; };
+		9E04BAE4BDBC6C1B664FF3DA /* DocumentCreationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentCreationService.swift; sourceTree = "<group>"; };
 		9E04BB0CB53C787C4A107133 /* TypeAlias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAlias.swift; sourceTree = "<group>"; };
 		9E04BC479B0A06D4C7085624 /* NewScanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanView.swift; sourceTree = "<group>"; };
 		9E04BD62F1EF9A07F421A937 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -103,6 +113,8 @@
 				9E04B8D94BF8F7ABE391FDE8 /* Screen */,
 				9E04B832F1E83BA86DB7F880 /* Constant */,
 				9E04BDE99EA28B81F382A512 /* Common */,
+				9E04B956C6048DDE2A764593 /* Service */,
+				9E04B38A386F870A95F3DF93 /* Model */,
 			);
 			path = SimpleScanner;
 			sourceTree = "<group>";
@@ -131,8 +143,19 @@
 			isa = PBXGroup;
 			children = (
 				9E04B5B8CB0B0B39483D94B5 /* LoggerMiddleware.swift */,
+				9E04B0914A6C42829FA028F0 /* WritePageToFileMiddleware.swift */,
+				9E04B859DCE0DAB794242753 /* ExportPDFMiddleware.swift */,
 			);
 			path = Middleware;
+			sourceTree = "<group>";
+		};
+		9E04B38A386F870A95F3DF93 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9E04B886CAA0AF31367B95B4 /* Error.swift */,
+				9E04BA56644CFEAEAB1939B4 /* File.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9E04B79B62B5E69A5E4CBED1 /* Action */ = {
@@ -161,6 +184,14 @@
 				9E04B9D79202784DB4104DE4 /* NewScan */,
 			);
 			path = Screen;
+			sourceTree = "<group>";
+		};
+		9E04B956C6048DDE2A764593 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				9E04BAE4BDBC6C1B664FF3DA /* DocumentCreationService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		9E04B9D79202784DB4104DE4 /* NewScan */ = {
@@ -353,6 +384,11 @@
 				9E04B723E1FA707D981B275E /* LoggerMiddleware.swift in Sources */,
 				9E04B6A534F061C913DA769A /* ActivityState.swift in Sources */,
 				9E04B1D109EF7DE8B2970FDD /* PageCollectionViewCell.swift in Sources */,
+				9E04B3CA7175996DD1C8E864 /* DocumentCreationService.swift in Sources */,
+				9E04B5227DCFDCE23632C3C5 /* WritePageToFileMiddleware.swift in Sources */,
+				9E04B55E0B411879F919DD7D /* Error.swift in Sources */,
+				9E04BFFA63C3C38F5CC54F0E /* File.swift in Sources */,
+				9E04B3AEC26301D837B189A3 /* ExportPDFMiddleware.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

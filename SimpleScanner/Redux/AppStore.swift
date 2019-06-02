@@ -8,7 +8,7 @@ import ReSwift
 
 public typealias AppStore = Store<AppState>
 // Main store for the application state
-public let appStore = AppStore(reducer: appReducer, state: nil, middleware: [loggerMiddleware])
+public let appStore = AppStore(reducer: appReducer, state: nil, middleware: allMiddleware)
 
 // Primary reducer for the application
 func appReducer(action: Action, state: AppState?) -> AppState {
@@ -19,3 +19,9 @@ func appReducer(action: Action, state: AppState?) -> AppState {
     )
     return state.reduce(action: action, state: state)
 }
+
+private let allMiddleware: [Middleware<AppState>] = [
+    loggerMiddleware,
+    writePageToFileMiddleware,
+    exportPDFMiddleware
+]

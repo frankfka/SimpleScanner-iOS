@@ -9,7 +9,8 @@ import ReSwift
 class NewScanState {
 
     let state: ActivityState
-    let pages: [UIImage]
+    let pages: [TempFile]
+    let exportedPDF: PDFFile?
 
     // Navigation
     let showScanVC: Bool
@@ -17,17 +18,19 @@ class NewScanState {
     let dismissNewScanVC: Bool
 
     init(
-            pages: [UIImage] = [],
+            pages: [TempFile] = [],
             state: ActivityState = .none,
             showScanVC: Bool = false,
             showPageWithIndex: Int? = nil,
-            dismissNewScanVC: Bool = false
+            dismissNewScanVC: Bool = false,
+            exportedPDF: PDFFile? = nil
     ) {
         self.state = state
         self.pages = pages
         self.showScanVC = showScanVC
         self.showPageWithIndex = showPageWithIndex
         self.dismissNewScanVC = dismissNewScanVC
+        self.exportedPDF = exportedPDF
     }
 
     func reduce(action: Action, state: NewScanState) -> NewScanState {
@@ -36,17 +39,19 @@ class NewScanState {
             return NewScanState(dismissNewScanVC: true)
         case _ as AddPagePressedAction:
             return NewScanState(pages: self.pages, showScanVC: true)
+        case _ as AddPageScanSuccessAction:
+            return NewScanState(pages: self.pages, state: .loading) //TODO this gets stuck in loading..
         case let action as AddPageSuccessAction:
             // Add arrays to create new array
             return NewScanState(pages: self.pages + [action.new])
-        case let _ as AddPageErrorAction:
+        case _ as AddPageErrorAction:
             return NewScanState(pages: self.pages, state: .error)
         case _ as SaveDocumentPressedAction:
-            return self // TODO
-        case _ as SaveDocumentSuccessAction:
-            return self // TODO
+            return NewScanState(pages: self.pages, state: .loading)
+        case let action as SaveDocumentSuccessAction:
+            return NewScanState(exportedPDF: action.pdf)
         case _ as SaveDocumentErrorAction:
-            return self // TODO
+            return NewScanState(pages: self.pages, state: .error) // TODO propagate the error
         case _ as NewScanNavigateAwayAction:
             return didNavigateAway(action, state)
         default:

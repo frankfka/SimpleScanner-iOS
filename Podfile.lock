@@ -1,4 +1,5 @@
 PODS:
+  - Kingfisher (5.5.0)
   - ReSwift (4.1.1)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
@@ -12,6 +13,7 @@ PODS:
   - WeScan (1.1.0)
 
 DEPENDENCIES:
+  - Kingfisher (~> 5.0)
   - ReSwift
   - RxCocoa (~> 5)
   - RxSwift (~> 5)
@@ -21,6 +23,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Kingfisher
     - ReSwift
     - RxCocoa
     - RxRelay
@@ -30,6 +33,7 @@ SPEC REPOS:
     - WeScan
 
 SPEC CHECKSUMS:
+  Kingfisher: 6fe5e67a90fd335e49b0f5c075ff55ac5ebedd94
   ReSwift: d925be0033558f55bd73d92869961230dfe19d52
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
@@ -38,6 +42,6 @@ SPEC CHECKSUMS:
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   WeScan: 7ebe08c966fbd7321be2be1a962423c237e3e2ec
 
-PODFILE CHECKSUM: 3a450ce45ec6f61a58953a8227a128fbe4c4ca84
+PODFILE CHECKSUM: a980985610cac1874ee91dfd2b25adf40c0247d8
 
 COCOAPODS: 1.7.0

@@ -6,6 +6,7 @@
 import UIKit
 import WeScan
 import ReSwift
+import SimplePDFViewer
 
 class NewScanController: UIViewController {
 
@@ -62,11 +63,15 @@ class NewScanController: UIViewController {
     }
 
     @objc private func cancelTapped() {
-        store.dispatchFunction(CancelNewScanAction())
+        store.dispatch(CancelNewScanAction())
     }
 
     @objc private func saveTapped() {
-        store.dispatch(SaveDocumentPressedAction())
+        // TODO: File name
+        store.dispatch(SaveDocumentPressedAction(
+                pages: store.state.newScanState.pages,
+                fileName: "TODO")
+        )
     }
 
 }
@@ -85,7 +90,7 @@ extension NewScanController: ImageScannerControllerDelegate {
         } else {
             newPage = results.scannedImage
         }
-        store.dispatch(AddPageSuccessAction(new: newPage))
+        store.dispatch(AddPageScanSuccessAction(new: newPage))
         scanner.dismiss(animated: true)
     }
 
@@ -114,9 +119,18 @@ extension NewScanController: StoreSubscriber {
             present(scannerVC, animated: true)
         } else if let pageIndex = state.showPageWithIndex {
             print("Show \(pageIndex)")
+        } else if let exportedPDF = state.exportedPDF {
+            let pdfViewer = SimplePDFViewController(url: exportedPDF.url)
+            present(pdfViewer, animated: true)
+            // TODO need delegate for onclose
         }
 
         // Update Views
+        update(state: state)
+    }
+
+    private func update(state: NewScanState) {
+        saveBarButton.isEnabled = !state.pages.isEmpty
         newScanView.update(viewModel: NewScanViewModel(from: state))
     }
 
