@@ -9,6 +9,7 @@ import ReSwift
 // Callbacks
 public typealias VoidCallback = () -> ()
 public typealias TapIndexCallback = (Int) -> ()
+public typealias FileNameCallback = (String) -> ()
 
 public typealias DispatchFunction = (Action) -> Void
 public typealias Middleware<State> = (@escaping DispatchFunction, @escaping () -> State?)

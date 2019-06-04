@@ -14,6 +14,7 @@ struct WriteTempPageError: Error {
         case writeError
     }
 }
+
 struct WritePDFError: Error {
     let erroredPages: [Int] // Zero based index
     let state: WritePDFErrorState
@@ -23,4 +24,9 @@ struct WritePDFError: Error {
         case noPages
         case writeError
     }
+}
+
+// Can be shown in UI
+struct UserFriendlyError: Error {
+    let displayStr: String
 }

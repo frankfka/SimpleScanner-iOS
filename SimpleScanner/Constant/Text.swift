@@ -15,5 +15,16 @@ class Text {
     // New Scan Page
     static let NewScanTitle = "New Scan"
     static let AddPageButton = "Add Page"
+    static let WritePageErrorMsg = "Page Scan Failed"
+    static let ExportPDFErrorMsg = "PDF Export Failed"
+    // Save Dialog
+    static let SavePDFTitle = "Save PDF"
+    static let SavePDFDescription = "Please specify a file name"
+    static let SavePDFConfirm = "Confirm"
+    static let SavePDFCancel = "Cancel"
+
+    // SimplePDFView
+    static let PDFViewError = "Something went wrong. Please try again"
+
 
 }

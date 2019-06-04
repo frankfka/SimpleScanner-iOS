@@ -27,10 +27,12 @@ public final class TempFile {
 // Represents a reference to a PDF file
 public final class PDFFile {
 
+    public let name: String
     public let url: URL
 
     public init(fileName: String) {
         let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        name = fileName
         url = docDirectory.appendingPathComponent(fileName).appendingPathExtension("pdf")
     }
 

@@ -9,6 +9,8 @@ import ReSwift
 let exportPDFMiddleware: Middleware<AppState> = { dispatch, getState in
     return { next in
         return { action in
+            // Dispatch action FIRST, then call the service
+            next(action)
             if let action = action as? SaveDocumentPressedAction {
                 let (pdf, error) = DocumentCreationService.shared.generatePDF(from: action.pages, fileName: action.fileName)
                 if let pdf = pdf {
@@ -17,8 +19,6 @@ let exportPDFMiddleware: Middleware<AppState> = { dispatch, getState in
                     dispatch(SaveDocumentErrorAction(error: error))
                 }
             }
-            // Proceed to next action
-            next(action)
         }
     }
 }

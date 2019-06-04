@@ -40,11 +40,19 @@ class DocumentCreationService {
             return (nil, WritePDFError(erroredPages: erroredPages, state: .noPages))
         }
         let documentFile = PDFFile(fileName: fileName)
-        // TODO document options
         if document.write(to: documentFile.url) {
             return (documentFile, erroredPages.isEmpty ? nil : WritePDFError(erroredPages: erroredPages, state: .missingPages))
         } else {
             return (nil, WritePDFError(erroredPages: erroredPages, state: .writeError))
         }
     }
+
+    // Creates a file name based on time
+    static func getDefaultFileName() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyMMMdd_HH-mm_ss"
+        let dateString = dateFormatter.string(from: Date())
+        return "SimpleScanner_\(dateString)"
+    }
+
 }

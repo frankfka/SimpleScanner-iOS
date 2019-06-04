@@ -14,7 +14,7 @@ class NewScanViewModel {
 
     init(from state: NewScanState) {
         self.pages = state.pages
-        self.enableEdit = true // TODO: (state.state == .none)
+        self.enableEdit = (state.state == .none)
     }
 }
 

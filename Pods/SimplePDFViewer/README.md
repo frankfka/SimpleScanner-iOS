@@ -32,17 +32,30 @@ it, simply add the following line to your Podfile:
 pod 'SimplePDFViewer'
 ```
 To use SimplePDFViewer, import `SimplePDFViewer`. You can then instantiate an instance of the VC like so:
-```
+```swift
 let pdfVC = SimplePDFViewController(urlString: ViewController.TEST_PDF_URL)
 pdfVC.viewTitle = "Test View Title" // Custom view title on top bar
 pdfVC.tint = .red // Tint applies to all views in the VC
 pdfVC.exportPDFName = "TestExportPDF" // File name for sharing, default is "Document"
 pdfVC.errorMessage = "Uh oh!" // Custom error message if PDF fails to load
+pdfVC.dismissalDelegate = self // Customize what happens when close button is pressed
 ```
 There are also constructors for the VC from a URL, PDFDocument, or raw Data. You can then present the VC using:
-```
+```swift
 present(pdfVC, animated: true, completion: nil) // Presents modally
 navigationController?.pushViewController(pdfVC, animated: true) // Pushes onto navigation stack
+```
+
+### Delegates
+There is currently one delegate: `SimplePDFViewOnDismissDelegate`
+Here's an example implementation:
+```swift
+func didDismiss(_ sender: SimplePDFViewController) {
+// It is your responsibility to dismiss the VC
+sender.dismiss(animated: true, completion: nil)
+// Do whatever else you want to do
+print("Hello!")
+}
 ```
 
 ## Example

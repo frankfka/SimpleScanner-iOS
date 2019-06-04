@@ -14,6 +14,7 @@ class NewScanController: UIViewController {
     private var newScanView: NewScanView!
     private var cancelBarButton: UIBarButtonItem!
     private var saveBarButton: UIBarButtonItem!
+    private var exportNameTextField: UITextField!
 
     public init(store: AppStore = appStore) {
         self.store = store
@@ -67,13 +68,15 @@ class NewScanController: UIViewController {
     }
 
     @objc private func saveTapped() {
-        // TODO: File name
-        store.dispatch(SaveDocumentPressedAction(
-                pages: store.state.newScanState.pages,
-                fileName: "TODO")
-        )
+        let saveDialog = SavePDFDialog(presentingVC: self) { fileName in
+            // Dispatch the save action with the specified file name
+            self.store.dispatch(SaveDocumentPressedAction(
+                    pages: self.store.state.newScanState.pages,
+                    fileName: fileName)
+            )
+        }
+        saveDialog.display()
     }
-
 }
 
 // Extension for WeScan
@@ -98,6 +101,16 @@ extension NewScanController: ImageScannerControllerDelegate {
         print("User cancelled scanning")
         scanner.dismiss(animated: true)
     }
+
+}
+
+// Extension for PDF Viewer
+extension NewScanController: SimplePDFViewOnDismissDelegate {
+    func didDismiss(_ sender: SimplePDFViewController) {
+        sender.dismiss(animated: true) {
+            self.store.dispatch(ExportedPDFViewDismissedAction())
+        }
+    }
 }
 
 // Extension for Store Subscriber
@@ -105,7 +118,15 @@ extension NewScanController: StoreSubscriber {
 
     public func newState(state: NewScanState) {
 
-        //TODO handle activity state
+        // Handle State
+        switch state.state {
+            case .error:
+                HUD.showError(message: state.error?.displayStr)
+            case.loading:
+                HUD.loading(show: true)
+            case.none:
+                HUD.loading(show: false)
+        }
 
         // Handle navigation
         if state.dismissNewScanVC {
@@ -121,8 +142,11 @@ extension NewScanController: StoreSubscriber {
             print("Show \(pageIndex)")
         } else if let exportedPDF = state.exportedPDF {
             let pdfViewer = SimplePDFViewController(url: exportedPDF.url)
+            pdfViewer.dismissalDelegate = self
+            pdfViewer.errorMessage = Text.PDFViewError
+            pdfViewer.exportPDFName = exportedPDF.name
+            pdfViewer.tint = Color.Primary
             present(pdfViewer, animated: true)
-            // TODO need delegate for onclose
         }
 
         // Update Views

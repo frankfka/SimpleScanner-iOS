@@ -9,12 +9,16 @@
 import UIKit
 import PDFKit
 
+public protocol SimplePDFViewOnDismissDelegate: AnyObject {
+    func didDismiss(_ sender: SimplePDFViewController)
+}
+
 public class SimplePDFViewController: UIViewController {
     
     // Views
-    let pdfView: SimplePDFViewer = SimplePDFViewer()
-    let topBar: SimplePDFTopBarView = SimplePDFTopBarView()
-    let bottomBar: SimplePDFBottomBarView = SimplePDFBottomBarView()
+    private let pdfView: SimplePDFViewer = SimplePDFViewer()
+    private let topBar: SimplePDFTopBarView = SimplePDFTopBarView()
+    private let bottomBar: SimplePDFBottomBarView = SimplePDFBottomBarView()
     
     // State
     private var currentPage = 1
@@ -40,6 +44,7 @@ public class SimplePDFViewController: UIViewController {
         }
     }
     public var exportPDFName: String = "Document"
+    public var dismissalDelegate: SimplePDFViewOnDismissDelegate?
     
     // MARK: Constructors
     public init(urlString: String) {
@@ -115,11 +120,16 @@ public class SimplePDFViewController: UIViewController {
 // Delegates for different views
 extension SimplePDFViewController: SimplePDFTopBarDelegate, SimplePDFBottomBarActionDelegate, SimplePDFViewerStatusDelegate {
     
-    func doneButtonPressed(_ sender: SimplePDFTopBarView) {
-        self.dismiss(animated: true, completion: nil)
+    internal func doneButtonPressed(_ sender: SimplePDFTopBarView) {
+        // Call delegate if it is set, else just dismiss
+        if let dismissalDelegate = self.dismissalDelegate {
+            dismissalDelegate.didDismiss(self)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
-    func onShareButtonPressed(_ sender: SimplePDFBottomBarView) {
+    internal func onShareButtonPressed(_ sender: SimplePDFBottomBarView) {
         guard let pdf = pdf else {
             print("PDF has not loaded yet, so cannot be shared.")
             return
@@ -129,7 +139,7 @@ extension SimplePDFViewController: SimplePDFTopBarDelegate, SimplePDFBottomBarAc
         showShareSheet(for: pdf)
     }
     
-    func onJumpToPagePressed(_ sender: SimplePDFBottomBarView) {
+    internal func onJumpToPagePressed(_ sender: SimplePDFBottomBarView) {
         guard let pdf = pdf else {
             print("PDF has not loaded yet.")
             return
@@ -137,19 +147,19 @@ extension SimplePDFViewController: SimplePDFTopBarDelegate, SimplePDFBottomBarAc
         showJumpToPageDialog(for: pdf)
     }
     
-    func didLoadSuccessfully(_ sender: SimplePDFViewer) {
+    internal func didLoadSuccessfully(_ sender: SimplePDFViewer) {
         self.pdf = sender.pdf
         bottomBar.enabled = true
         bottomBar.totalPages = pdf?.pageCount ?? 1
         bottomBar.currentPage = sender.currentPageNumber
     }
     
-    func didLoadWithError(_ sender: SimplePDFViewer) {
+    internal func didLoadWithError(_ sender: SimplePDFViewer) {
         print("PDF Loaded with error")
         bottomBar.enabled = false // Just to be sure
     }
     
-    func onPageChange(_ sender: SimplePDFViewer) {
+    internal func onPageChange(_ sender: SimplePDFViewer) {
         self.currentPage = sender.currentPageNumber
         bottomBar.currentPage = sender.currentPageNumber
     }

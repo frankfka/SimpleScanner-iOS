@@ -9,6 +9,8 @@ import ReSwift
 let writePageToFileMiddleware: Middleware<AppState> = { dispatch, getState in
     return { next in
         return { action in
+            // Dispatch the current action FIRST, then perform the service
+            next(action)
             if let action = action as? AddPageScanSuccessAction {
                 let (tempFile, error) = DocumentCreationService.shared.saveTemporaryPage(action.new)
                 if let tempFile = tempFile {
@@ -17,8 +19,6 @@ let writePageToFileMiddleware: Middleware<AppState> = { dispatch, getState in
                     dispatch(AddPageErrorAction(error: error))
                 }
             }
-            // Proceed to next action
-            next(action)
         }
     }
 }

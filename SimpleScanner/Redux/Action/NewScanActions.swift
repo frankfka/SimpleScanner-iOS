@@ -24,9 +24,9 @@ struct AddPageErrorAction: Action, CustomStringConvertible {
     let error: Error?
     var description: String {
         if let error = error as? WriteTempPageError {
-            return "AddPageErrorAction: State: \(error.state) | Message: \(error.innerError?.localizedDescription)"
+            return "AddPageErrorAction: State: \(error.state) | Message: \(String(describing: error.innerError?.localizedDescription))"
         } else {
-            return "AddPageErrorAction: \(error?.localizedDescription)"
+            return "AddPageErrorAction: \(String(describing: error?.localizedDescription))"
         }
     }
 }
@@ -53,10 +53,12 @@ struct SaveDocumentSuccessAction: Action {
 struct SaveDocumentErrorAction: Action, CustomStringConvertible {
     let error: WritePDFError?
     var description: String {
-        return "SaveDocumentErrorAction: State: \(error?.state) | Errored Pages: \(error?.erroredPages)"
+        return "SaveDocumentErrorAction: State: \(String(describing: error?.state)) | Errored Pages: \(String(describing: error?.erroredPages))"
     }
 }
 // User cancelled scan
 struct CancelNewScanAction: Action { }
+// User dismissed the exported PDF popup
+struct ExportedPDFViewDismissedAction: Action { }
 // Navigated away
 struct NewScanNavigateAwayAction: Action { }

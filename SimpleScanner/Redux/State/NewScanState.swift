@@ -9,6 +9,7 @@ import ReSwift
 class NewScanState {
 
     let state: ActivityState
+    let error: UserFriendlyError?
     let pages: [TempFile]
     let exportedPDF: PDFFile?
 
@@ -20,12 +21,14 @@ class NewScanState {
     init(
             pages: [TempFile] = [],
             state: ActivityState = .none,
+            error: UserFriendlyError? = nil,
             showScanVC: Bool = false,
             showPageWithIndex: Int? = nil,
             dismissNewScanVC: Bool = false,
             exportedPDF: PDFFile? = nil
     ) {
         self.state = state
+        self.error = error
         self.pages = pages
         self.showScanVC = showScanVC
         self.showPageWithIndex = showPageWithIndex
@@ -37,6 +40,8 @@ class NewScanState {
         switch action {
         case _ as CancelNewScanAction:
             return NewScanState(dismissNewScanVC: true)
+        case _ as ExportedPDFViewDismissedAction:
+            return NewScanState(dismissNewScanVC: true)
         case _ as AddPagePressedAction:
             return NewScanState(pages: self.pages, showScanVC: true)
         case _ as AddPageScanSuccessAction:
@@ -45,13 +50,13 @@ class NewScanState {
             // Add arrays to create new array
             return NewScanState(pages: self.pages + [action.new])
         case _ as AddPageErrorAction:
-            return NewScanState(pages: self.pages, state: .error)
+            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.WritePageErrorMsg))
         case _ as SaveDocumentPressedAction:
             return NewScanState(pages: self.pages, state: .loading)
         case let action as SaveDocumentSuccessAction:
             return NewScanState(exportedPDF: action.pdf)
         case _ as SaveDocumentErrorAction:
-            return NewScanState(pages: self.pages, state: .error) // TODO propagate the error
+            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.ExportPDFErrorMsg))
         case _ as NewScanNavigateAwayAction:
             return didNavigateAway(action, state)
         default:
