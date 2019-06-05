@@ -42,7 +42,7 @@ class SavePDFDialog: NSObject {
         dialog.addTextField() { textField in
             self.textField = textField
             textField.delegate = self
-            textField.text = DocumentCreationService.getDefaultFileName()
+            textField.text = PDFService.getDefaultFileName()
         }
     }
 

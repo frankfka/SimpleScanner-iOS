@@ -12,7 +12,7 @@ let writePageToFileMiddleware: Middleware<AppState> = { dispatch, getState in
             // Dispatch the current action FIRST, then perform the service
             next(action)
             if let action = action as? AddPageScanSuccessAction {
-                let (tempFile, error) = DocumentCreationService.shared.saveTemporaryPage(action.new)
+                let (tempFile, error) = PDFService.shared.saveTemporaryPage(action.new)
                 if let tempFile = tempFile {
                     dispatch(AddPageSuccessAction(new: tempFile))
                 } else {

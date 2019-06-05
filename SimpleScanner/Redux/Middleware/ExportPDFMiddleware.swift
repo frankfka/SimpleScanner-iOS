@@ -12,8 +12,9 @@ let exportPDFMiddleware: Middleware<AppState> = { dispatch, getState in
             // Dispatch action FIRST, then call the service
             next(action)
             if let action = action as? SaveDocumentPressedAction {
-                let (pdf, error) = DocumentCreationService.shared.generatePDF(from: action.pages, fileName: action.fileName)
+                let (pdf, error) = PDFService.shared.savePDF(from: action.pages, fileName: action.fileName)
                 if let pdf = pdf {
+                    DatabaseService.shared.addPDF(pdf) // TODO: use Rx here
                     dispatch(SaveDocumentSuccessAction(pdf: pdf))
                 } else {
                     dispatch(SaveDocumentErrorAction(error: error))

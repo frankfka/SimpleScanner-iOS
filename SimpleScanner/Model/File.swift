@@ -36,4 +36,11 @@ public final class PDFFile {
         url = docDirectory.appendingPathComponent(fileName).appendingPathExtension("pdf")
     }
 
+    func delete() {
+        print("Deleting PDF at \(self.url.path)")
+        DispatchQueue.global(qos: .utility).async {
+            try? FileManager.default.removeItem(at: self.url)
+        }
+    }
+
 }

@@ -27,7 +27,8 @@ class HomeController: UIViewController {
     override func loadView() {
         self.title = Text.HomeViewTitle
         homeView = HomeView(
-                viewModel: HomeViewModel(state: store.state.homeState),
+                // TODO put documents in state?
+                viewModel: HomeViewModel(state: store.state.homeState, documents: DatabaseService.shared.allDocuments()),
                 newScanTapped: newScanTapped,
                 itemTapped: itemTapped
         )
@@ -49,6 +50,7 @@ class HomeController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        store.dispatch(HomeNavigateAwayAction())
         store.unsubscribe(self)
     }
 
@@ -69,19 +71,16 @@ extension HomeController: StoreSubscriber {
 
         // Present new scan screen if state calls for it
         if state.showAddDocument {
-            self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true) { [weak self] in
-                self?.store.dispatch(HomeNavigateAwayAction())
-            }
+            self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true)
         }
 
         // Present PDF if state calls for it
         if let docIndex = state.showDocumentWithIndex {
             // TODO present PDF
-            self.store.dispatch(HomeNavigateAwayAction())
         }
 
         // Update Views
-        homeView.update(viewModel: HomeViewModel(state: state))
+        homeView.update(viewModel: HomeViewModel(state: state, documents: DatabaseService.shared.allDocuments())) // TODO should we put in state?
 
     }
 

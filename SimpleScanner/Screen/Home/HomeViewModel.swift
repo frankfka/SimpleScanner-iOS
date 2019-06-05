@@ -4,13 +4,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 class HomeViewModel {
 
-    let documents: [String]
+    // Realm is self-updating, so no need to retrieve from new state
+    let documents: Results<PDF>
 
-    init(state: HomeState) {
-        self.documents = state.documents
+    init(state: HomeState, documents: Results<PDF>) {
+        self.documents = documents
     }
 
 }

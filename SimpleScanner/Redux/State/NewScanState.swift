@@ -45,7 +45,7 @@ class NewScanState {
         case _ as AddPagePressedAction:
             return NewScanState(pages: self.pages, showScanVC: true)
         case _ as AddPageScanSuccessAction:
-            return NewScanState(pages: self.pages, state: .loading) //TODO this gets stuck in loading..
+            return NewScanState(pages: self.pages, state: .loading)
         case let action as AddPageSuccessAction:
             // Add arrays to create new array
             return NewScanState(pages: self.pages + [action.new])

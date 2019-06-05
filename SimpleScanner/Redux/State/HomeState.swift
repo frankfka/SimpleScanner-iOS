@@ -7,25 +7,20 @@ import ReSwift
 
 struct HomeState {
 
-    let documents: [String]
-
     // Navigation
     let showAddDocument: Bool
     let showDocumentWithIndex: Int?
 
     init(
-            documents: [String] = ["First", "Second"],
             showAddDocument: Bool = false,
             showDocumentWithIndex: Int? = nil
     ) {
-        self.documents = documents
         self.showAddDocument = showAddDocument
         self.showDocumentWithIndex = showDocumentWithIndex
     }
 
     func reduce(action: Action, state: HomeState) -> HomeState {
         switch action {
-        // TODO need to specify all fields
         case _ as AddNewDocumentTappedAction:
             return HomeState(showAddDocument: true)
         case let action as DocumentTappedAction:

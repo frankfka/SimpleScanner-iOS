@@ -6,9 +6,9 @@
 import UIKit
 import PDFKit
 
-class DocumentCreationService {
+class PDFService {
 
-    static let shared = DocumentCreationService()
+    static let shared = PDFService()
 
     // Saves a page to disk and returns URL
     func saveTemporaryPage(_ image: UIImage) -> (TempFile?, Error?) {
@@ -25,7 +25,7 @@ class DocumentCreationService {
     }
 
     // Generates a PDF from scanned images
-    func generatePDF(from imageFiles: [TempFile], fileName: String) -> (PDFFile?, WritePDFError?) {
+    func savePDF(from imageFiles: [TempFile], fileName: String) -> (PDFFile?, WritePDFError?) {
         let document = PDFDocument()
         var erroredPages: [Int] = []
         imageFiles.forEach { file in

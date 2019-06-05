@@ -33,7 +33,7 @@ class HomeView: UIView {
 
     func update(viewModel: HomeViewModel) {
         self.vm = viewModel
-        // Do other updating here
+        documentCollectionView.reloadData()
     }
 
 }
@@ -50,9 +50,10 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.DocumentCollectionCellReuseID, for: indexPath)
-        myCell.backgroundColor = UIColor.blue
-        return myCell
+        let documentCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.DocumentCollectionCellReuseID, for: indexPath) as! PDFCollectionViewCell
+        let cellModel = PDFCollectionViewCellModel(from: vm.documents[indexPath.row])
+        documentCell.loadCell(with: cellModel)
+        return documentCell
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -100,7 +101,7 @@ extension HomeView {
         documentCollectionView.backgroundColor = Color.BodyBackground
         documentCollectionView.delegate = self
         documentCollectionView.dataSource = self
-        documentCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: View.DocumentCollectionCellReuseID)
+        documentCollectionView.register(PDFCollectionViewCell.self, forCellWithReuseIdentifier: View.DocumentCollectionCellReuseID)
         addSubview(documentCollectionView)
         documentCollectionView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()
