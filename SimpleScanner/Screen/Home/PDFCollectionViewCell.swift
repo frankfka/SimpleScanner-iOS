@@ -15,9 +15,13 @@ class PDFCollectionViewCellModel {
     let dateCreated: String
 
     init(from pdf: PDF) {
-        // TODO: can we cache?
-        let pdfDoc = PDFDocument(url: URL(fileURLWithPath: pdf.path))! //TODO: error handling
-        thumbnail = pdfDoc.page(at: 0)!.thumbnail(of: CGSize(width: 128, height: 128), for: .artBox)
+        if let pdfDoc = PDFService.shared.getPDF(fileName: pdf.fileName),
+           let thumbnail = ImageService.shared.getThumbnail(pdf: pdfDoc) {
+            self.thumbnail = thumbnail
+        } else {
+            print("PDF Document with filename \(pdf.fileName) not found.")
+            self.thumbnail = nil
+        }
         name = pdf.fileName
         dateCreated = "TODO"
     }
@@ -28,9 +32,8 @@ class PDFCollectionViewCell: UICollectionViewCell {
     private var imageView: UIImageView?
 
     func loadCell(with model: PDFCollectionViewCellModel) {
-        // Error state is plain black (UIImageView default) // TODO: specific error state
         if let imageView = imageView {
-            imageView.image = model.thumbnail
+            imageView.image = model.thumbnail // TODO: specific error placeholder
         } else {
             // Create new ImageView
             imageView = UIImageView()

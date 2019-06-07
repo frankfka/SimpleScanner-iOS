@@ -11,7 +11,7 @@ class NewScanState {
     let state: ActivityState
     let error: UserFriendlyError?
     let pages: [TempFile]
-    let exportedPDF: PDFFile?
+    let exportedPDF: PDF?
 
     // Navigation
     let showScanVC: Bool
@@ -25,7 +25,7 @@ class NewScanState {
             showScanVC: Bool = false,
             showPageWithIndex: Int? = nil,
             dismissNewScanVC: Bool = false,
-            exportedPDF: PDFFile? = nil
+            exportedPDF: PDF? = nil
     ) {
         self.state = state
         self.error = error

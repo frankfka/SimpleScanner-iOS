@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = Color.NavTint
         window?.rootViewController = mainNavController
         window?.makeKeyAndVisible()
+        window?.tintColor = Color.Primary
         return true
     }
 

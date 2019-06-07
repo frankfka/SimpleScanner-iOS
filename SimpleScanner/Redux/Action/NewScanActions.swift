@@ -47,13 +47,18 @@ struct SaveDocumentPressedAction: Action, CustomStringConvertible {
 }
 // Save Complete Action
 struct SaveDocumentSuccessAction: Action {
-    let pdf: PDFFile
+    let pdf: PDF
 }
 // Save Error Action
 struct SaveDocumentErrorAction: Action, CustomStringConvertible {
-    let error: WritePDFError?
+    let error: Error?
     var description: String {
-        return "SaveDocumentErrorAction: State: \(String(describing: error?.state)) | Errored Pages: \(String(describing: error?.erroredPages))"
+        if let writeErr = error as? WritePDFError {
+            return "SaveDocumentErrorAction (Write Error): State: \(writeErr.state) | Errored Pages: \(writeErr.erroredPages)"
+        } else if let dbErr = error as? RealmError {
+            return "SaveDocumentErrorAction (Database Error): State: \(dbErr.state) | Inner Error: \(dbErr.innerError?.localizedDescription ?? "") "
+        }
+        return error?.localizedDescription ?? ""
     }
 }
 // User cancelled scan

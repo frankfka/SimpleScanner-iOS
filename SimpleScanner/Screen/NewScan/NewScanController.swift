@@ -141,10 +141,10 @@ extension NewScanController: StoreSubscriber {
         } else if let pageIndex = state.showPageWithIndex {
             print("Show \(pageIndex)")
         } else if let exportedPDF = state.exportedPDF {
-            let pdfViewer = SimplePDFViewController(url: exportedPDF.url)
+            let pdfViewer = SimplePDFViewController(url: getDocumentsDirectory().appendingPathComponent(exportedPDF.fileName).appendingPathExtension("pdf"))
             pdfViewer.dismissalDelegate = self
             pdfViewer.errorMessage = Text.PDFViewError
-            pdfViewer.exportPDFName = exportedPDF.name
+            pdfViewer.exportPDFName = exportedPDF.fileName
             pdfViewer.tint = Color.Primary
             present(pdfViewer, animated: true)
         }

@@ -9,14 +9,13 @@ import RealmSwift
 class PDF: Object {
     @objc dynamic var fileName: String = ""
     @objc dynamic var dateCreated: Date = Date()
-    @objc dynamic var path: String = ""
 }
 
 extension PDF {
 
     // Returns true if PDF is valid
     static func verify(_ pdf: PDF) -> Bool {
-        if !pdf.fileName.isEmpty && !pdf.path.isEmpty {
+        if !pdf.fileName.isEmpty {
             return true
         }
         return false

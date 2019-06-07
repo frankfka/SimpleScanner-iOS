@@ -21,17 +21,21 @@ class DatabaseService {
         return database.objects(PDF.self)
     }
 
-    func addPDF(_ file: PDFFile) {
+    func addPDF(_ file: PDFFile) -> (PDF?, RealmError?) {
         var newPDF = PDF()
         newPDF.fileName = file.name
-        newPDF.path = file.url.path
         newPDF.dateCreated = Date()
         if PDF.verify(newPDF) {
-            try! database.write {
-                database.add(newPDF)
+            do {
+                try database.write {
+                    database.add(newPDF)
+                }
+                return (newPDF, nil)
+            } catch {
+                return (nil, RealmError(state: .realmError, innerError: error))
             }
         } else {
-            // TODO: Deal with errors including in try!
+            return (nil, RealmError(state: .invalidObject, innerError: nil))
         }
     }
 

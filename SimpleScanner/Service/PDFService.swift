@@ -47,6 +47,12 @@ class PDFService {
         }
     }
 
+    // Retrieves a PDF with a given name
+    func getPDF(fileName: String) -> PDFDocument? {
+        let fileUrl = getDocumentsDirectory().appendingPathComponent(fileName).appendingPathExtension("pdf")
+        return PDFDocument(url: fileUrl)
+    }
+
     // Creates a file name based on time
     static func getDefaultFileName() -> String {
         let dateFormatter = DateFormatter()

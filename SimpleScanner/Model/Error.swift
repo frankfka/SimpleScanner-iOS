@@ -26,6 +26,16 @@ struct WritePDFError: Error {
     }
 }
 
+struct RealmError: Error {
+    let state: RealmErrorState
+    let innerError: Error?
+
+    enum RealmErrorState {
+        case invalidObject
+        case realmError
+    }
+}
+
 // Can be shown in UI
 struct UserFriendlyError: Error {
     let displayStr: String

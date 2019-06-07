@@ -30,6 +30,7 @@
 		9E04B723E1FA707D981B275E /* LoggerMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B5B8CB0B0B39483D94B5 /* LoggerMiddleware.swift */; };
 		9E04B7379326CC3F426DEC11 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B33BC071885CC1FC11FC /* View.swift */; };
 		9E04B7BD98B7D676C19371B6 /* NewScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BC479B0A06D4C7085624 /* NewScanView.swift */; };
+		9E04B862E9E366571DA1C260 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B4525D43F52C7B2DC336 /* ImageService.swift */; };
 		9E04B87E33C1BFE1D2CCEC89 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B2D900256F50CB23B4D8 /* HomeView.swift */; };
 		9E04BB22843A1193CEE08A9A /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BF9490C73C86266D98EF /* TextButton.swift */; };
 		9E04BB899D12074E134AE2F8 /* PDFCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B29C57CEE930D6059AB7 /* PDFCollectionViewCell.swift */; };
@@ -59,6 +60,7 @@
 		9E04B34FB0867314FA274D65 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		9E04B3CBA9AD2F2805B61AA8 /* NewScanController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanController.swift; sourceTree = "<group>"; };
 		9E04B43DE7D73EBFE2A369A2 /* SavePDFDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavePDFDialog.swift; sourceTree = "<group>"; };
+		9E04B4525D43F52C7B2DC336 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		9E04B488F419124E63B19ED2 /* NewScanState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanState.swift; sourceTree = "<group>"; };
 		9E04B5B8CB0B0B39483D94B5 /* LoggerMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggerMiddleware.swift; sourceTree = "<group>"; };
 		9E04B5EC1103906B079B384C /* PDF.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDF.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				9E04BAE4BDBC6C1B664FF3DA /* PDFService.swift */,
 				9E04BE44F768A4925ED926B7 /* DatabaseService.swift */,
+				9E04B4525D43F52C7B2DC336 /* ImageService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 				9E04B2618BC906AEBC318F30 /* PDF.swift in Sources */,
 				9E04BEBDA3C05DB06350ED0E /* DatabaseService.swift in Sources */,
 				9E04BB899D12074E134AE2F8 /* PDFCollectionViewCell.swift in Sources */,
+				9E04B862E9E366571DA1C260 /* ImageService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

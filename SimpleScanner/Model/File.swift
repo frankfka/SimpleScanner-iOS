@@ -5,6 +5,10 @@
 
 import Foundation
 
+public func getDocumentsDirectory() -> URL {
+    return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+}
+
 // Represents a reference to a temporary image file
 public final class TempFile {
 
@@ -31,9 +35,8 @@ public final class PDFFile {
     public let url: URL
 
     public init(fileName: String) {
-        let docDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         name = fileName
-        url = docDirectory.appendingPathComponent(fileName).appendingPathExtension("pdf")
+        url = getDocumentsDirectory().appendingPathComponent(fileName).appendingPathExtension("pdf")
     }
 
     func delete() {
