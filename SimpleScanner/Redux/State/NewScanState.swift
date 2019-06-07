@@ -5,12 +5,13 @@
 
 import Foundation
 import ReSwift
+import PDFKit
 
 class NewScanState {
 
     let state: ActivityState
     let error: UserFriendlyError?
-    let pages: [TempFile]
+    let pages: [PDFPage]
     let exportedPDF: PDF?
 
     // Navigation
@@ -19,7 +20,7 @@ class NewScanState {
     let dismissNewScanVC: Bool
 
     init(
-            pages: [TempFile] = [],
+            pages: [PDFPage] = [],
             state: ActivityState = .none,
             error: UserFriendlyError? = nil,
             showScanVC: Bool = false,

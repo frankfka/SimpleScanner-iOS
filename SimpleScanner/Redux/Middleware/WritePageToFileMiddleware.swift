@@ -6,15 +6,15 @@
 import Foundation
 import ReSwift
 
-let writePageToFileMiddleware: Middleware<AppState> = { dispatch, getState in
+let createPageMiddleware: Middleware<AppState> = { dispatch, getState in
     return { next in
         return { action in
             // Dispatch the current action FIRST, then perform the service
             next(action)
             if let action = action as? AddPageScanSuccessAction {
-                let (tempFile, error) = PDFService.shared.saveTemporaryPage(action.new)
-                if let tempFile = tempFile {
-                    dispatch(AddPageSuccessAction(new: tempFile))
+                let (page, error) = PDFService.shared.createPage(action.new)
+                if let page = page {
+                    dispatch(AddPageSuccessAction(new: page))
                 } else {
                     dispatch(AddPageErrorAction(error: error))
                 }

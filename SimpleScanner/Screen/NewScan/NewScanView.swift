@@ -6,11 +6,12 @@
 import UIKit
 import SnapKit
 import WeScan
+import PDFKit
 
 // Simple VM for the class
 class NewScanViewModel {
     let enableEdit: Bool
-    let pages: [TempFile]
+    let pages: [PDFPage]
 
     init(from state: NewScanState) {
         self.pages = state.pages
@@ -65,7 +66,7 @@ extension NewScanView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.PageCollectionCellReuseID, for: indexPath) as! PageCollectionViewCell
-        let cellModel = PageCollectionViewCellModel(imageFile: vm.pages[indexPath.row])
+        let cellModel = PageCollectionViewCellModel(page: vm.pages[indexPath.row])
         pageCell.loadCell(with: cellModel)
         return pageCell
     }

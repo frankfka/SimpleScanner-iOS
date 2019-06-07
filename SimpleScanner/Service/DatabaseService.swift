@@ -22,7 +22,7 @@ class DatabaseService {
     }
 
     func addPDF(_ file: PDFFile) -> (PDF?, RealmError?) {
-        var newPDF = PDF()
+        let newPDF = PDF()
         newPDF.fileName = file.name
         newPDF.dateCreated = Date()
         if PDF.verify(newPDF) {

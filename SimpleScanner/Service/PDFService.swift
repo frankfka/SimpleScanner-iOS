@@ -6,44 +6,50 @@
 import UIKit
 import PDFKit
 
+enum PageScaleSize {
+    case none
+    case A4
+}
+
+let A4Size: CGRect = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) // A4, 72 dp
+
 class PDFService {
 
     static let shared = PDFService()
 
+    // Creates a file name based on time
+    static func getDefaultFileName() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyMMMdd_HH-mm_ss"
+        let dateString = dateFormatter.string(from: Date())
+        return "SimpleScanner_\(dateString)"
+    }
+
     // Saves a page to disk and returns URL
-    func saveTemporaryPage(_ image: UIImage) -> (TempFile?, Error?) {
-        guard let imgData = image.pngData() else {
-            return (nil, WriteTempPageError(state: .pngDataConversionError, innerError: nil))
-        }
-        let tempFile = TempFile(extension: "png")
-        do {
-            try imgData.write(to: tempFile.url, options: .atomic)
-            return (tempFile, nil)
-        } catch {
-            return (nil, WriteTempPageError(state: .writeError, innerError: error))
+    func createPage(_ image: UIImage, scaleTo: PageScaleSize = .A4) -> (PDFPage?, Error?) {
+        if let page = PDFPage(image: image) {
+            page.setBounds(bounds(for: image, with: scaleTo), for: .mediaBox)
+            return (page, nil)
+        } else {
+            return (nil, WritePageError(state: .conversionError))
         }
     }
 
     // Generates a PDF from scanned images
-    func savePDF(from imageFiles: [TempFile], fileName: String) -> (PDFFile?, WritePDFError?) {
-        let document = PDFDocument()
-        var erroredPages: [Int] = []
-        imageFiles.forEach { file in
-            if let pageImage = UIImage(contentsOfFile: file.url.path), let page = PDFPage(image: pageImage) {
-                document.insert(page, at: document.pageCount)
-            } else {
-                erroredPages.append(document.pageCount)
-            }
-        }
+    func savePDF(from pages: [PDFPage], fileName: String) -> (PDFFile?, WritePDFError?) {
         // Prevent writing of empty documents
-        guard document.pageCount > 0 else {
-            return (nil, WritePDFError(erroredPages: erroredPages, state: .noPages))
+        guard !pages.isEmpty else {
+            return (nil, WritePDFError(state: .noPages))
+        }
+        let document = PDFDocument()
+        pages.forEach { page in
+            document.insert(page, at: document.pageCount)
         }
         let documentFile = PDFFile(fileName: fileName)
         if document.write(to: documentFile.url) {
-            return (documentFile, erroredPages.isEmpty ? nil : WritePDFError(erroredPages: erroredPages, state: .missingPages))
+            return (documentFile, nil)
         } else {
-            return (nil, WritePDFError(erroredPages: erroredPages, state: .writeError))
+            return (nil, WritePDFError(state: .writeError))
         }
     }
 
@@ -53,12 +59,15 @@ class PDFService {
         return PDFDocument(url: fileUrl)
     }
 
-    // Creates a file name based on time
-    static func getDefaultFileName() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyMMMdd_HH-mm_ss"
-        let dateString = dateFormatter.string(from: Date())
-        return "SimpleScanner_\(dateString)"
+    // Calculates bounds such that entire page will fit
+    private func bounds(for page: UIImage, with scale: PageScaleSize) -> CGRect {
+        switch scale {
+        case .A4:
+            let scale = A4Size.width / page.size.width
+            return CGRect(x: 0, y: 0, width: scale * page.size.width, height: scale * page.size.height)
+        default:
+            return CGRect(x: 0, y: 0, width: page.size.width, height: page.size.height)
+        }
     }
 
 }

@@ -5,22 +5,18 @@
 
 import Foundation
 
-struct WriteTempPageError: Error {
+struct WritePageError: Error {
     let state: WriteTempPageErrorState
-    let innerError: Error?
 
     enum WriteTempPageErrorState {
-        case pngDataConversionError
-        case writeError
+        case conversionError
     }
 }
 
 struct WritePDFError: Error {
-    let erroredPages: [Int] // Zero based index
     let state: WritePDFErrorState
 
     enum WritePDFErrorState {
-        case missingPages
         case noPages
         case writeError
     }

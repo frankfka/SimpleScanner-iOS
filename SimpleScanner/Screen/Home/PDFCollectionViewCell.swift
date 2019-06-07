@@ -16,7 +16,7 @@ class PDFCollectionViewCellModel {
 
     init(from pdf: PDF) {
         if let pdfDoc = PDFService.shared.getPDF(fileName: pdf.fileName),
-           let thumbnail = ImageService.shared.getThumbnail(pdf: pdfDoc) {
+           let thumbnail = ImageService.shared.getThumbnailForDocument(pdf: pdfDoc) {
             self.thumbnail = thumbnail
         } else {
             print("PDF Document with filename \(pdf.fileName) not found.")

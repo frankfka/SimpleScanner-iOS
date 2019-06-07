@@ -5,6 +5,7 @@
 
 import UIKit
 import ReSwift
+import PDFKit
 
 // Add Page pressed
 struct AddPagePressedAction: Action { }
@@ -13,18 +14,15 @@ struct AddPageScanSuccessAction: Action {
     let new: UIImage
 }
 // Add page process was successful
-struct AddPageSuccessAction: Action, CustomStringConvertible {
-    let new: TempFile
-    var description: String {
-        return "AddPageSuccessAction: \(new.url.absoluteString)"
-    }
+struct AddPageSuccessAction: Action {
+    let new: PDFPage
 }
 // Add Page returned error
 struct AddPageErrorAction: Action, CustomStringConvertible {
     let error: Error?
     var description: String {
-        if let error = error as? WriteTempPageError {
-            return "AddPageErrorAction: State: \(error.state) | Message: \(String(describing: error.innerError?.localizedDescription))"
+        if let error = error as? WritePageError {
+            return "AddPageErrorAction: \(error.state)"
         } else {
             return "AddPageErrorAction: \(String(describing: error?.localizedDescription))"
         }
@@ -39,7 +37,7 @@ struct PageIconTappedAction: Action, CustomStringConvertible {
 }
 // Save Pressed Action
 struct SaveDocumentPressedAction: Action, CustomStringConvertible {
-    let pages: [TempFile]
+    let pages: [PDFPage]
     let fileName: String
     var description: String {
         return "SaveDocumentPressedAction: Saving \(pages.count) pages to \(fileName).pdf"
@@ -54,7 +52,7 @@ struct SaveDocumentErrorAction: Action, CustomStringConvertible {
     let error: Error?
     var description: String {
         if let writeErr = error as? WritePDFError {
-            return "SaveDocumentErrorAction (Write Error): State: \(writeErr.state) | Errored Pages: \(writeErr.erroredPages)"
+            return "SaveDocumentErrorAction (Write Error): State: \(writeErr.state)"
         } else if let dbErr = error as? RealmError {
             return "SaveDocumentErrorAction (Database Error): State: \(dbErr.state) | Inner Error: \(dbErr.innerError?.localizedDescription ?? "") "
         }
