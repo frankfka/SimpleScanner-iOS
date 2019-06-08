@@ -119,14 +119,7 @@ extension NewScanController: StoreSubscriber {
     public func newState(state: NewScanState) {
 
         // Handle State
-        switch state.state {
-            case .error:
-                HUD.showError(message: state.error?.displayStr)
-            case.loading:
-                HUD.loading(show: true)
-            case.none:
-                HUD.loading(show: false)
-        }
+        self.showAnimation(for: state.state, with: state.error?.displayStr)
 
         // Handle navigation
         if state.dismissNewScanVC {
@@ -141,12 +134,7 @@ extension NewScanController: StoreSubscriber {
         } else if let pageIndex = state.showPageWithIndex {
             print("Show \(pageIndex)")
         } else if let exportedPDF = state.exportedPDF {
-            let pdfViewer = SimplePDFViewController(url: getDocumentsDirectory().appendingPathComponent(exportedPDF.fileName).appendingPathExtension("pdf"))
-            pdfViewer.dismissalDelegate = self
-            pdfViewer.errorMessage = Text.PDFViewError
-            pdfViewer.exportPDFName = exportedPDF.fileName
-            pdfViewer.tint = Color.Primary
-            present(pdfViewer, animated: true)
+            PDFViewer.show(pdf: exportedPDF, sender: self, dismissalDelegate: self)
         }
 
         // Update Views

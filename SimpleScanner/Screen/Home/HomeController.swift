@@ -9,14 +9,18 @@
 import UIKit
 import SnapKit
 import ReSwift
+import SimplePDFViewer
+import RealmSwift
 
 class HomeController: UIViewController {
 
     private let store: AppStore
     private var homeView: HomeView!
+    private var vm: HomeViewModel
 
     public init(store: AppStore = appStore) {
         self.store = store
+        self.vm = HomeViewModel(state: store.state.homeState, documents: store.state.documentState.all)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -27,8 +31,7 @@ class HomeController: UIViewController {
     override func loadView() {
         self.title = Text.HomeViewTitle
         homeView = HomeView(
-                // TODO put documents in state?
-                viewModel: HomeViewModel(state: store.state.homeState, documents: DatabaseService.shared.allDocuments()),
+                viewModel: self.vm,
                 newScanTapped: newScanTapped,
                 itemTapped: itemTapped
         )
@@ -69,18 +72,20 @@ extension HomeController: StoreSubscriber {
 
     public func newState(state: HomeState) {
 
+        // Handle State
+        self.showAnimation(for: state.state, with: nil)
+
+        self.vm = HomeViewModel(state: state, documents: vm.documents)
         // Present new scan screen if state calls for it
         if state.showAddDocument {
             self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true)
         }
-
         // Present PDF if state calls for it
         if let docIndex = state.showDocumentWithIndex {
-            // TODO present PDF
+            PDFViewer.show(pdf: vm.documents[docIndex], sender: self)
         }
-
         // Update Views
-        homeView.update(viewModel: HomeViewModel(state: state, documents: DatabaseService.shared.allDocuments())) // TODO should we put in state?
+        homeView.update(viewModel: self.vm)
 
     }
 

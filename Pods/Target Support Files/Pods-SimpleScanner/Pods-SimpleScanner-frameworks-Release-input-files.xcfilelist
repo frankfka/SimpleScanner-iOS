@@ -1,10 +1,8 @@
 ${PODS_ROOT}/Target Support Files/Pods-SimpleScanner/Pods-SimpleScanner-frameworks.sh
-${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework
 ${BUILT_PRODUCTS_DIR}/ReSwift/ReSwift.framework
 ${BUILT_PRODUCTS_DIR}/Realm/Realm.framework
 ${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework
 ${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
-${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework
 ${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
 ${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
 ${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework

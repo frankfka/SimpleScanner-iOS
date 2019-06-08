@@ -5,7 +5,6 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
 import PDFKit
 
 // Optional in case UIImage not loaded properly, in which case we display a blank

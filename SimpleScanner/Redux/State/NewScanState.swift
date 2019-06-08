@@ -44,7 +44,7 @@ class NewScanState {
         case _ as ExportedPDFViewDismissedAction:
             return NewScanState(dismissNewScanVC: true)
         case _ as AddPagePressedAction:
-            return NewScanState(pages: self.pages, showScanVC: true)
+            return NewScanState(pages: self.pages, state: .loading, showScanVC: true)
         case _ as AddPageScanSuccessAction:
             return NewScanState(pages: self.pages, state: .loading)
         case let action as AddPageSuccessAction:

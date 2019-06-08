@@ -5,12 +5,10 @@ target 'SimpleScanner' do
   use_frameworks!
 
   # Pods for SimpleScanner
-    pod 'Kingfisher', '~> 5.0'
     pod 'RealmSwift'
     pod 'ReSwift'
     pod 'RxCocoa', '~> 5'
     pod 'RxSwift', '~> 5'
-    pod "RxRealm"
     pod 'SimplePDFViewer'
     pod 'SnapKit', '~> 5.0.0'
     pod 'SVProgressHUD'
