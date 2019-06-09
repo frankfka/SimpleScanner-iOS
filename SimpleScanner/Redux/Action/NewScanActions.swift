@@ -28,6 +28,14 @@ struct AddPageErrorAction: Action, CustomStringConvertible {
         }
     }
 }
+// User switched order of pages
+struct SwitchPageAction: Action, CustomStringConvertible {
+    let originalIndex: Int
+    let destinationIndex: Int
+    var description: String {
+        return "SwitchPageAction: \(originalIndex) to \(destinationIndex)"
+    }
+}
 // Page icon was tapped
 struct PageIconTappedAction: Action, CustomStringConvertible {
     let index: Int

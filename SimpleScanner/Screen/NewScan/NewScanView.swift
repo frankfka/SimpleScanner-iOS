@@ -31,11 +31,13 @@ class NewScanView: UIView {
     // Callbacks
     private let newPageTapped: VoidCallback
     private let scannedPageTapped: TapIndexCallback
+    private let pageOrderSwitched: PageSwitchCallback
 
-    init(viewModel: NewScanViewModel, newPageTapped: @escaping VoidCallback, scannedPageTapped: @escaping TapIndexCallback) {
+    init(viewModel: NewScanViewModel, newPageTapped: @escaping VoidCallback, scannedPageTapped: @escaping TapIndexCallback, pageOrderSwitched: @escaping PageSwitchCallback) {
         self.vm = viewModel
         self.newPageTapped = newPageTapped
         self.scannedPageTapped = scannedPageTapped
+        self.pageOrderSwitched = pageOrderSwitched
         super.init(frame: CGRect.zero)
         initSubviews()
     }
@@ -47,7 +49,11 @@ class NewScanView: UIView {
     func update(viewModel: NewScanViewModel) {
         self.vm = viewModel
         newScanButton.isUserInteractionEnabled = vm.enableEdit
-        pagesCollectionView.reloadData()
+        self.pagesCollectionView.endInteractiveMovement()
+        // TODO: Fix potential performance issues - don't need to reload the entire section all the time
+        DispatchQueue.main.async {
+            self.pagesCollectionView.reloadSections(IndexSet(integer: 0))
+        }
     }
 
 }
@@ -80,56 +86,34 @@ extension NewScanView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
 extension NewScanView: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        let page = vm.pages[indexPath.row]
         let dragItem = UIDragItem(itemProvider: NSItemProvider())
-        dragItem.localObject = page
+        dragItem.localObject = vm.pages[indexPath.row]
         return [dragItem]
     }
 
     public func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
-        let destinationIndexPath: IndexPath
-        if let indexPath = coordinator.destinationIndexPath
-        {
-            destinationIndexPath = indexPath
-        }
-        else
-        {
-            // Get last index path of table view.
-            let section = collectionView.numberOfSections - 1
-            let row = collectionView.numberOfItems(inSection: section)
-            destinationIndexPath = IndexPath(row: row, section: section)
-        }
-
-        switch coordinator.proposal.operation
-        {
+        // Get index path of destination if it exists, or just select the last item's index path
+        let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(row: vm.pages.count, section: 0)
+        // Only perform move operations
+        switch coordinator.proposal.operation {
         case .move:
-            self.reorderItems(coordinator: coordinator, destinationIndexPath:destinationIndexPath, collectionView: collectionView)
+            // Get the original index path of the item
+            if let dragItem = coordinator.items.first, let originalIndexPath = dragItem.sourceIndexPath {
+                // Get destination index path, making sure that we don't get an out of bounds error
+                let destinationIndexPathRow = (destinationIndexPath.row >= vm.pages.count) ? vm.pages.count - 1 : destinationIndexPath.row
+                // Perform the updates
+                coordinator.drop(dragItem.dragItem, toItemAt: destinationIndexPath)
+                self.pageOrderSwitched(originalIndexPath.row, destinationIndexPathRow)
+            }
             break
         default:
             return
         }
     }
 
-    private func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
-        let items = coordinator.items
-        if items.count == 1, let item = items.first, let sourceIndexPath = item.sourceIndexPath {
-            var dIndexPath = destinationIndexPath
-            if dIndexPath.row >= collectionView.numberOfItems(inSection: 0)
-            {
-                dIndexPath.row = collectionView.numberOfItems(inSection: 0) - 1
-            }
-            collectionView.performBatchUpdates({
-                let temp = vm.pages[sourceIndexPath.row]
-                vm.pages.remove(at: sourceIndexPath.row)
-                vm.pages.insert(temp, at: dIndexPath.row)
-                collectionView.deleteItems(at: [sourceIndexPath])
-                collectionView.insertItems(at: [dIndexPath])
-            })
-            coordinator.drop(item.dragItem, toItemAt: dIndexPath)
-        }
-    }
-
+    // Returns a Drop Proposal to be used
     public func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        // Only allow drag & drop within the same collection view within the same app
         if session.localDragSession != nil && collectionView.hasActiveDrag {
             return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }

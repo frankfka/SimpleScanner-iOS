@@ -32,7 +32,10 @@ class NewScanController: UIViewController {
         self.saveBarButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped))
         navigationItem.leftBarButtonItem = cancelBarButton
         navigationItem.rightBarButtonItem = saveBarButton
-        newScanView = NewScanView(viewModel: NewScanViewModel(from: store.state.newScanState), newPageTapped: newPageTapped, scannedPageTapped: scannedPageTapped)
+        newScanView = NewScanView(viewModel: NewScanViewModel(from: store.state.newScanState),
+                newPageTapped: newPageTapped,
+                scannedPageTapped: scannedPageTapped,
+                pageOrderSwitched: pageOrderSwitched)
         self.view = newScanView
     }
 
@@ -61,6 +64,10 @@ class NewScanController: UIViewController {
 
     private func scannedPageTapped(index: Int) {
         store.dispatch(PageIconTappedAction(index: index))
+    }
+
+    private func pageOrderSwitched(original: Int, destination: Int) {
+        store.dispatch(SwitchPageAction(originalIndex: original, destinationIndex: destination))
     }
 
     @objc private func cancelTapped() {

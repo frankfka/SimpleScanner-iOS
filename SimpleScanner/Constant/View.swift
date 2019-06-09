@@ -26,6 +26,7 @@ class View {
     static let ButtonFont: UIFont = .systemFont(ofSize: 20)
     static let HeaderFont: UIFont = .systemFont(ofSize: 36)
 
+    // TODO: Combine fields
     static let CollectionViewVerticalMargin: CGFloat = 48
     // Document Collection View
     static let DocumentCollectionViewItemsPerRow: CGFloat = 2
@@ -44,7 +45,7 @@ class View {
         return CGSize(width: widthPerItem, height: widthPerItem)
     }
     static let PageCollectionCellReuseID: String = "PageCell"
-    static let AddPageCollectionCellReuseID: String = "AddPageCell" // Not being used
+    static let AddPageCollectionCellReuseID: String = "AddPageCell" //TODO: Not being used
 
     // Computes width of a collection view cell
     private static func computeCollectionViewCellWidth(frameWidth: CGFloat, insets: UIEdgeInsets, itemsPerRow: CGFloat) -> CGFloat {

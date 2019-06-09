@@ -27,9 +27,16 @@ class PageCollectionViewCell: UICollectionViewCell {
     private var pageThumbnail: UIImageView?
     private var pageLabel: UILabel?
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        pageThumbnail?.image = nil
+        pageLabel?.text = nil
+    }
+
     func loadCell(with model: PageCollectionViewCellModel) {
         // Error state is plain black (UIImageView default) // TODO: specific error state
         self.vm = model
+        print("load cell")
         if cellView == nil {
             initSubviews()
         }
@@ -37,6 +44,7 @@ class PageCollectionViewCell: UICollectionViewCell {
     }
 
     private func loadSubviews() {
+        print("load view for \(vm?.page)")
         pageThumbnail!.image = vm!.thumbnail
         pageLabel!.text = Text.PageCellNumberLabel(currentPage: vm!.page, totalPages: vm!.totalPages)
     }

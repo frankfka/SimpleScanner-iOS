@@ -52,6 +52,8 @@ class NewScanState {
             return NewScanState(pages: self.pages + [action.new])
         case _ as AddPageErrorAction:
             return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.WritePageErrorMsg))
+        case let action as SwitchPageAction:
+            return switchPage(action, state)
         case _ as SaveDocumentPressedAction:
             return NewScanState(pages: self.pages, state: .loading)
         case let action as SaveDocumentSuccessAction:
@@ -67,7 +69,20 @@ class NewScanState {
 
     // Reset all navigation states, but still preserve the scanned pages
     private func didNavigateAway(_: Action, _ state: NewScanState) -> NewScanState {
-        return NewScanState(pages: state.pages, showScanVC: false, showPageWithIndex: nil, dismissNewScanVC: false)
+        return NewScanState(pages: state.pages)
+    }
+
+    // Switch ordering of the pages
+    private func switchPage(_ action: SwitchPageAction, _ state: NewScanState) -> NewScanState {
+        var newPages = state.pages
+        let pageToMove = state.pages[action.originalIndex]
+        newPages.remove(at: action.originalIndex)
+        if action.originalIndex < action.destinationIndex {
+            newPages.insert(pageToMove, at: action.destinationIndex)
+        } else if action.originalIndex > action.destinationIndex {
+            newPages.insert(pageToMove, at: action.destinationIndex)
+        }
+        return NewScanState(pages: newPages)
     }
 
 }

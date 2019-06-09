@@ -10,6 +10,7 @@ import ReSwift
 public typealias VoidCallback = () -> ()
 public typealias TapIndexCallback = (Int) -> ()
 public typealias FileNameCallback = (String) -> ()
+public typealias PageSwitchCallback = (Int, Int) -> () // Original, Destination
 
 public typealias DispatchFunction = (Action) -> Void
 public typealias Middleware<State> = (@escaping DispatchFunction, @escaping () -> State?)
