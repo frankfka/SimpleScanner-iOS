@@ -66,13 +66,74 @@ extension NewScanView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.PageCollectionCellReuseID, for: indexPath) as! PageCollectionViewCell
-        let cellModel = PageCollectionViewCellModel(page: vm.pages[indexPath.row])
+        let cellModel = PageCollectionViewCellModel(page: vm.pages[indexPath.row], pageNum: indexPath.row + 1, totalPages: vm.pages.count)
         pageCell.loadCell(with: cellModel)
         return pageCell
     }
 
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         scannedPageTapped(indexPath.row)
+    }
+}
+
+// Drag & Drop Functionality
+extension NewScanView: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
+
+    public func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let page = vm.pages[indexPath.row]
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        dragItem.localObject = page
+        return [dragItem]
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        let destinationIndexPath: IndexPath
+        if let indexPath = coordinator.destinationIndexPath
+        {
+            destinationIndexPath = indexPath
+        }
+        else
+        {
+            // Get last index path of table view.
+            let section = collectionView.numberOfSections - 1
+            let row = collectionView.numberOfItems(inSection: section)
+            destinationIndexPath = IndexPath(row: row, section: section)
+        }
+
+        switch coordinator.proposal.operation
+        {
+        case .move:
+            self.reorderItems(coordinator: coordinator, destinationIndexPath:destinationIndexPath, collectionView: collectionView)
+            break
+        default:
+            return
+        }
+    }
+
+    private func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
+        let items = coordinator.items
+        if items.count == 1, let item = items.first, let sourceIndexPath = item.sourceIndexPath {
+            var dIndexPath = destinationIndexPath
+            if dIndexPath.row >= collectionView.numberOfItems(inSection: 0)
+            {
+                dIndexPath.row = collectionView.numberOfItems(inSection: 0) - 1
+            }
+            collectionView.performBatchUpdates({
+                let temp = vm.pages[sourceIndexPath.row]
+                vm.pages.remove(at: sourceIndexPath.row)
+                vm.pages.insert(temp, at: dIndexPath.row)
+                collectionView.deleteItems(at: [sourceIndexPath])
+                collectionView.insertItems(at: [dIndexPath])
+            })
+            coordinator.drop(item.dragItem, toItemAt: dIndexPath)
+        }
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        if session.localDragSession != nil && collectionView.hasActiveDrag {
+            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UICollectionViewDropProposal(operation: .forbidden)
     }
 }
 
@@ -113,6 +174,9 @@ extension NewScanView {
         flowLayout.sectionInset = View.PagesCollectionViewSectionInsets
         pagesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         pagesCollectionView.backgroundColor = Color.BodyBackground
+        pagesCollectionView.dragInteractionEnabled = true
+        pagesCollectionView.dropDelegate = self
+        pagesCollectionView.dragDelegate = self
         pagesCollectionView.delegate = self
         pagesCollectionView.dataSource = self
         pagesCollectionView.register(PageCollectionViewCell.self, forCellWithReuseIdentifier: View.PageCollectionCellReuseID)

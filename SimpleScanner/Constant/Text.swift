@@ -17,6 +17,10 @@ class Text {
     static let AddPageButton = "Add Page"
     static let WritePageErrorMsg = "Page Scan Failed"
     static let ExportPDFErrorMsg = "PDF Export Failed"
+    // New Scan Cell
+    static func PageCellNumberLabel(currentPage: Int, totalPages: Int) -> String {
+        return "\(currentPage) of \(totalPages)"
+    }
     // Save Dialog
     static let SavePDFTitle = "Save PDF"
     static let SavePDFDescription = "Please specify a file name"

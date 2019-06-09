@@ -26,9 +26,10 @@ class View {
     static let ButtonFont: UIFont = .systemFont(ofSize: 20)
     static let HeaderFont: UIFont = .systemFont(ofSize: 36)
 
+    static let CollectionViewVerticalMargin: CGFloat = 48
     // Document Collection View
     static let DocumentCollectionViewItemsPerRow: CGFloat = 2
-    static let DocumentCollectionViewSectionInsets = UIEdgeInsets(top: SectionVerticalMargin, left: ViewPadding, bottom: SectionVerticalMargin, right: ViewPadding)
+    static let DocumentCollectionViewSectionInsets = UIEdgeInsets(top: CollectionViewVerticalMargin, left: ViewPadding, bottom: CollectionViewVerticalMargin, right: ViewPadding)
     static func DocumentCollectionViewSize(frameWidth: CGFloat) -> CGSize {
         let widthPerItem = computeCollectionViewCellWidth(frameWidth: frameWidth, insets: DocumentCollectionViewSectionInsets, itemsPerRow: DocumentCollectionViewItemsPerRow)
         return CGSize(width: widthPerItem, height: widthPerItem)
@@ -37,7 +38,7 @@ class View {
 
     // Pages Collection View
     static let PagesCollectionViewItemsPerRow: CGFloat = 2
-    static let PagesCollectionViewSectionInsets = UIEdgeInsets(top: SectionVerticalMargin, left: ViewPadding, bottom: SectionVerticalMargin, right: ViewPadding)
+    static let PagesCollectionViewSectionInsets = UIEdgeInsets(top: CollectionViewVerticalMargin, left: ViewPadding, bottom: CollectionViewVerticalMargin, right: ViewPadding)
     static func PagesCollectionViewSize(frameWidth: CGFloat) -> CGSize {
         let widthPerItem = computeCollectionViewCellWidth(frameWidth: frameWidth, insets: PagesCollectionViewSectionInsets, itemsPerRow: PagesCollectionViewItemsPerRow)
         return CGSize(width: widthPerItem, height: widthPerItem)
