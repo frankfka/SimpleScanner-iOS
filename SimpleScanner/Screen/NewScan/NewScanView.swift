@@ -74,15 +74,20 @@ extension NewScanView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.PageCollectionCellReuseID, for: indexPath) as! PageCollectionViewCell
         let cellModel = PageCollectionViewCellModel(page: vm.pages[indexPath.row], pageNum: indexPath.row + 1, totalPages: vm.pages.count)
         pageCell.loadCell(with: cellModel)
+        pageCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellTapped(sender:))))
         return pageCell
     }
 
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        scannedPageTapped(indexPath.row)
+    @objc private func cellTapped(sender: UITapGestureRecognizer) {
+        let indexPath = self.pagesCollectionView.indexPathForItem(at: sender.location(in: self.pagesCollectionView))
+        if let indexPath = indexPath {
+            scannedPageTapped(indexPath.row)
+        }
     }
+
 }
 
-// Drag & Drop Functionality
+// Drag & Drop, Delete Functionality
 extension NewScanView: UICollectionViewDragDelegate, UICollectionViewDropDelegate {
 
     public func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
@@ -102,8 +107,13 @@ extension NewScanView: UICollectionViewDragDelegate, UICollectionViewDropDelegat
                 // Get destination index path, making sure that we don't get an out of bounds error
                 let destinationIndexPathRow = (destinationIndexPath.row >= vm.pages.count) ? vm.pages.count - 1 : destinationIndexPath.row
                 // Perform the updates
-                coordinator.drop(dragItem.dragItem, toItemAt: destinationIndexPath)
-                self.pageOrderSwitched(originalIndexPath.row, destinationIndexPathRow)
+                collectionView.performBatchUpdates({
+                    self.pageOrderSwitched(originalIndexPath.row, destinationIndexPathRow)
+                    collectionView.deleteItems(at: [originalIndexPath])
+                    collectionView.insertItems(at: [destinationIndexPath])
+                }, completion: { _ in
+                    coordinator.drop(dragItem.dragItem, toItemAt: destinationIndexPath)
+                })
             }
             break
         default:

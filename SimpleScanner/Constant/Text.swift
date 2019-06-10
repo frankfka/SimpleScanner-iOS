@@ -21,6 +21,9 @@ class Text {
     static func PageCellNumberLabel(currentPage: Int, totalPages: Int) -> String {
         return "\(currentPage) of \(totalPages)"
     }
+    // Page Actions Dialog
+    static let PageActionsDelete = "Delete"
+    static let PageActionsView = "View"
     // Save Dialog
     static let SavePDFTitle = "Save PDF"
     static let SavePDFDescription = "Please specify a file name"

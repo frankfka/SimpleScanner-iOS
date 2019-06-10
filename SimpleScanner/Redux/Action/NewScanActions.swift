@@ -43,6 +43,20 @@ struct PageIconTappedAction: Action, CustomStringConvertible {
         return "PageIconTappedAction: \(index)"
     }
 }
+// User wants to see page in detail
+struct PresentPageAction: Action, CustomStringConvertible {
+    let index: Int
+    var description: String {
+        return "PresentPageAction: \(index)"
+    }
+}
+// Delete a page
+struct DeletePageAction: Action, CustomStringConvertible {
+    let index: Int
+    var description: String {
+        return "DeletePageAction: \(index)"
+    }
+}
 // Save Pressed Action
 struct SaveDocumentPressedAction: Action, CustomStringConvertible {
     let pages: [PDFPage]

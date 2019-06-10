@@ -7,6 +7,7 @@ import UIKit
 import WeScan
 import ReSwift
 import SimplePDFViewer
+import BFRImageViewer
 
 class NewScanController: UIViewController {
 
@@ -138,8 +139,19 @@ extension NewScanController: StoreSubscriber {
             scannerVC.navigationBar.prefersLargeTitles = false
             scannerVC.imageScannerDelegate = self
             present(scannerVC, animated: true)
+        } else if let pageIndex = state.showPageActionsWithIndex {
+            let actionsController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+            actionsController.addAction(UIAlertAction(title: Text.PageActionsView, style: .default) { _ in
+                self.store.dispatch(PresentPageAction(index: pageIndex))
+            })
+            actionsController.addAction(UIAlertAction(title: Text.PageActionsDelete, style: .destructive) { _ in
+                self.store.dispatch(DeletePageAction(index: pageIndex))
+            })
+            actionsController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+            present(actionsController, animated: true)
         } else if let pageIndex = state.showPageWithIndex {
-            print("Show \(pageIndex)")
+            let pageThumbnail = ImageService.shared.getThumbnailForPage(page: state.pages[pageIndex], width: UIScreen.main.bounds.width)
+            present(BFRImageViewController(imageSource: [pageThumbnail])!, animated: true) //TODO: Build your own
         } else if let exportedPDF = state.exportedPDF {
             PDFViewer.show(pdf: exportedPDF, sender: self, dismissalDelegate: self)
         }

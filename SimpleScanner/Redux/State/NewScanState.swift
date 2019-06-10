@@ -16,6 +16,7 @@ class NewScanState {
 
     // Navigation
     let showScanVC: Bool
+    let showPageActionsWithIndex: Int?
     let showPageWithIndex: Int?
     let dismissNewScanVC: Bool
 
@@ -24,6 +25,7 @@ class NewScanState {
             state: ActivityState = .none,
             error: UserFriendlyError? = nil,
             showScanVC: Bool = false,
+            showPageActionsWithIndex: Int? = nil,
             showPageWithIndex: Int? = nil,
             dismissNewScanVC: Bool = false,
             exportedPDF: PDF? = nil
@@ -32,6 +34,7 @@ class NewScanState {
         self.error = error
         self.pages = pages
         self.showScanVC = showScanVC
+        self.showPageActionsWithIndex = showPageActionsWithIndex
         self.showPageWithIndex = showPageWithIndex
         self.dismissNewScanVC = dismissNewScanVC
         self.exportedPDF = exportedPDF
@@ -54,6 +57,12 @@ class NewScanState {
             return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.WritePageErrorMsg))
         case let action as SwitchPageAction:
             return switchPage(action, state)
+        case let action as PageIconTappedAction:
+            return NewScanState(pages: self.pages, showPageActionsWithIndex: action.index)
+        case let action as PresentPageAction:
+            return NewScanState(pages: self.pages, state: .loading, showPageWithIndex: action.index)
+        case let action as DeletePageAction:
+            return deletePage(action, state)
         case _ as SaveDocumentPressedAction:
             return NewScanState(pages: self.pages, state: .loading)
         case let action as SaveDocumentSuccessAction:
@@ -77,11 +86,14 @@ class NewScanState {
         var newPages = state.pages
         let pageToMove = state.pages[action.originalIndex]
         newPages.remove(at: action.originalIndex)
-        if action.originalIndex < action.destinationIndex {
-            newPages.insert(pageToMove, at: action.destinationIndex)
-        } else if action.originalIndex > action.destinationIndex {
-            newPages.insert(pageToMove, at: action.destinationIndex)
-        }
+        newPages.insert(pageToMove, at: action.destinationIndex)
+        return NewScanState(pages: newPages)
+    }
+
+    // Delete page from state
+    private func deletePage(_ action: DeletePageAction, _ state: NewScanState) -> NewScanState {
+        var newPages = state.pages
+        newPages.remove(at: action.index)
         return NewScanState(pages: newPages)
     }
 

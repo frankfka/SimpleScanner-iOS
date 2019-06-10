@@ -5,6 +5,7 @@ target 'SimpleScanner' do
   use_frameworks!
 
   # Pods for SimpleScanner
+    pod 'BFRImageViewer'
     pod 'RealmSwift'
     pod 'ReSwift'
     pod 'RxCocoa', '~> 5'
