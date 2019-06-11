@@ -165,6 +165,7 @@ extension NewScanView {
 
     private func initPagesCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumLineSpacing = View.CollectionViewCellVerticalMargin
         flowLayout.sectionInset = View.PagesCollectionViewSectionInsets
         pagesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         pagesCollectionView.backgroundColor = Color.BodyBackground

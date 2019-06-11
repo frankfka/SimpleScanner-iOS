@@ -11,6 +11,14 @@ class Text {
     static let HomeViewTitle = "Documents"
     static let NewScanButton = "New Scan"
     static let PastScansHeader = "Past Scans"
+    static func NumPages(numPages: Int) -> String {
+        return "\(numPages) Pages"
+    }
+    static func DateString(for date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, YYYY"
+        return dateFormatter.string(from: date)
+    }
 
     // New Scan Page
     static let NewScanTitle = "New Scan"

@@ -96,7 +96,7 @@ extension NewScanController: ImageScannerControllerDelegate {
 
     func imageScannerController(_ scanner: ImageScannerController, didFinishScanningWithResults results: ImageScannerResults) {
         let newPage: UIImage
-        if let enhancedImage = results.enhancedImage {
+        if let enhancedImage = results.enhancedImage, results.doesUserPreferEnhancedImage {
             newPage = enhancedImage
         } else {
             newPage = results.scannedImage
@@ -144,7 +144,7 @@ extension NewScanController: StoreSubscriber {
             actionsController.addAction(UIAlertAction(title: Text.PageActionsView, style: .default) { _ in
                 self.store.dispatch(PresentPageAction(index: pageIndex))
             })
-            actionsController.addAction(UIAlertAction(title: Text.PageActionsDelete, style: .destructive) { _ in
+            actionsController.addAction(UIAlertAction(title: Text.PageActionsDelete, style: .default) { _ in
                 self.store.dispatch(DeletePageAction(index: pageIndex))
             })
             actionsController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))

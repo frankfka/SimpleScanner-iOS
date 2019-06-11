@@ -97,6 +97,7 @@ extension HomeView {
     private func initDocumentCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = View.DocumentCollectionViewSectionInsets
+        flowLayout.minimumLineSpacing = View.CollectionViewCellVerticalMargin
         documentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         documentCollectionView.backgroundColor = Color.BodyBackground
         documentCollectionView.delegate = self

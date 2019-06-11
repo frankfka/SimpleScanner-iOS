@@ -10,12 +10,10 @@ import PDFKit
 // Optional in case UIImage not loaded properly, in which case we display a blank
 class PageCollectionViewCellModel {
     let thumbnail: UIImage
-    let page: Int
-    let totalPages: Int
+    let pageLabel: String
 
     init(page: PDFPage, pageNum: Int, totalPages: Int) {
-        self.page = pageNum
-        self.totalPages = totalPages
+        self.pageLabel = Text.PageCellNumberLabel(currentPage: pageNum, totalPages: totalPages)
         self.thumbnail = ImageService.shared.getThumbnailForPage(page: page)
     }
 }
@@ -44,7 +42,7 @@ class PageCollectionViewCell: UICollectionViewCell {
 
     private func loadSubviews() {
         pageThumbnail!.image = vm!.thumbnail
-        pageLabel!.text = Text.PageCellNumberLabel(currentPage: vm!.page, totalPages: vm!.totalPages)
+        pageLabel!.text = vm!.pageLabel
     }
 
     private func initSubviews() {
@@ -67,7 +65,7 @@ class PageCollectionViewCell: UICollectionViewCell {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.equalTo(View.NormalFont.pointSize + 8)
+            make.height.equalTo(pageNumLabel.font.pointSize + View.TextLabelPadding)
         }
         thumbnailView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
