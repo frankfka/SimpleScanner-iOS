@@ -12,16 +12,20 @@ let exportPDFMiddleware: Middleware<AppState> = { dispatch, getState in
             // Dispatch action FIRST, then call the service
             next(action)
             if let action = action as? SaveDocumentPressedAction {
-                let (pdfFile, writeError) = PDFService.shared.savePDF(from: action.pages, fileName: action.fileName)
-                if let pdfFile = pdfFile {
-                    let (pdf, realmError) = DatabaseService.shared.addPDF(pdfFile) // TODO: use Rx here
-                    if let pdf = pdf {
+                switch PDFService.shared.savePDF(from: action.pages, fileName: action.fileName) {
+                // Export to file successful
+                case .success(let pdfFile):
+                    switch DatabaseService.shared.addPDF(pdfFile) {
+                    // Realm save successful
+                    case .success(let pdf):
                         dispatch(SaveDocumentSuccessAction(pdf: pdf))
-                    } else {
-                        dispatch(SaveDocumentErrorAction(error: realmError))
+                    // Realm save failed
+                    case .failure(let error):
+                        dispatch(SaveDocumentErrorAction(error: error))
                     }
-                } else {
-                    dispatch(SaveDocumentErrorAction(error: writeError))
+                // Export to file failed
+                case .failure(let error):
+                    dispatch(SaveDocumentErrorAction(error: error))
                 }
             }
         }

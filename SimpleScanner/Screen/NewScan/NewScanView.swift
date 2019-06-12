@@ -50,7 +50,6 @@ class NewScanView: UIView {
         self.vm = viewModel
         newScanButton.isUserInteractionEnabled = vm.enableEdit
         self.pagesCollectionView.endInteractiveMovement()
-        // TODO: Fix potential performance issues - don't need to reload the entire section all the time
         DispatchQueue.main.async {
             self.pagesCollectionView.reloadSections(IndexSet(integer: 0))
         }

@@ -8,8 +8,6 @@ target 'SimpleScanner' do
     pod 'BFRImageViewer'
     pod 'RealmSwift'
     pod 'ReSwift'
-    pod 'RxCocoa', '~> 5'
-    pod 'RxSwift', '~> 5'
     pod 'SimplePDFViewer'
     pod 'SnapKit', '~> 5.0.0'
     pod 'SVProgressHUD'

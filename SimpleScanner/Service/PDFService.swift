@@ -26,20 +26,20 @@ class PDFService {
     }
 
     // Saves a page to disk and returns URL
-    func createPage(_ image: UIImage, scaleTo: PageScaleSize = .A4) -> (PDFPage?, Error?) {
+    func createPage(_ image: UIImage, scaleTo: PageScaleSize = .A4) -> Result<PDFPage, WritePageError> {
         if let page = PDFPage(image: image) {
             page.setBounds(bounds(for: image, with: scaleTo), for: .mediaBox)
-            return (page, nil)
+            return .success(page)
         } else {
-            return (nil, WritePageError(state: .conversionError))
+            return .failure(WritePageError(state: .conversionError))
         }
     }
 
     // Generates a PDF from scanned images
-    func savePDF(from pages: [PDFPage], fileName: String) -> (PDFFile?, WritePDFError?) {
+    func savePDF(from pages: [PDFPage], fileName: String) -> Result<PDFFile, WritePDFError> {
         // Prevent writing of empty documents
         guard !pages.isEmpty else {
-            return (nil, WritePDFError(state: .noPages))
+            return .failure(WritePDFError(state: .noPages))
         }
         let document = PDFDocument()
         pages.forEach { page in
@@ -47,16 +47,30 @@ class PDFService {
         }
         let documentFile = PDFFile(fileName: fileName)
         if document.write(to: documentFile.url) {
-            return (documentFile, nil)
+            return .success(documentFile)
         } else {
-            return (nil, WritePDFError(state: .writeError))
+            return .failure(WritePDFError(state: .writeError))
+        }
+    }
+
+    // Delete a PDF
+    // TODO: Combine these services
+    func deletePDF(_ pdf: PDF) -> Result<Void, Error> {
+        do {
+            try FileManager.default.removeItem(at: getURL(from: pdf.fileName))
+            return .success(())
+        } catch {
+            return .failure(error)
         }
     }
 
     // Retrieves a PDF with a given name
     func getPDF(fileName: String) -> PDFDocument? {
-        let fileUrl = getDocumentsDirectory().appendingPathComponent(fileName).appendingPathExtension("pdf")
-        return PDFDocument(url: fileUrl)
+        return PDFDocument(url: getURL(from: fileName))
+    }
+
+    private func getURL(from fileName: String) -> URL {
+        return getDocumentsDirectory().appendingPathComponent(fileName).appendingPathExtension("pdf")
     }
 
     // Calculates bounds such that entire page will fit

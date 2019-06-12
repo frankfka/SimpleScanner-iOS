@@ -21,7 +21,7 @@ class DatabaseService {
         return database.objects(PDF.self)
     }
 
-    func addPDF(_ file: PDFFile) -> (PDF?, RealmError?) {
+    func addPDF(_ file: PDFFile) -> Result<PDF, RealmError> {
         let newPDF = PDF()
         newPDF.fileName = file.name
         newPDF.dateCreated = Date()
@@ -30,17 +30,24 @@ class DatabaseService {
                 try database.write {
                     database.add(newPDF)
                 }
-                return (newPDF, nil)
+                return .success(newPDF)
             } catch {
-                return (nil, RealmError(state: .realmError, innerError: error))
+                return .failure(RealmError(state: .realmError, innerError: error))
             }
         } else {
-            return (nil, RealmError(state: .invalidObject, innerError: nil))
+            return .failure(RealmError(state: .invalidObject, innerError: nil))
         }
     }
 
-    func deletePDF() {
-        // TODO
+    func deletePDF(_ pdf: PDF) -> Result<Void, Error> {
+        do {
+            try database.write {
+                database.delete(pdf)
+            }
+            return .success(())
+        } catch {
+            return .failure(error)
+        }
     }
 
 }

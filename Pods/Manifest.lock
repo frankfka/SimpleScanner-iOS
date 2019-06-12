@@ -22,12 +22,6 @@ PODS:
   - RealmSwift (3.16.1):
     - Realm (= 3.16.1)
   - ReSwift (4.1.1)
-  - RxCocoa (5.0.0):
-    - RxRelay (~> 5)
-    - RxSwift (~> 5)
-  - RxRelay (5.0.0):
-    - RxSwift (~> 5)
-  - RxSwift (5.0.0)
   - SimplePDFViewer (0.1.1):
     - SnapKit (~> 5.0.0)
   - SnapKit (5.0.0)
@@ -38,8 +32,6 @@ DEPENDENCIES:
   - BFRImageViewer
   - RealmSwift
   - ReSwift
-  - RxCocoa (~> 5)
-  - RxSwift (~> 5)
   - SimplePDFViewer
   - SnapKit (~> 5.0.0)
   - SVProgressHUD
@@ -54,9 +46,6 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - ReSwift
-    - RxCocoa
-    - RxRelay
-    - RxSwift
     - SimplePDFViewer
     - SnapKit
     - SVProgressHUD
@@ -70,14 +59,11 @@ SPEC CHECKSUMS:
   Realm: 601cacc51d8be3b17a377ef787be0f6ee0e76cf1
   RealmSwift: 486f2e09d5a8ccff63ed66e48d0846b111deb5e5
   ReSwift: d925be0033558f55bd73d92869961230dfe19d52
-  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
-  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
-  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SimplePDFViewer: 8cb94e745d13bb840d19bdb8807586f512016de9
   SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   WeScan: 7ebe08c966fbd7321be2be1a962423c237e3e2ec
 
-PODFILE CHECKSUM: 8446d4bae476c722cd42f1bea796280e2ec402cf
+PODFILE CHECKSUM: 63f67a75df3ba3c89880f02e678cc3e1b94f5aea
 
 COCOAPODS: 1.7.0

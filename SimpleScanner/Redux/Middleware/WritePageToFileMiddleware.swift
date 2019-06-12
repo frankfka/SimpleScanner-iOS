@@ -12,10 +12,10 @@ let createPageMiddleware: Middleware<AppState> = { dispatch, getState in
             // Dispatch the current action FIRST, then perform the service
             next(action)
             if let action = action as? AddPageScanSuccessAction {
-                let (page, error) = PDFService.shared.createPage(action.new)
-                if let page = page {
+                switch PDFService.shared.createPage(action.new) {
+                case .success(let page):
                     dispatch(AddPageSuccessAction(new: page))
-                } else {
+                case .failure(let error):
                     dispatch(AddPageErrorAction(error: error))
                 }
             }

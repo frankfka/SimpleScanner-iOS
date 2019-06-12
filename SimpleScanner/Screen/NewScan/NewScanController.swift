@@ -140,19 +140,22 @@ extension NewScanController: StoreSubscriber {
             scannerVC.imageScannerDelegate = self
             present(scannerVC, animated: true)
         } else if let pageIndex = state.showPageActionsWithIndex {
-            let actionsController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+            // Launch dialog with delete & view actions
+            let actionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             actionsController.addAction(UIAlertAction(title: Text.PageActionsView, style: .default) { _ in
                 self.store.dispatch(PresentPageAction(index: pageIndex))
             })
-            actionsController.addAction(UIAlertAction(title: Text.PageActionsDelete, style: .default) { _ in
+            actionsController.addAction(UIAlertAction(title: Text.PageActionsDelete, style: .destructive) { _ in
                 self.store.dispatch(DeletePageAction(index: pageIndex))
             })
             actionsController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
             present(actionsController, animated: true)
         } else if let pageIndex = state.showPageWithIndex {
+            // Show image as a new VC
             let pageThumbnail = ImageService.shared.getThumbnailForPage(page: state.pages[pageIndex], width: UIScreen.main.bounds.width)
             present(BFRImageViewController(imageSource: [pageThumbnail])!, animated: true) //TODO: Build your own
         } else if let exportedPDF = state.exportedPDF {
+            // Show exported PDF
             PDFViewer.show(pdf: exportedPDF, sender: self, dismissalDelegate: self)
         }
 
