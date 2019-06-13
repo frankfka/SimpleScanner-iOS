@@ -33,7 +33,8 @@ class HomeController: UIViewController {
         homeView = HomeView(
                 viewModel: self.vm,
                 newScanTapped: newScanTapped,
-                itemTapped: itemTapped
+                showPDFTapped: showPDFTapped,
+                showPDFOptionsTapped: showPDFOptionsTapped
         )
         self.view = homeView
     }
@@ -61,8 +62,12 @@ class HomeController: UIViewController {
         store.dispatch(AddNewDocumentTappedAction())
     }
 
-    private func itemTapped(index: Int) {
-        store.dispatch(DocumentTappedAction(index: index))
+    private func showPDFTapped(index: Int) {
+        store.dispatch(ShowDocumentTappedAction(index: index))
+    }
+
+    private func showPDFOptionsTapped(index: Int) {
+        store.dispatch(ShowDocumentOptionsTappedAction(index: index))
     }
 
 }
@@ -79,6 +84,8 @@ extension HomeController: StoreSubscriber {
         // Present new scan screen if state calls for it
         if state.showAddDocument {
             self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true)
+        } else if state.showDocumentOptionsWithIndex {
+            // TODO:
         }
         // Present PDF if state calls for it
         if let docIndex = state.showDocumentWithIndex {

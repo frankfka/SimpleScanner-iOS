@@ -11,23 +11,28 @@ struct HomeState {
     // Navigation
     let showAddDocument: Bool
     let showDocumentWithIndex: Int?
+    let showDocumentOptionsWithIndex: Int?
 
     init(
             state: ActivityState = .none,
             showAddDocument: Bool = false,
-            showDocumentWithIndex: Int? = nil
+            showDocumentWithIndex: Int? = nil,
+            showDocumentOptionsWithIndex: Int? = nil
     ) {
         self.state = state
         self.showAddDocument = showAddDocument
         self.showDocumentWithIndex = showDocumentWithIndex
+        self.showDocumentOptionsWithIndex = showDocumentOptionsWithIndex
     }
 
     func reduce(action: Action, state: HomeState) -> HomeState {
         switch action {
         case _ as AddNewDocumentTappedAction:
             return HomeState(state: .loading, showAddDocument: true)
-        case let action as DocumentTappedAction:
+        case let action as ShowDocumentTappedAction:
             return HomeState(state: .loading, showDocumentWithIndex: action.index)
+        case let action as ShowDocumentOptionsTappedAction:
+            return HomeState(showDocumentOptionsWithIndex: action.index)
         case _ as HomeNavigateAwayAction:
             return didNavigateAway()
         default:

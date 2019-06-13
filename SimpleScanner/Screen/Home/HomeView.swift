@@ -17,12 +17,14 @@ class HomeView: UIView {
 
     // Callbacks
     private let newScanTapped: VoidCallback
-    private let itemTapped: TapIndexCallback
+    private let showPDFTapped: TapIndexCallback
+    private let showPDFOptionsTapped: TapIndexCallback
 
-    init(viewModel: HomeViewModel, newScanTapped: @escaping VoidCallback, itemTapped: @escaping TapIndexCallback) {
+    init(viewModel: HomeViewModel, newScanTapped: @escaping VoidCallback, showPDFTapped: @escaping TapIndexCallback, showPDFOptionsTapped: @escaping TapIndexCallback) {
         self.vm = viewModel
         self.newScanTapped = newScanTapped
-        self.itemTapped = itemTapped
+        self.showPDFTapped = showPDFTapped
+        self.showPDFOptionsTapped = showPDFOptionsTapped
         super.init(frame: CGRect.zero)
         initSubviews()
     }
@@ -51,14 +53,11 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let documentCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.DocumentCollectionCellReuseID, for: indexPath) as! PDFCollectionViewCell
-        let cellModel = PDFCollectionViewCellModel(from: vm.documents[indexPath.row])
-        documentCell.loadCell(with: cellModel)
+        let cellModel = PDFCollectionViewCellModel(from: vm.documents[indexPath.row], index: indexPath.row)
+        documentCell.loadCell(with: cellModel, onOptionsTap: showPDFOptionsTapped, onThumbnailTap: showPDFTapped)
         return documentCell
     }
 
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.itemTapped(indexPath.row)
-    }
 }
 
 // Initialization

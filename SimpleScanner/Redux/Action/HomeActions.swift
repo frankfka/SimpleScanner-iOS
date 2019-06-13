@@ -11,6 +11,15 @@ struct AddNewDocumentTappedAction: Action { }
 // Called when anything is presented/pushed onto Home screen
 struct HomeNavigateAwayAction: Action { }
 // When document tapped in UICollectionView
-struct DocumentTappedAction: Action {
+struct ShowDocumentTappedAction: Action {
     let index: Int
 }
+// When document options tapped
+struct ShowDocumentOptionsTappedAction: Action {
+    let index: Int
+}
+// When user wants to delete document
+struct DeleteDocumentAction: Action {
+    let index: Int
+}
+struct DeleteDocumentOkAction: Action { }
