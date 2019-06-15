@@ -70,6 +70,12 @@ class HomeController: UIViewController {
         store.dispatch(ShowDocumentOptionsTappedAction(index: index))
     }
 
+    private func deletePDFTapped(index: Int) -> ((UIAlertAction) -> Void) {
+        return { _ in
+            self.store.dispatch(DeleteDocumentAction(index: index))
+        }
+    }
+
 }
 
 // Redux Extension
@@ -81,14 +87,16 @@ extension HomeController: StoreSubscriber {
         self.showAnimation(for: state.state, with: nil)
 
         self.vm = HomeViewModel(state: state, documents: vm.documents)
-        // Present new scan screen if state calls for it
         if state.showAddDocument {
+            // Present new scan screen if state calls for it
             self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true)
-        } else if state.showDocumentOptionsWithIndex {
-            // TODO:
-        }
-        // Present PDF if state calls for it
-        if let docIndex = state.showDocumentWithIndex {
+        } else if let docIndex = state.showDocumentOptionsWithIndex {
+            // Present document options if state calls for it
+            let documentOptionsDialog = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            documentOptionsDialog.addAction(UIAlertAction(title: Text.PDFDelete, style: .destructive, handler: deletePDFTapped(index: docIndex)))
+            // TODO: hook up actions
+        } else if let docIndex = state.showDocumentWithIndex {
+            // Present PDF if state calls for it
             PDFViewer.show(pdf: vm.documents[docIndex], sender: self)
         }
         // Update Views

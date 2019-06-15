@@ -1,5 +1,5 @@
 //
-// Created by Frank Jia on 2019-06-01.
+// Created by Frank Jia on 2019-06-14.
 // Copyright (c) 2019 Frank Jia. All rights reserved.
 //
 
@@ -15,62 +15,59 @@ let A4Size: CGRect = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) // A4, 72 d
 
 class PDFService {
 
-    static let shared = PDFService()
+    static let shared = PDFService(databaseService: DatabaseService.shared, fileManagerService: FileManagerService.shared)
 
-    // Creates a file name based on time
-    static func getDefaultFileName() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyMMMdd_HH-mm_ss"
-        let dateString = dateFormatter.string(from: Date())
-        return "SimpleScanner_\(dateString)"
+    private let databaseService: DatabaseService
+    private let fileManagerService: FileManagerService
+
+    init(databaseService: DatabaseService, fileManagerService: FileManagerService) {
+        self.databaseService = databaseService
+        self.fileManagerService = fileManagerService
     }
 
-    // Saves a page to disk and returns URL
-    func createPage(_ image: UIImage, scaleTo: PageScaleSize = .A4) -> Result<PDFPage, WritePageError> {
+    // Creates a PDF page from a given image
+    func createPage(_ image: UIImage, scaleTo: PageScaleSize = .A4) -> Result<PDFPage, PDFError> {
         if let page = PDFPage(image: image) {
             page.setBounds(bounds(for: image, with: scaleTo), for: .mediaBox)
             return .success(page)
         } else {
-            return .failure(WritePageError(state: .conversionError))
+            return .failure(PDFError(state: .pageConversionError))
         }
     }
 
-    // Generates a PDF from scanned images
-    func savePDF(from pages: [PDFPage], fileName: String) -> Result<PDFFile, WritePDFError> {
-        // Prevent writing of empty documents
-        guard !pages.isEmpty else {
-            return .failure(WritePDFError(state: .noPages))
-        }
-        let document = PDFDocument()
-        pages.forEach { page in
-            document.insert(page, at: document.pageCount)
-        }
-        let documentFile = PDFFile(fileName: fileName)
-        if document.write(to: documentFile.url) {
-            return .success(documentFile)
-        } else {
-            return .failure(WritePDFError(state: .writeError))
+    // Saves a file to disk then the database
+    func savePDF(from pages: [PDFPage], fileName: String) -> Result<PDF, PDFError> {
+        switch fileManagerService.savePDFToDisk(from: pages, fileName: fileName) {
+        case .success (let pdfFile):
+            switch databaseService.addPDFToDatabase(pdfFile) {
+            case .success (let pdf):
+                return .success(pdf)
+            case . failure (let writeError):
+                return .failure(PDFError(state: .writeError, innerError: writeError))
+            }
+        case .failure (let writeError):
+            return .failure(PDFError(state: .writeError, innerError: writeError))
         }
     }
 
-    // Delete a PDF
-    // TODO: Combine these services
-    func deletePDF(_ pdf: PDF) -> Result<Void, Error> {
-        do {
-            try FileManager.default.removeItem(at: getURL(from: pdf.fileName))
-            return .success(())
-        } catch {
-            return .failure(error)
+    // Deletes a file from database then the disk
+    func deletePDF(_ pdf: PDF) -> Result<Void, PDFError> {
+        let fileName = pdf.fileName
+        switch databaseService.deletePDFFromDatabase(pdf) {
+        case .success:
+            switch fileManagerService.deletePDFFromDisk(fileName: fileName) {
+            case .success:
+                return .success(())
+            case .failure (let error):
+                return .failure(PDFError(state: .deleteError, innerError: error))
+            }
+        case .failure (let error):
+            return .failure(PDFError(state: .deleteError, innerError: error))
         }
     }
 
-    // Retrieves a PDF with a given name
     func getPDF(fileName: String) -> PDFDocument? {
-        return PDFDocument(url: getURL(from: fileName))
-    }
-
-    private func getURL(from fileName: String) -> URL {
-        return getDocumentsDirectory().appendingPathComponent(fileName).appendingPathExtension("pdf")
+        return self.fileManagerService.getPDFFromDisk(fileName: fileName)
     }
 
     // Calculates bounds such that entire page will fit

@@ -32,7 +32,6 @@ class PageCollectionViewCell: UICollectionViewCell {
     }
 
     func loadCell(with model: PageCollectionViewCellModel) {
-        // Error state is plain black (UIImageView default) // TODO: specific error state
         self.vm = model
         if cellView == nil {
             initSubviews()

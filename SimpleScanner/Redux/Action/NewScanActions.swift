@@ -21,11 +21,7 @@ struct AddPageSuccessAction: Action {
 struct AddPageErrorAction: Action, CustomStringConvertible {
     let error: Error?
     var description: String {
-        if let error = error as? WritePageError {
-            return "AddPageErrorAction: \(error.state)"
-        } else {
-            return "AddPageErrorAction: \(String(describing: error?.localizedDescription))"
-        }
+        return error?.localizedDescription ?? ""
     }
 }
 // User switched order of pages
@@ -73,11 +69,6 @@ struct SaveDocumentSuccessAction: Action {
 struct SaveDocumentErrorAction: Action, CustomStringConvertible {
     let error: Error?
     var description: String {
-        if let writeErr = error as? WritePDFError {
-            return "SaveDocumentErrorAction (Write Error): State: \(writeErr.state)"
-        } else if let dbErr = error as? RealmError {
-            return "SaveDocumentErrorAction (Database Error): State: \(dbErr.state) | Inner Error: \(dbErr.innerError?.localizedDescription ?? "") "
-        }
         return error?.localizedDescription ?? ""
     }
 }

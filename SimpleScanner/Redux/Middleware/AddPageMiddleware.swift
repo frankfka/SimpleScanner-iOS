@@ -6,7 +6,7 @@
 import Foundation
 import ReSwift
 
-let createPageMiddleware: Middleware<AppState> = { dispatch, getState in
+let addPageMiddleware: Middleware<AppState> = { dispatch, getState in
     return { next in
         return { action in
             // Dispatch the current action FIRST, then perform the service

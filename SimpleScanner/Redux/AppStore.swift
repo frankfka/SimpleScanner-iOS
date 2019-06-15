@@ -23,6 +23,6 @@ func appReducer(action: Action, state: AppState?) -> AppState {
 
 private let allMiddleware: [Middleware<AppState>] = [
     loggerMiddleware,
-    createPageMiddleware,
+    addPageMiddleware,
     exportPDFMiddleware
 ]

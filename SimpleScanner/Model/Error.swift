@@ -5,30 +5,54 @@
 
 import Foundation
 
-struct WritePageError: Error {
-    let state: WriteTempPageErrorState
+// Errors when dealing with PDFKit
+struct PDFError: LocalizedError {
+    let state: PDFErrorState
+    let innerError: Error?
 
-    enum WriteTempPageErrorState {
-        case conversionError
+    init(state: PDFErrorState, innerError: Error? = nil) {
+        self.state = state
+        self.innerError = innerError
+    }
+    
+    enum PDFErrorState {
+        case pageConversionError
+        case writeError
+        case deleteError
+    }
+
+    public var errorDescription: String? {
+        if let fileManagerError = self.innerError as? FileManagerError {
+            return "\(self.state): \(fileManagerError.state) | \(fileManagerError.innerError?.localizedDescription)"
+        } else if let realmError = self.innerError as? RealmError {
+            return "\(self.state): \(realmError.state) | \(realmError.innerError?.localizedDescription)"
+        } else {
+            return "\(self.state): \(self.innerError?.localizedDescription)"
+        }
     }
 }
 
-struct WritePDFError: Error {
-    let state: WritePDFErrorState
+// Errors when dealing with disk
+struct FileManagerError: Error {
+    let state: FileManagerErrorState
+    let innerError: Error?
 
-    enum WritePDFErrorState {
+    enum FileManagerErrorState {
         case noPages
         case writeError
+        case deleteError
     }
 }
 
+// Errors when dealing with Realm
 struct RealmError: Error {
     let state: RealmErrorState
     let innerError: Error?
 
     enum RealmErrorState {
         case invalidObject
-        case realmError
+        case realmWriteError
+        case realmDeleteError
     }
 }
 

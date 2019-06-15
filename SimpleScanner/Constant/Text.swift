@@ -19,6 +19,8 @@ class Text {
         dateFormatter.dateFormat = "MMM dd, YYYY"
         return dateFormatter.string(from: date)
     }
+    // PDF Options Dialog
+    static let PDFDelete = "Delete"
 
     // New Scan Page
     static let NewScanTitle = "New Scan"

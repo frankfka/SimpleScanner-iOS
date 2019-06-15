@@ -15,11 +15,20 @@ struct ShowDocumentTappedAction: Action {
     let index: Int
 }
 // When document options tapped
-struct ShowDocumentOptionsTappedAction: Action {
+struct ShowDocumentOptionsTappedAction: Action, CustomStringConvertible {
     let index: Int
+    var description: String {
+        return "ShowDocumentOptionsTappedAction: \(index)"
+    }
 }
 // When user wants to delete document
 struct DeleteDocumentAction: Action {
     let index: Int
 }
-struct DeleteDocumentOkAction: Action { }
+struct DeleteDocumentSuccessAction: Action { }
+struct DeleteDocumentErrorAction: Action, CustomStringConvertible {
+    let error: Error?
+    var description: String {
+        return error?.localizedDescription ?? ""
+    }
+}
