@@ -15,7 +15,7 @@ class FileManagerService {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyMMMdd_HH-mm_ss"
         let dateString = dateFormatter.string(from: Date())
-        return "SimpleScanner_\(dateString)"
+        return "PDF_\(dateString)"
     }
 
     // Generates a PDF from scanned images

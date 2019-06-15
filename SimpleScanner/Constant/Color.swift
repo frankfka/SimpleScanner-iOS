@@ -16,6 +16,6 @@ class Color {
     static let Border = UIColor.gray
     static let Button = Primary
     static let ButtonText = UIColor.white
-    static let NavTint = UIColor.black
+    static let NavTint = Primary
 
 }

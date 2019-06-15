@@ -28,6 +28,7 @@
 		9E04B63EC45E8A9CDB7EA576 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BE3B98EE1903F8109383 /* HomeViewModel.swift */; };
 		9E04B6A534F061C913DA769A /* ActivityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B0896DD00485D71EF225 /* ActivityState.swift */; };
 		9E04B6CCC1F5BB2142CC81C3 /* NewScanController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B3CBA9AD2F2805B61AA8 /* NewScanController.swift */; };
+		9E04B6DDD8821C2AA215C367 /* DeletePageMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BE30ECA39E08CA831407 /* DeletePageMiddleware.swift */; };
 		9E04B723E1FA707D981B275E /* LoggerMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B5B8CB0B0B39483D94B5 /* LoggerMiddleware.swift */; };
 		9E04B7379326CC3F426DEC11 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04B33BC071885CC1FC11FC /* View.swift */; };
 		9E04B7BD98B7D676C19371B6 /* NewScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E04BC479B0A06D4C7085624 /* NewScanView.swift */; };
@@ -83,6 +84,7 @@
 		9E04BD62F1EF9A07F421A937 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		9E04BD6DE8D0AA38CF754D0F /* PageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9E04BD9924ADCDDFAA5B63E2 /* NewScanActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanActions.swift; sourceTree = "<group>"; };
+		9E04BE30ECA39E08CA831407 /* DeletePageMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeletePageMiddleware.swift; sourceTree = "<group>"; };
 		9E04BE3B98EE1903F8109383 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		9E04BE44F768A4925ED926B7 /* DatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		9E04BF36B80CD96B067CC262 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				9E04B5B8CB0B0B39483D94B5 /* LoggerMiddleware.swift */,
 				9E04B0914A6C42829FA028F0 /* AddPageMiddleware.swift */,
 				9E04B859DCE0DAB794242753 /* ExportPDFMiddleware.swift */,
+				9E04BE30ECA39E08CA831407 /* DeletePageMiddleware.swift */,
 			);
 			path = Middleware;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				9E04B01FCD23B33F78BF29F6 /* PDFViewer.swift in Sources */,
 				9E04BF2B215809276F751FF5 /* ActivityStateViewController.swift in Sources */,
 				9E04BFE57A3D186AB12893BC /* PDFService.swift in Sources */,
+				9E04B6DDD8821C2AA215C367 /* DeletePageMiddleware.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

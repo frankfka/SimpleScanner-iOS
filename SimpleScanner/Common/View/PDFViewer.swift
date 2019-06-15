@@ -13,7 +13,7 @@ class PDFViewer {
         pdfViewer.dismissalDelegate = dismissalDelegate
         pdfViewer.errorMessage = Text.PDFViewError
         pdfViewer.exportPDFName = pdf.fileName
-        pdfViewer.tint = Color.Primary
+        pdfViewer.tint = Color.NavTint
         sender.present(pdfViewer, animated: true, completion: completion)
     }
 

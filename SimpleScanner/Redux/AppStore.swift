@@ -16,7 +16,7 @@ func appReducer(action: Action, state: AppState?) -> AppState {
     let state = state ?? AppState(
             homeState: HomeState(),
             newScanState: NewScanState(),
-            documentState: DocumentState(all: DatabaseService.shared.allDocuments())
+            documentState: DocumentState(all: PDFService.shared.getAllPDFs())
     )
     return state.reduce(action: action, state: state)
 }
@@ -24,5 +24,6 @@ func appReducer(action: Action, state: AppState?) -> AppState {
 private let allMiddleware: [Middleware<AppState>] = [
     loggerMiddleware,
     addPageMiddleware,
-    exportPDFMiddleware
+    exportPDFMiddleware,
+    deletePDFMiddleware
 ]

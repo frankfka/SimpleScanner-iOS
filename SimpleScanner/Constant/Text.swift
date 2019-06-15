@@ -7,6 +7,11 @@ import Foundation
 
 class Text {
 
+    // General
+    static let Confirm = "Confirm"
+    static let Cancel = "Cancel"
+    static let Delete = "Delete"
+
     // Home Page
     static let HomeViewTitle = "Documents"
     static let NewScanButton = "New Scan"
@@ -19,8 +24,6 @@ class Text {
         dateFormatter.dateFormat = "MMM dd, YYYY"
         return dateFormatter.string(from: date)
     }
-    // PDF Options Dialog
-    static let PDFDelete = "Delete"
 
     // New Scan Page
     static let NewScanTitle = "New Scan"
@@ -32,13 +35,10 @@ class Text {
         return "\(currentPage) of \(totalPages)"
     }
     // Page Actions Dialog
-    static let PageActionsDelete = "Delete"
     static let PageActionsView = "View"
     // Save Dialog
     static let SavePDFTitle = "Save PDF"
     static let SavePDFDescription = "Please specify a file name"
-    static let SavePDFConfirm = "Confirm"
-    static let SavePDFCancel = "Cancel"
 
     // SimplePDFView
     static let PDFViewError = "Something went wrong. Please try again"

@@ -5,6 +5,7 @@
 
 import UIKit
 import PDFKit
+import RealmSwift
 
 enum PageScaleSize {
     case none
@@ -66,8 +67,12 @@ class PDFService {
         }
     }
 
-    func getPDF(fileName: String) -> PDFDocument? {
+    func getPDFDocument(fileName: String) -> PDFDocument? {
         return self.fileManagerService.getPDFFromDisk(fileName: fileName)
+    }
+
+    func getAllPDFs() -> Results<PDF> {
+        return databaseService.allDocuments()
     }
 
     // Calculates bounds such that entire page will fit

@@ -33,16 +33,22 @@ struct HomeState {
             return HomeState(state: .loading, showDocumentWithIndex: action.index)
         case let action as ShowDocumentOptionsTappedAction:
             return HomeState(showDocumentOptionsWithIndex: action.index)
+        case _ as DeleteDocumentAction:
+            return HomeState(state: .loading)
+        case _ as DeleteDocumentSuccessAction:
+            return reset()
+        case _ as DeleteDocumentErrorAction:
+            return HomeState(state: .error)
         case _ as HomeNavigateAwayAction:
-            return didNavigateAway()
+            return reset()
         default:
             return self
         }
     }
 
     // Reset all navigation states
-    private func didNavigateAway() -> HomeState {
-        return HomeState(showAddDocument: false, showDocumentWithIndex: nil)
+    private func reset() -> HomeState {
+        return HomeState(state: .none, showAddDocument: false, showDocumentWithIndex: nil, showDocumentOptionsWithIndex: nil)
     }
 
 }

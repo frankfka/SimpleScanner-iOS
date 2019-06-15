@@ -15,7 +15,7 @@ class PDFCollectionViewCellModel {
     let index: Int
 
     init(from pdf: PDF, index: Int) {
-        if let pdfDoc = PDFService.shared.getPDF(fileName: pdf.fileName),
+        if let pdfDoc = PDFService.shared.getPDFDocument(fileName: pdf.fileName),
            let thumbnail = ImageService.shared.getThumbnailForDocument(pdf: pdfDoc) {
             self.thumbnail = thumbnail
         } else {
