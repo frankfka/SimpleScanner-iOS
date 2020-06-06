@@ -10,36 +10,28 @@ import Foundation
 import AVFoundation
 
 protocol CaptureDevice: class {
-    func unlockForConfiguration()
-    func lockForConfiguration() throws
-    
     var torchMode: AVCaptureDevice.TorchMode { get set }
     var isTorchAvailable: Bool { get }
     
     var focusMode: AVCaptureDevice.FocusMode { get set }
     var focusPointOfInterest: CGPoint { get set }
     var isFocusPointOfInterestSupported: Bool { get }
-    func isFocusModeSupported(_ focusMode: AVCaptureDevice.FocusMode) -> Bool
     
     var exposureMode: AVCaptureDevice.ExposureMode { get set }
     var exposurePointOfInterest: CGPoint { get set }
     var isExposurePointOfInterestSupported: Bool { get }
-    func isExposureModeSupported(_ exposureMode: AVCaptureDevice.ExposureMode) -> Bool
-    
+
     var isSubjectAreaChangeMonitoringEnabled: Bool { get set }
+
+    func isFocusModeSupported(_ focusMode: AVCaptureDevice.FocusMode) -> Bool
+    func isExposureModeSupported(_ exposureMode: AVCaptureDevice.ExposureMode) -> Bool
+    func unlockForConfiguration()
+    func lockForConfiguration() throws
 }
 
 extension AVCaptureDevice: CaptureDevice { }
 
 final class MockCaptureDevice: CaptureDevice {
-    func unlockForConfiguration() {
-        return
-    }
-    
-    func lockForConfiguration() throws {
-        return
-    }
-    
     var torchMode: AVCaptureDevice.TorchMode = .off
     var isTorchAvailable: Bool = true
     
@@ -50,7 +42,16 @@ final class MockCaptureDevice: CaptureDevice {
     var exposureMode: AVCaptureDevice.ExposureMode = .continuousAutoExposure
     var exposurePointOfInterest: CGPoint = .zero
     var isExposurePointOfInterestSupported: Bool = true
-    
+    var isSubjectAreaChangeMonitoringEnabled: Bool = false
+
+    func unlockForConfiguration() {
+        return
+    }
+
+    func lockForConfiguration() throws {
+        return
+    }
+
     func isFocusModeSupported(_ focusMode: AVCaptureDevice.FocusMode) -> Bool {
         return true
     }
@@ -58,6 +59,4 @@ final class MockCaptureDevice: CaptureDevice {
     func isExposureModeSupported(_ exposureMode: AVCaptureDevice.ExposureMode) -> Bool {
         return true
     }
-    
-    var isSubjectAreaChangeMonitoringEnabled: Bool = false
 }

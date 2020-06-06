@@ -28,6 +28,7 @@
 #include <exception>
 #include <string>
 
+#include <realm/util/buffer.hpp>
 #include <realm/util/logger.hpp>
 #include <realm/util/network.hpp>
 #include <realm/impl/cont_transact_hist.hpp>
@@ -141,13 +142,16 @@ public:
         /// file. Received DOWNLOAD messages will be accepted, but otherwise
         /// ignored. No UPLOAD messages will be generated. For testing purposes
         /// only.
+        ///
+        /// Many operations, such as serialized transactions, are not suppored
+        /// in this mode.
         bool dry_run = false;
 
         /// The default changeset cooker to be used by new sessions. Can be
         /// overridden by Session::Config::changeset_cooker.
         ///
-        /// \sa make_client_history(), TrivialChangesetCooker.
-        std::shared_ptr<ClientHistory::ChangesetCooker> changeset_cooker;
+        /// \sa make_client_replication(), TrivialChangesetCooker.
+        std::shared_ptr<ClientReplication::ChangesetCooker> changeset_cooker;
 
         /// The maximum number of milliseconds to allow for a connection to
         /// become fully established. This includes the time to resolve the
@@ -220,13 +224,13 @@ public:
         /// For testing purposes only.
         bool disable_upload_activation_delay = false;
 
-        /// If enable_upload_log_compaction is true, every changeset will be
+        /// If `disable_upload_compaction` is true, every changeset will be
         /// compacted before it is uploaded to the server. Compaction will
         /// reduce the size of a changeset if the same field is set multiple
         /// times or if newly created objects are deleted within the same
         /// transaction. Log compaction increeses CPU usage and memory
         /// consumption.
-        bool enable_upload_log_compaction = true;
+        bool disable_upload_compaction = false;
 
         /// Set the `TCP_NODELAY` option on all TCP/IP sockets. This disables
         /// the Nagle algorithm. Disabling it, can in some cases be used to
@@ -389,6 +393,9 @@ public:
                                  std::uint_fast64_t progress_version,
                                  std::uint_fast64_t snapshot_version);
     using WaitOperCompletionHandler = std::function<void(std::error_code)>;
+    using SerialTransactChangeset = util::Buffer<char>;
+    using SerialTransactInitiationHandler = std::function<void(std::error_code)>;
+    using SerialTransactCompletionHandler = std::function<void(std::error_code, bool accepted)>;
     using SSLVerifyCallback = bool(const std::string& server_address,
                                    port_type server_port,
                                    const char* pem_data,
@@ -396,8 +403,7 @@ public:
                                    int preverify_ok,
                                    int depth);
 
-    class Config {
-    public:
+    struct Config {
         Config() {}
 
         /// server_address is the fully qualified host name, or IP address of
@@ -551,10 +557,10 @@ public:
         /// destroyed. Please see "Callback semantics" section under Client for
         /// more on this.
         ///
-        /// \sa make_client_history(), TrivialChangesetCooker.
-        std::shared_ptr<ClientHistory::ChangesetCooker> changeset_cooker;
+        /// \sa make_client_replication(), TrivialChangesetCooker.
+        std::shared_ptr<ClientReplication::ChangesetCooker> changeset_cooker;
 
-        /// The encryption key the SharedGroup will be opened with.
+        /// The encryption key the DB will be opened with.
         util::Optional<std::array<char, 64>> encryption_key;
 
         /// ClientReset is used for both async open and client reset. If
@@ -651,6 +657,31 @@ public:
             bool require_recent_state_realm = true;
         };
         util::Optional<ClientReset> client_reset_config;
+
+        struct ProxyConfig {
+            enum class Type { HTTP, HTTPS } type;
+            std::string address;
+            port_type port;
+        };
+        util::Optional<ProxyConfig> proxy_config;
+
+        /// Set to true to disable the upload process for this session. This
+        /// includes the sending of empty UPLOAD messages.
+        ///
+        /// This feature exists exclusively for testing purposes at this time.
+        bool disable_upload = false;
+
+        /// Set to true to disable sending of empty UPLOAD messages for this
+        /// session.
+        ///
+        /// This feature exists exclusively for testing purposes at this time.
+        bool disable_empty_upload = false;
+
+        /// Set to true to cause the integration of the first received changeset
+        /// (in a DOWNLOAD message) to fail.
+        ///
+        /// This feature exists exclusively for testing purposes at this time.
+        bool simulate_integration_error = false;
     };
 
     /// \brief Start a new session for the specified client-side Realm.
@@ -1038,7 +1069,7 @@ public:
 
     /// @{ \brief Synchronous wait for upload or download completion.
     ///
-    /// These functions are synchronous equivalents to
+    /// These functions are synchronous equivalents of
     /// async_wait_for_upload_completion() and
     /// async_wait_for_download_completion() respectively. This means that they
     /// block the caller until the completion condition is satisfied, or the
@@ -1089,6 +1120,96 @@ public:
     /// \brief Change address of server for this session.
     void override_server(std::string address, port_type);
 
+    /// \brief Initiate a serialized transaction.
+    ///
+    /// Asynchronously waits for completion of any serialized transactions, that
+    /// are already in progress via the same session object, then waits for
+    /// the download process to complete (async_wait_for_download_completion()),
+    /// then pauses the upload process. The upload process will be resumed when
+    /// async_try_complete_serial_transact() or abort_serial_transact() is
+    /// called.
+    ///
+    /// Changesets produced by local transactions, that are committed after the
+    /// completion of the initiation of a serialized transaction, are guaranteed
+    /// to not be uploaded until after (or during) the completion of that
+    /// serialized transaction (async_try_complete_serial_transact()).
+    ///
+    /// If the initiation of a serialized transaction is successfully completed,
+    /// that is, if the specified handler gets called with an std::error_code
+    /// argument that evaluates to false in a boolean context, then the
+    /// application is required to eventually call
+    /// async_try_complete_serial_transact() to complete the transaction, or
+    /// abort_serial_transact() to abort it. If
+    /// async_try_complete_serial_transact() fails (throws), the application is
+    /// required to follow up with a call to abort_serial_transact().
+    ///
+    /// If the session object is destroyed before initiation process completes,
+    /// the specified handler will be called with error
+    /// `util::error::operation_aborted`. Currently, this is the only possible
+    /// error that can be reported through this handler.
+    ///
+    /// This feature is only available when the server supports version 28, or
+    /// later, of the synchronization protocol. See
+    /// get_current_protocol_version().
+    ///
+    /// This feature is not currently supported with Partial Synchronization,
+    /// and in a server cluster, it is currently only supported on the root
+    /// node.
+    void async_initiate_serial_transact(SerialTransactInitiationHandler);
+
+    /// \brief Complete a serialized transaction.
+    ///
+    /// Initiate the completion of the serialized transaction. This involves
+    /// sending the specified changeset to the server, and waiting for the
+    /// servers response.
+    ///
+    /// If the session object is destroyed before completion process completes,
+    /// the specified handler will be called with error
+    /// `util::error::operation_aborted`.
+    ///
+    /// Otherwise, if the server does not support serialized transactions, the
+    /// specified handler will be called with error
+    /// `util::MiscExtErrors::operation_not_supported`. This happens if the
+    /// negotiated protocol version is too old, if serialized transactions are
+    /// disallowed by the server, or if it is not allowed for the Realm file in
+    /// question (partial synchronization).
+    ///
+    /// Otherwise, the specified handler will be called with an error code
+    /// argument that evaluates to false in a boolean context, and the
+    /// `accepted` argument will be true if, and only if the transaction was
+    /// accepted by the server.
+    ///
+    /// \param upload_anchor The upload cursor associated with the snapshot on
+    /// which the specified changeset is based. Use
+    /// sync::ClientHistory::get_upload_anchor_of_current_transact() to obtain
+    /// it. Note that
+    /// sync::ClientHistory::get_upload_anchor_of_current_transact() needs to be
+    /// called during the transaction that is used to produce the changeset of
+    /// the serialized transaction.
+    ///
+    /// \param changeset A changeset obtained from an aborted transaction on the
+    /// Realm file associated with this session. Use
+    /// sync::ClientHistory::get_sync_changeset() to obtain it. The transaction,
+    /// which is used to produce teh changeset, needs to be rolled back rather
+    /// than committed, because the decision of whether to accept the changes
+    /// need to be delegated to the server. Note that
+    /// sync::ClientHistory::get_sync_Changeset_of_current_transact() needs to
+    /// be called at the end of the transaction, that is used to produce the
+    /// changeset, but before the rollback operation.
+    void async_try_complete_serial_transact(UploadCursor upload_anchor,
+                                            SerialTransactChangeset changeset,
+                                            SerialTransactCompletionHandler);
+
+    /// \brief Abort a serialized transaction.
+    ///
+    /// Must be called if async_try_complete_serial_transact() fails, i.e., if
+    /// it throws, or if async_try_complete_serial_transact() is not called at
+    /// all. Must not be called if async_try_complete_serial_transact()
+    /// succeeds, i.e., if it does not throw.
+    ///
+    /// Will resume upload process.
+    void abort_serial_transact() noexcept;
+
 private:
     class Impl;
     Impl* m_impl = nullptr;
@@ -1134,11 +1255,17 @@ enum class Client::Error {
     client_too_new_for_server   = 125, ///< Protocol version negotiation failed: Client is too new for server
     protocol_mismatch           = 126, ///< Protocol version negotiation failed: No version supported by both client and server
     bad_state_message           = 127, ///< Bad values in state message (STATE)
+    missing_protocol_feature    = 128, ///< Requested feature missing in negotiated protocol version
+    bad_serial_transact_status  = 129, ///< Bad status of serialized transaction (TRANSACT)
+    bad_object_id_substitutions = 130, ///< Bad encoded object identifier substitutions (TRANSACT)
+    http_tunnel_failed          = 131, ///< Failed to establish HTTP tunnel with configured proxy
 };
 
 const std::error_category& client_error_category() noexcept;
 
 std::error_code make_error_code(Client::Error) noexcept;
+
+std::ostream& operator<<(std::ostream& os, Session::Config::ProxyConfig::Type);
 
 } // namespace sync
 } // namespace realm

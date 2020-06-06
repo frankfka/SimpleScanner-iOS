@@ -96,10 +96,10 @@ extension NewScanController: ImageScannerControllerDelegate {
 
     func imageScannerController(_ scanner: ImageScannerController, didFinishScanningWithResults results: ImageScannerResults) {
         let newPage: UIImage
-        if let enhancedImage = results.enhancedImage, results.doesUserPreferEnhancedImage {
+        if let enhancedImage = results.enhancedScan?.image, results.doesUserPreferEnhancedScan {
             newPage = enhancedImage
         } else {
-            newPage = results.scannedImage
+            newPage = results.originalScan.image
         }
         store.dispatch(AddPageScanSuccessAction(new: newPage))
         scanner.dismiss(animated: true)

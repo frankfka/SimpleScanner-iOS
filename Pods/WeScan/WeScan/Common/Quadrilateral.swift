@@ -24,6 +24,28 @@ public struct Quadrilateral: Transformable {
     
     /// A point that specifies the bottom left corner of the quadrilateral.
     public var bottomLeft: CGPoint
+
+    public var description: String {
+        return "topLeft: \(topLeft), topRight: \(topRight), bottomRight: \(bottomRight), bottomLeft: \(bottomLeft)"
+    }
+
+    /// The path of the Quadrilateral as a `UIBezierPath`
+    var path: UIBezierPath {
+        let path = UIBezierPath()
+        path.move(to: topLeft)
+        path.addLine(to: topRight)
+        path.addLine(to: bottomRight)
+        path.addLine(to: bottomLeft)
+        path.close()
+
+        return path
+    }
+
+    /// The perimeter of the Quadrilateral
+    var perimeter: Double {
+        let perimeter = topLeft.distanceTo(point: topRight) + topRight.distanceTo(point: bottomRight) + bottomRight.distanceTo(point: bottomLeft) + bottomLeft.distanceTo(point: topLeft)
+        return Double(perimeter)
+    }
     
     init(rectangleFeature: CIRectangleFeature) {
         self.topLeft = rectangleFeature.topLeft
@@ -45,28 +67,6 @@ public struct Quadrilateral: Transformable {
         self.topRight = topRight
         self.bottomRight = bottomRight
         self.bottomLeft = bottomLeft
-    }
-    
-    public var description: String {
-        return "topLeft: \(topLeft), topRight: \(topRight), bottomRight: \(bottomRight), bottomLeft: \(bottomLeft)"
-    }
-    
-    /// The path of the Quadrilateral as a `UIBezierPath`
-    var path: UIBezierPath {
-        let path = UIBezierPath()
-        path.move(to: topLeft)
-        path.addLine(to: topRight)
-        path.addLine(to: bottomRight)
-        path.addLine(to: bottomLeft)
-        path.close()
-        
-        return path
-    }
-    
-    /// The perimeter of the Quadrilateral
-    var perimeter: Double {
-        let perimeter = topLeft.distanceTo(point: topRight) + topRight.distanceTo(point: bottomRight) + bottomRight.distanceTo(point: bottomLeft) + bottomLeft.distanceTo(point: topLeft)
-        return Double(perimeter)
     }
     
     /// Applies a `CGAffineTransform` to the quadrilateral.

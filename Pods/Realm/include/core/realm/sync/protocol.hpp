@@ -134,9 +134,33 @@ namespace sync {
 //
 //  27 STATE_REQUEST, STATE, CLIENT_VERSION_REQUEST and CLIENT_VERSION messages
 //     introduced. These messages are used for client reset and async open.
+//
+//  28 Introduction of TRANSACT message (serialized transactions). New session
+//     level error code 221 "Serialized transaction before upload completion".
+//
+//     Also added new parameters `<min file format version>`, `<max file format
+//     version>`, `<min history schema version>`, and `<max history schema
+//     version>` to STATE_REQUEST message.
+//
+//  29 Addition of `<progress client version>` and `<progress server version>`
+//     to the UPLOAD message. Together, these constitute an upload cursor that
+//     marks the reached position in the client-side history of the uploading
+//     process.
+//
+//     Removal of `<last server version>`, and addition of `<locked server
+//     version>`. `<last server version>` was replaced in part by `<progress
+//     server version>` as described above, and in part by the new `<locked
+//     server version>`. The purpose of `<locked server version>` is to allow
+//     the client to lock parts of the server-side history that precede
+//     `<progress server version>`. It is intended to be used in the future in
+//     conjunction with the cooked history.
+//
+//  30 New error code, 222 "Client file has expired", was added. New parameter
+//     `<is subserver>` added to BIND message.
+//
 constexpr int get_current_protocol_version() noexcept
 {
-    return 27;
+    return 30;
 }
 
 
@@ -215,6 +239,19 @@ struct DownloadCursor {
     version_type last_integrated_client_version;
 };
 
+/// Checks that `dc.last_integrated_client_version` is zero if
+/// `dc.server_version` is zero.
+bool is_consistent(DownloadCursor dc) noexcept;
+
+/// Checks that `a.last_integrated_client_version` and
+/// `b.last_integrated_client_version` are equal, if `a.server_version` and
+/// `b.server_version` are equal. Otherwise checks that
+/// `a.last_integrated_client_version` is less than, or equal to
+/// `b.last_integrated_client_version`, if `a.server_version` is less than
+/// `b.server_version`. Otherwise checks that `a.last_integrated_client_version`
+/// is greater than, or equal to `b.last_integrated_client_version`.
+bool are_mutually_consistent(DownloadCursor a, DownloadCursor b) noexcept;
+
 
 /// \brief The server's reference to a position in the client-side history.
 ///
@@ -234,14 +271,49 @@ struct UploadCursor {
     version_type last_integrated_server_version;
 };
 
+/// Checks that `uc.last_integrated_server_version` is zero if
+/// `uc.client_version` is zero.
+bool is_consistent(UploadCursor uc) noexcept;
+
+/// Checks that `a.last_integrated_server_version` and
+/// `b.last_integrated_server_version` are equal, if `a.client_version` and
+/// `b.client_version` are equal. Otherwise checks that
+/// `a.last_integrated_server_version` is less than, or equal to
+/// `b.last_integrated_server_version`, if `a.client_version` is less than
+/// `b.client_version`. Otherwise checks that `a.last_integrated_server_version`
+/// is greater than, or equal to `b.last_integrated_server_version`.
+bool are_mutually_consistent(UploadCursor a, UploadCursor b) noexcept;
+
 
 /// A client's record of the current point of progress of the synchronization
 /// process. The client must store this persistently in the local Realm file.
 struct SyncProgress {
-    SaltedVersion     latest_server_version{0, 0};
-    DownloadCursor    download{0, 0};
-    UploadCursor      upload{0, 0};
-    std::int_fast64_t downloadable_bytes = 0;
+    /// The last server version that the client has heard about.
+    SaltedVersion latest_server_version = {0, 0};
+
+    /// The last server version integrated, or about to be integrated by the
+    /// client.
+    DownloadCursor download = {0, 0};
+
+    /// The last client version integrated by the server.
+    UploadCursor upload = {0, 0};
+};
+
+
+/// An indication of the final status of an attempt at performing a serialized
+/// transaction.
+enum class SerialTransactStatus {
+    /// The transaction was accepted and successful.
+    accepted = 1,
+
+    /// The transaction was rejected because the servers history contained
+    /// causally unrelated changes. I.e., the requesting client lost a race to
+    /// be served first. The client should try again.
+    rejected = 2,
+
+    /// The server did not support serialized transactions at all, or did not
+    /// support it on the targeted Realm in particular.
+    not_supported = 3,
 };
 
 
@@ -281,7 +353,7 @@ enum class ProtocolError {
     permission_denied            = 206, // Permission denied (STATE_REQUEST, BIND, REFRESH)
     bad_server_file_ident        = 207, // Bad server file identifier (IDENT) (obsolete!)
     bad_client_file_ident        = 208, // Bad client file identifier (IDENT)
-    bad_server_version           = 209, // Bad server version (IDENT, UPLOAD)
+    bad_server_version           = 209, // Bad server version (IDENT, UPLOAD, TRANSACT)
     bad_client_version           = 210, // Bad client version (IDENT, UPLOAD)
     diverging_histories          = 211, // Diverging histories (IDENT)
     bad_changeset                = 212, // Bad changeset (UPLOAD)
@@ -294,12 +366,11 @@ enum class ProtocolError {
     server_file_deleted          = 218, // Server file was deleted while session was bound to it
     client_file_blacklisted      = 219, // Client file has been blacklisted (IDENT)
     user_blacklisted             = 220, // User has been blacklisted (BIND)
+    transact_before_upload       = 221, // Serialized transaction before upload completion
+    client_file_expired          = 222, // Client file has expired
 };
 
-inline constexpr bool is_session_level_error(ProtocolError error)
-{
-    return int(error) >= 200 && int(error) <= 299;
-}
+constexpr bool is_session_level_error(ProtocolError);
 
 /// Returns null if the specified protocol error code is not defined by
 /// ProtocolError.
@@ -322,6 +393,45 @@ template<> struct is_error_code_enum<realm::sync::ProtocolError> {
 
 namespace realm {
 namespace sync {
+
+
+
+
+
+// Implementation
+
+inline bool is_consistent(DownloadCursor dc) noexcept
+{
+    return (dc.server_version != 0 || dc.last_integrated_client_version == 0);
+}
+
+inline bool are_mutually_consistent(DownloadCursor a, DownloadCursor b) noexcept
+{
+    if (a.server_version < b.server_version)
+        return (a.last_integrated_client_version <= b.last_integrated_client_version);
+    if (a.server_version > b.server_version)
+        return (a.last_integrated_client_version >= b.last_integrated_client_version);
+    return (a.last_integrated_client_version == b.last_integrated_client_version);
+}
+
+inline bool is_consistent(UploadCursor uc) noexcept
+{
+    return (uc.client_version != 0 || uc.last_integrated_server_version == 0);
+}
+
+inline bool are_mutually_consistent(UploadCursor a, UploadCursor b) noexcept
+{
+    if (a.client_version < b.client_version)
+        return (a.last_integrated_server_version <= b.last_integrated_server_version);
+    if (a.client_version > b.client_version)
+        return (a.last_integrated_server_version >= b.last_integrated_server_version);
+    return (a.last_integrated_server_version == b.last_integrated_server_version);
+}
+
+constexpr bool is_session_level_error(ProtocolError error)
+{
+    return int(error) >= 200 && int(error) <= 299;
+}
 
 } // namespace sync
 } // namespace realm

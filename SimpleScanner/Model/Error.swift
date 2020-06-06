@@ -23,11 +23,11 @@ struct PDFError: LocalizedError {
 
     public var errorDescription: String? {
         if let fileManagerError = self.innerError as? FileManagerError {
-            return "\(self.state): \(fileManagerError.state) | \(fileManagerError.innerError?.localizedDescription)"
+            return "\(self.state): \(fileManagerError.state) | \(fileManagerError.innerError?.localizedDescription ?? "")"
         } else if let realmError = self.innerError as? RealmError {
-            return "\(self.state): \(realmError.state) | \(realmError.innerError?.localizedDescription)"
+            return "\(self.state): \(realmError.state) | \(realmError.innerError?.localizedDescription ?? "")"
         } else {
-            return "\(self.state): \(self.innerError?.localizedDescription)"
+            return "\(self.state): \(self.innerError?.localizedDescription ?? "")"
         }
     }
 }

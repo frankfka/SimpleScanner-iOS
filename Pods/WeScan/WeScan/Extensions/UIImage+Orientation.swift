@@ -10,6 +10,14 @@ import Foundation
 
 extension UIImage {
     
+    /// Data structure to easily express rotation options.
+    struct RotationOptions: OptionSet {
+        let rawValue: Int
+        
+        static let flipOnVerticalAxis = RotationOptions(rawValue: 1)
+        static let flipOnHorizontalAxis = RotationOptions(rawValue: 2)
+    }
+    
     /// Returns the same image with a portrait orientation.
     func applyingPortraitOrientation() -> UIImage {
         switch imageOrientation {
@@ -25,15 +33,7 @@ extension UIImage {
             return self
         }
     }
-    
-    /// Data structure to easily express rotation options.
-    struct RotationOptions: OptionSet {
-        let rawValue: Int
-        
-        static let flipOnVerticalAxis = RotationOptions(rawValue: 1)
-        static let flipOnHorizontalAxis = RotationOptions(rawValue: 2)
-    }
-    
+
     /// Rotate the image by the given angle, and perform other transformations based on the passed in options.
     ///
     /// - Parameters:

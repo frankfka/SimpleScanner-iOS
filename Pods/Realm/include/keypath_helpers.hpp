@@ -23,19 +23,30 @@
 #include <realm/parser/keypath_mapping.hpp>
 
 namespace realm {
-/// Create the mappings from user defined names of linkingObjects into the verbose
-/// syntax that the parser supports: @links.Class.property.
-inline void alias_backlinks(parser::KeyPathMapping& mapping, Realm& realm)
+/// Populate the mapping from public name to internal name for queries.
+static void populate_keypath_mapping(parser::KeyPathMapping& mapping, Realm& realm)
 {
+    mapping.set_backlink_class_prefix("class_");
+
     for (auto& object_schema : realm.schema()) {
-        for (Property const& property : object_schema.computed_properties) {
-            if (property.type == PropertyType::LinkingObjects) {
-                auto table = ObjectStore::table_for_object_type(realm.read_group(), object_schema.name);
-                auto native_name = util::format("@links.%1.%2",
-                                                ObjectStore::table_name_for_object_type(property.object_type),
-                                                property.link_origin_property_name);
-                mapping.add_mapping(table, property.name, std::move(native_name));
-            }
+        TableRef table;
+        auto get_table = [&] {
+            if (!table)
+                table = realm.read_group().get_table(object_schema.table_key);
+            return table;
+        };
+
+        for (auto& property : object_schema.persisted_properties) {
+            if (!property.public_name.empty() && property.public_name != property.name)
+                mapping.add_mapping(get_table(), property.public_name, property.name);
+        }
+
+        for (auto& property : object_schema.computed_properties) {
+            if (property.type != PropertyType::LinkingObjects)
+                continue;
+            auto native_name = util::format("@links.%1.%2", property.object_type,
+                                            property.link_origin_property_name);
+            mapping.add_mapping(get_table(), property.name, std::move(native_name));
         }
     }
 }
@@ -48,7 +59,7 @@ inline IncludeDescriptor generate_include_from_keypaths(std::vector<StringData> 
                                                         Realm& realm, ObjectSchema const& object_schema,
                                                         parser::KeyPathMapping& mapping)
 {
-    auto base_table = ObjectStore::table_for_object_type(realm.read_group(), object_schema.name);
+    auto base_table = realm.read_group().get_table(object_schema.table_key);
     REALM_ASSERT(base_table);
     // FIXME: the following is mostly copied from core's query_builder::apply_ordering
     std::vector<std::vector<LinkPathPart>> properties;
@@ -68,15 +79,15 @@ inline IncludeDescriptor generate_include_from_keypaths(std::vector<StringData> 
             // backlinks use type_LinkList since list operations apply to them (and is_backlink is set)
             if (element.col_type != type_Link && element.col_type != type_LinkList) {
                 throw InvalidPathError(util::format("Property '%1' is not a link in object of type '%2' in 'INCLUDE' clause",
-                                                    element.table->get_column_name(element.col_ndx),
+                                                    element.table->get_column_name(element.col_key),
                                                     get_printable_table_name(*element.table)));
             }
             if (element.table == cur_table) {
-                if (element.col_ndx == realm::npos) {
+                if (!element.col_key) {
                     cur_table = element.table;
                 }
                 else {
-                    cur_table = element.table->get_link_target(element.col_ndx); // advance through forward link
+                    cur_table = element.table->get_link_target(element.col_key); // advance through forward link
                 }
             }
             else {
@@ -86,10 +97,10 @@ inline IncludeDescriptor generate_include_from_keypaths(std::vector<StringData> 
             if (element.is_backlink) {
                 tr = element.table;
             }
-            links.emplace_back(element.col_ndx, tr);
+            links.emplace_back(element.col_key, tr);
         }
         properties.push_back(std::move(links));
     }
-    return IncludeDescriptor{*base_table, properties};
+    return IncludeDescriptor{base_table, properties};
 }
 }

@@ -35,7 +35,6 @@
 #include <realm/sync/object_id.hpp>
 #include <realm/impl/input_stream.hpp>
 #include <realm/table_ref.hpp>
-#include <realm/link_view_fwd.hpp>
 
 namespace realm {
 namespace sync {
@@ -95,32 +94,28 @@ struct Instruction {
     template <class T> struct GetInstructionType;
 
     Instruction() {}
-    template <class T>
-    Instruction(T instr);
+    template<class T> Instruction(T instr);
 
     static const size_t max_instruction_size = 64;
     std::aligned_storage_t<max_instruction_size> m_storage;
     Type type;
 
-    template <class F>
-    auto visit(F&& lambda);
-    template <class F>
-    auto visit(F&& lambda) const;
+    template<class F> auto visit(F&& lambda);
+    template<class F> auto visit(F&& lambda) const;
 
-    template <class T>
-    T& get_as()
+    template<class T> T& get_as()
     {
         REALM_ASSERT(type == GetInstructionType<T>::value);
         return *reinterpret_cast<T*>(&m_storage);
     }
 
-    template <class T>
-    const T& get_as() const
+    template<class T> const T& get_as() const
     {
         return const_cast<Instruction*>(this)->template get_as<T>();
     }
 
     bool operator==(const Instruction& other) const noexcept;
+
     bool operator!=(const Instruction& other) const noexcept
     {
         return !(*this == other);
@@ -142,16 +137,19 @@ struct StringBufferRange {
 
 struct InternString {
     static const InternString npos;
-    explicit constexpr InternString(uint32_t v = uint32_t(-1)): value(v) {}
+    explicit constexpr InternString(uint32_t v = uint32_t(-1)) noexcept : value(v) {}
 
     uint32_t value;
 
     bool operator==(const InternString& other) const noexcept { return value == other.value; }
+    bool operator<(const InternString& other) const noexcept { return value < other.value; }
+
+    explicit operator bool() const noexcept { return (value != npos.value); }
 };
 
 struct Instruction::Payload {
     struct Link {
-        sync::ObjectID target; // can be nothing = null
+        GlobalKey target; // can be nothing = null
         InternString target_table;
     };
 
@@ -194,7 +192,7 @@ struct Instruction::Payload {
 };
 
 struct Instruction::ObjectInstructionBase {
-    sync::ObjectID object;
+    GlobalKey object;
 };
 
 struct Instruction::FieldInstructionBase
@@ -356,7 +354,7 @@ struct InstructionHandler {
 #undef REALM_DEFINE_INSTRUCTION_GET_TYPE
 
 template <class T>
-Instruction::Instruction(T instr): type(GetInstructionType<T>::value)
+Instruction::Instruction(T instr) : type(GetInstructionType<T>::value)
 {
     new(&m_storage) T(std::move(instr));
 }
@@ -366,7 +364,21 @@ inline auto Instruction::visit(F&& lambda)
 {
     switch (type) {
 #define REALM_VISIT_INSTRUCTION(X) \
-        case Type::X: return lambda(get_as<Instruction::X>());
+        case Type::X: \
+            return lambda(get_as<Instruction::X>());
+        REALM_FOR_EACH_INSTRUCTION_TYPE(REALM_VISIT_INSTRUCTION)
+#undef REALM_VISIT_INSTRUCTION
+    }
+    REALM_UNREACHABLE();
+}
+
+template <class F>
+inline auto Instruction::visit(F&& lambda) const
+{
+    switch (type) {
+#define REALM_VISIT_INSTRUCTION(X) \
+        case Type::X: \
+            return lambda(get_as<Instruction::X>());
         REALM_FOR_EACH_INSTRUCTION_TYPE(REALM_VISIT_INSTRUCTION)
 #undef REALM_VISIT_INSTRUCTION
     }
@@ -398,12 +410,6 @@ inline bool Instruction::Payload::is_null() const
 inline bool Instruction::Payload::is_implicit_null() const
 {
     return type == -2;
-}
-
-template <class F>
-auto Instruction::visit(F&& lambda) const
-{
-    return const_cast<Instruction*>(this)->visit(std::forward<F>(lambda));
 }
 
 std::ostream& operator<<(std::ostream&, Instruction::Type);

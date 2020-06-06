@@ -59,6 +59,7 @@ struct Changeset {
     Changeset& operator=(const Changeset&) = delete;
 
     InternString intern_string(StringData); // Slow!
+    InternString find_string(StringData) const noexcept; // Slow!
     StringData string_data() const noexcept;
 
     StringBuffer& string_buffer() noexcept;
@@ -160,10 +161,28 @@ struct Changeset {
     /// version produced by this changeset on the client on which this changeset
     /// originated, but may for instance be the version produced on the server
     /// after receiving and re-sending this changeset to another client.
+    ///
+    /// FIXME: The explanation above is confusing. The truth is that if this
+    /// changeset was received by a client from the server, then \a version is
+    /// the version that was produced on the server by this changeset.
+    ///
+    /// FIXME: This property, as well as \a last_integrated_remote_version, \a
+    /// origin_timestamp, and \a origin_file_ident should probably be removed
+    /// from this class, as they are not a logical part of a changeset, and also
+    /// are difficult to document without knowing more about what context the
+    /// changeset object occurs. Also, functions such as
+    /// InstructionApplier::apply() that a changeset as argument, but do not
+    /// care about those properties.
     version_type version = 0;
 
     /// On clients, the last integrated server version. On the server, this is
     /// the last integrated client version.
+    ///
+    /// FIXME: The explanation above is confusing. The truth is that if this
+    /// changeset was received by a client from the server, then \a
+    /// last_integrated_remote_version is the last client version that was
+    /// integrated by the server at the server version referencened by \a
+    /// version.
     version_type last_integrated_remote_version = 0;
 
     /// Timestamp at origin when the original untransformed changeset was
@@ -256,7 +275,6 @@ struct Changeset::IteratorImpl {
     using difference_type = std::ptrdiff_t;
 
     IteratorImpl() : m_pos(0) {}
-    IteratorImpl(const IteratorImpl& other) : m_inner(other.m_inner), m_pos(other.m_pos) {}
     template <bool is_const_ = is_const>
     IteratorImpl(const IteratorImpl<false>& other, std::enable_if_t<is_const_>* = nullptr)
         : m_inner(other.m_inner), m_pos(other.m_pos) {}
@@ -370,7 +388,7 @@ struct Changeset::Reflector {
     struct Tracer {
         virtual void name(StringData) = 0;
         virtual void field(StringData, StringData) = 0;
-        virtual void field(StringData, ObjectID) = 0;
+        virtual void field(StringData, GlobalKey) = 0;
         virtual void field(StringData, int64_t) = 0;
         virtual void field(StringData, double) = 0;
         virtual void after_each() {}
@@ -399,7 +417,7 @@ struct Changeset::Printer : Changeset::Reflector::Tracer {
     // ChangesetReflector::Tracer interface:
     void name(StringData) final;
     void field(StringData, StringData) final;
-    void field(StringData, ObjectID) final;
+    void field(StringData, GlobalKey) final;
     void field(StringData, int64_t) final;
     void field(StringData, double) final;
     void after_each() final;

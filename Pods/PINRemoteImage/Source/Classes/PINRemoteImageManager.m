@@ -15,6 +15,7 @@
 
 #import "PINAlternateRepresentationProvider.h"
 #import "PINRemoteImage.h"
+#import "PINRemoteImageManagerConfiguration.h"
 #import "PINRemoteLock.h"
 #import "PINProgressiveImage.h"
 #import "PINRemoteImageCallbacks.h"
@@ -33,6 +34,7 @@
 #import "NSData+ImageDetectors.h"
 #import "PINImage+DecodedImage.h"
 #import "PINImage+ScaledImage.h"
+#import "PINRemoteImageManager+Private.h"
 #import "NSHTTPURLResponse+MaxAge.h"
 
 #if USE_PINCACHE
@@ -42,8 +44,7 @@
 #endif
 
 
-#define PINRemoteImageManagerDefaultTimeout            30.0
-#define PINRemoteImageHTTPMaximumConnectionsPerHost    UINT16_MAX
+#define PINRemoteImageManagerDefaultTimeout 30.0
 //A limit of 200 characters is chosen because PINDiskCache
 //may expand the length by encoding certain characters
 #define PINRemoteImageManagerCacheKeyMaxLength 200
@@ -114,6 +115,7 @@ typedef void (^PINRemoteImageManagerDataCompletion)(NSData *data, NSURLResponse 
 @property (nonatomic, strong) PINURLSessionManager *sessionManager;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, __kindof PINRemoteImageTask *> *tasks;
 @property (nonatomic, strong) NSHashTable <NSUUID *> *canceledTasks;
+@property (nonatomic, strong) NSHashTable <NSUUID *> *UUIDs;
 @property (nonatomic, strong) NSArray <NSNumber *> *progressThresholds;
 @property (nonatomic, assign) BOOL shouldBlurProgressive;
 @property (nonatomic, assign) CGSize maxProgressiveRenderSize;
@@ -124,7 +126,7 @@ typedef void (^PINRemoteImageManagerDataCompletion)(NSData *data, NSURLResponse 
 @property (nonatomic, assign) float highQualityBPSThreshold;
 @property (nonatomic, assign) float lowQualityBPSThreshold;
 @property (nonatomic, assign) BOOL shouldUpgradeLowQualityImages;
-@property (nonatomic, strong) PINRemoteImageManagerMetrics metricsCallback;
+@property (nonatomic, strong) PINRemoteImageManagerMetrics metricsCallback API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0));
 @property (nonatomic, copy) PINRemoteImageManagerAuthenticationChallenge authenticationChallengeHandler;
 @property (nonatomic, copy) id<PINRequestRetryStrategy> (^retryStrategyCreationBlock)(void);
 @property (nonatomic, copy) PINRemoteImageManagerRequestConfigurationHandler requestConfigurationHandler;
@@ -166,21 +168,33 @@ static dispatch_once_t sharedDispatchToken;
     return [self initWithSessionConfiguration:nil];
 }
 
-- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration
 {
-    return [self initWithSessionConfiguration:configuration alternativeRepresentationProvider:nil];
+    return [self initWithSessionConfiguration:sessionConfiguration alternativeRepresentationProvider:nil];
 }
 
-- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration alternativeRepresentationProvider:(id <PINRemoteImageManagerAlternateRepresentationProvider>)alternateRepProvider
+- (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration alternativeRepresentationProvider:(id <PINRemoteImageManagerAlternateRepresentationProvider>)alternateRepProvider
 {
-    return [self initWithSessionConfiguration:configuration alternativeRepresentationProvider:alternateRepProvider imageCache:nil];
+    return [self initWithSessionConfiguration:sessionConfiguration alternativeRepresentationProvider:alternateRepProvider imageCache:nil managerConfiguration:nil];
 }
 
-- (nonnull instancetype)initWithSessionConfiguration:(nullable NSURLSessionConfiguration *)configuration
-                   alternativeRepresentationProvider:(nullable id <PINRemoteImageManagerAlternateRepresentationProvider>)alternateRepProvider
-                                          imageCache:(nullable id<PINRemoteImageCaching>)imageCache
+- (nonnull instancetype)initWithSessionConfiguration:(nullable NSURLSessionConfiguration *)sessionConfiguration
+                   alternativeRepresentationProvider:(nullable id <PINRemoteImageManagerAlternateRepresentationProvider>)alternateRepDelegate
+                                          imageCache:(nullable id<PINRemoteImageCaching>)imageCache {
+    return [self initWithSessionConfiguration:sessionConfiguration alternativeRepresentationProvider:alternateRepDelegate imageCache:imageCache managerConfiguration:nil];
+}
+
+-(nonnull instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration
+                  alternativeRepresentationProvider:(id<PINRemoteImageManagerAlternateRepresentationProvider>)alternateRepProvider
+                                         imageCache:(id<PINRemoteImageCaching>)imageCache
+                               managerConfiguration:(nullable PINRemoteImageManagerConfiguration *)managerConfiguration
 {
     if (self = [super init]) {
+        PINRemoteImageManagerConfiguration *configuration = managerConfiguration;
+        if (!configuration) {
+            configuration = [[PINRemoteImageManagerConfiguration alloc] init];
+        }
+        
         if (imageCache) {
             self.cache = imageCache;
         } else if (PINRemoteImageManagerSubclassOverridesSelector([self class], @selector(defaultImageCache))) {
@@ -191,7 +205,7 @@ static dispatch_once_t sharedDispatchToken;
         } else {
             self.cache = [[self class] defaultImageCache];
         }
-
+        
         if ([self.cache respondsToSelector:@selector(setObjectOnDisk:forKey:withAgeLimit:)] &&
                 [self.cache respondsToSelector:@selector(setObjectInMemory:forKey:withCost:withAgeLimit:)] &&
                 [self.cache respondsToSelector:@selector(diskCacheIsTTLCache)] &&
@@ -199,8 +213,8 @@ static dispatch_once_t sharedDispatchToken;
             _diskCacheTTLIsEnabled = [self.cache diskCacheIsTTLCache];
             _memoryCacheTTLIsEnabled = [self.cache memoryCacheIsTTLCache];
         }
-
-        _sessionConfiguration = [configuration copy];
+        
+        _sessionConfiguration = [sessionConfiguration copy];
         if (!_sessionConfiguration) {
             _sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
             _sessionConfiguration.timeoutIntervalForRequest = PINRemoteImageManagerDefaultTimeout;
@@ -211,22 +225,23 @@ static dispatch_once_t sharedDispatchToken;
         
         _callbackQueue = dispatch_queue_create("PINRemoteImageManagerCallbackQueue", DISPATCH_QUEUE_CONCURRENT);
         _lock = [[PINRemoteLock alloc] initWithName:@"PINRemoteImageManager"];
-
-        _concurrentOperationQueue = [[PINOperationQueue alloc] initWithMaxConcurrentOperations:[[NSProcessInfo processInfo] activeProcessorCount] * 2];
-        _urlSessionTaskQueue = [PINRemoteImageDownloadQueue queueWithMaxConcurrentDownloads:10];
+        
+        _concurrentOperationQueue = [[PINOperationQueue alloc] initWithMaxConcurrentOperations: configuration.maxConcurrentOperations];
+        _urlSessionTaskQueue = [PINRemoteImageDownloadQueue queueWithMaxConcurrentDownloads:configuration.maxConcurrentDownloads];
         
         self.sessionManager = [[PINURLSessionManager alloc] initWithSessionConfiguration:_sessionConfiguration];
         self.sessionManager.delegate = self;
         
-        self.estimatedRemainingTimeThreshold = 0.1;
-      
-        _highQualityBPSThreshold = 500000;
-        _lowQualityBPSThreshold = 50000; // approximately edge speeds
-        _shouldUpgradeLowQualityImages = NO;
-        _shouldBlurProgressive = YES;
-        _maxProgressiveRenderSize = CGSizeMake(1024, 1024);
+        self.estimatedRemainingTimeThreshold = configuration.estimatedRemainingTimeThreshold;
+        
+        _highQualityBPSThreshold = configuration.highQualityBPSThreshold;
+        _lowQualityBPSThreshold = configuration.lowQualityBPSThreshold;
+        _shouldUpgradeLowQualityImages = configuration.shouldUpgradeLowQualityImages;
+        _shouldBlurProgressive = configuration.shouldBlurProgressive;
+        _maxProgressiveRenderSize = configuration.maxProgressiveRenderSize;
         self.tasks = [[NSMutableDictionary alloc] init];
         self.canceledTasks = [[NSHashTable alloc] initWithOptions:NSHashTableWeakMemory capacity:5];
+        self.UUIDs = [NSHashTable weakObjectsHashTable];
         
         if (alternateRepProvider == nil) {
             _defaultAlternateRepresentationProvider = [[PINAlternateRepresentationProvider alloc] init];
@@ -244,6 +259,11 @@ static dispatch_once_t sharedDispatchToken;
 
 - (id<PINRequestRetryStrategy>)defaultRetryStrategy {
     return [[PINRequestExponentialRetryStrategy alloc] initWithRetryMaxCount:3 delayBase:4];
+}
+
+- (void)dealloc
+{
+    [self.sessionManager invalidateSessionAndCancelTasks];
 }
 
 - (id<PINRemoteImageCaching>)defaultImageCache {
@@ -292,9 +312,7 @@ static dispatch_once_t sharedDispatchToken;
         }
         return data;
     } keyEncoder:nil keyDecoder:nil ttlCache:enableTtl];
-    if (enableTtl) {
-        [pinCache.memoryCache setTtlCache:YES]; // https://github.com/pinterest/PINCache/issues/226
-    }
+
     return pinCache;
 #else
     return [[PINRemoteImageBasicCache alloc] init];
@@ -679,6 +697,8 @@ static dispatch_once_t sharedDispatchToken;
             }
             [task addCallbacksWithCompletionBlock:completion progressImageBlock:progressImage progressDownloadBlock:progressDownload withUUID:UUID];
             [self.tasks setObject:task forKey:key];
+            // Relax :), task retain the UUID for us, it's ok to have a weak reference to UUID here.
+            [self.UUIDs addObject:UUID];
         
             NSAssert(taskClass == [task class], @"Task class should be the same!");
         [self unlock];
@@ -1041,6 +1061,23 @@ static dispatch_once_t sharedDispatchToken;
     } withPriority:PINOperationQueuePriorityHigh];
 }
 
+- (void)cancelAllTasks
+{
+    [self cancelAllTasksAndStoreResumeData:NO];
+}
+
+- (void)cancelAllTasksAndStoreResumeData:(BOOL)storeResumeData
+{
+    [_concurrentOperationQueue scheduleOperation:^{
+        [self lock];
+            NSArray<NSUUID *> *uuidToTask = [self.UUIDs allObjects];
+        [self unlock];
+        for (NSUUID *uuid in uuidToTask) {
+            [self cancelTaskWithUUID:uuid storeResumeData:storeResumeData];
+        }
+    } withPriority:PINOperationQueuePriorityHigh];
+}
+
 - (void)setPriority:(PINRemoteImageManagerPriority)priority ofTaskWithUUID:(NSUUID *)UUID
 {
     if (UUID == nil) {
@@ -1212,7 +1249,7 @@ static dispatch_once_t sharedDispatchToken;
     [task didReceiveData:data];
 }
 
-- (void)didCollectMetrics:(nonnull NSURLSessionTaskMetrics *)metrics forURL:(nonnull NSURL *)url
+- (void)didCollectMetrics:(nonnull NSURLSessionTaskMetrics *)metrics forURL:(nonnull NSURL *)url API_AVAILABLE(macosx(10.12), ios(10.0), watchos(3.0), tvos(10.0))
 {
     [self lock];
         if (self.metricsCallback) {

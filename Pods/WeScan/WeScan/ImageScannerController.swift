@@ -43,7 +43,7 @@ public protocol ImageScannerControllerDelegate: NSObjectProtocol {
 public final class ImageScannerController: UINavigationController {
     
     /// The object that acts as the delegate of the `ImageScannerController`.
-    weak public var imageScannerDelegate: ImageScannerControllerDelegate?
+    public weak var imageScannerDelegate: ImageScannerControllerDelegate?
     
     // MARK: - Life Cycle
     
@@ -55,13 +55,21 @@ public final class ImageScannerController: UINavigationController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
     
     public required init(image: UIImage? = nil, delegate: ImageScannerControllerDelegate? = nil) {
         super.init(rootViewController: ScannerViewController())
         
         self.imageScannerDelegate = delegate
         
-        navigationBar.tintColor = .black
+        if #available(iOS 13.0, *) {
+            navigationBar.tintColor = .label
+        } else {
+            navigationBar.tintColor = .black
+        }
         navigationBar.isTranslucent = false
         self.view.addSubview(blackFlashView)
         setupConstraints()
@@ -74,35 +82,32 @@ public final class ImageScannerController: UINavigationController {
             // Whether or not we detect a quad, present the edit view controller after attempting to detect a quad.
             // *** Vision *requires* a completion block to detect rectangles, but it's instant.
             // *** When using Vision, we'll present the normal edit view controller first, then present the updated edit view controller later.
-            defer {
-                let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
-                setViewControllers([editViewController], animated: false)
-            }
-            
+           
             guard let ciImage = CIImage(image: image) else { return }
-            
+            let orientation = CGImagePropertyOrientation(image.imageOrientation)
+            let orientedImage = ciImage.oriented(forExifOrientation: Int32(orientation.rawValue))
             if #available(iOS 11.0, *) {
+                
                 // Use the VisionRectangleDetector on iOS 11 to attempt to find a rectangle from the initial image.
-                VisionRectangleDetector.rectangle(forImage: ciImage) { (quad) in
-                    detectedQuad = quad
-                    detectedQuad?.reorganize()
-
+                VisionRectangleDetector.rectangle(forImage: ciImage, orientation: orientation) { (quad) in
+                    detectedQuad = quad?.toCartesian(withHeight: orientedImage.extent.height)
                     let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
                     self.setViewControllers([editViewController], animated: true)
                 }
             } else {
                 // Use the CIRectangleDetector on iOS 10 to attempt to find a rectangle from the initial image.
-                detectedQuad = CIRectangleDetector.rectangle(forImage: ciImage)
-                detectedQuad?.reorganize()
+                detectedQuad = CIRectangleDetector.rectangle(forImage: ciImage)?.toCartesian(withHeight: orientedImage.extent.height)
+                let editViewController = EditScanViewController(image: image, quad: detectedQuad, rotateImage: false)
+                setViewControllers([editViewController], animated: false)
             }
         }
     }
-    
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+
+    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -117,10 +122,6 @@ public final class ImageScannerController: UINavigationController {
         NSLayoutConstraint.activate(blackFlashViewConstraints)
     }
     
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
-    
     internal func flashToBlack() {
         view.bringSubviewToFront(blackFlashView)
         blackFlashView.isHidden = false
@@ -129,25 +130,72 @@ public final class ImageScannerController: UINavigationController {
             self.blackFlashView.isHidden = true
         }
     }
-    
 }
 
-/// Data structure containing information about a scan.
+/// Data structure containing information about a scan, including both the image and an optional PDF.
+public struct ImageScannerScan {
+    public enum ImageScannerError: Error {
+        case failedToGeneratePDF
+    }
+    
+    public var image: UIImage
+    
+    public func generatePDFData(completion: @escaping (Result<Data, ImageScannerError>) -> Void) {
+        DispatchQueue.global(qos: .userInteractive).async {
+            if let pdfData = self.image.pdfData() {
+                completion(.success(pdfData))
+            } else {
+                completion(.failure(.failedToGeneratePDF))
+            }
+        }
+        
+    }
+    
+    mutating func rotate(by rotationAngle: Measurement<UnitAngle>) {
+        guard rotationAngle.value != 0, rotationAngle.value != 360 else { return }
+        image = image.rotated(by: rotationAngle) ?? image
+    }
+}
+
+/// Data structure containing information about a scanning session.
+/// Includes the original scan, cropped scan, detected rectangle, and whether the user selected the enhanced scan. May also include an enhanced scan if no errors were encountered.
 public struct ImageScannerResults {
     
-    /// The original image taken by the user, prior to the cropping applied by WeScan.
-    public var originalImage: UIImage
+    /// The original scan taken by the user, prior to the cropping applied by WeScan.
+    public var originalScan: ImageScannerScan
     
-    /// The deskewed and cropped orignal image using the detected rectangle, without any filters.
-    public var scannedImage: UIImage
+    /// The deskewed and cropped scan using the detected rectangle, without any filters.
+    public var croppedScan: ImageScannerScan
     
-    /// The enhanced image, passed through an Adaptive Thresholding function. This image will always be grayscale and may not always be available.
-    public var enhancedImage: UIImage?
+    /// The enhanced scan, passed through an Adaptive Thresholding function. This image will always be grayscale and may not always be available.
+    public var enhancedScan: ImageScannerScan?
     
-    /// Whether the user wants to use the enhanced image or not. The `enhancedImage`, for use with OCR or similar uses, may still be available even if it has not been selected by the user.
-    public var doesUserPreferEnhancedImage: Bool
+    /// Whether the user selected the enhanced scan or not.
+    /// The `enhancedScan` may still be available even if it has not been selected by the user.
+    public var doesUserPreferEnhancedScan: Bool
     
     /// The detected rectangle which was used to generate the `scannedImage`.
     public var detectedRectangle: Quadrilateral
     
+    @available(*, unavailable, renamed: "originalScan")
+    public var originalImage: UIImage?
+    
+    @available(*, unavailable, renamed: "croppedScan")
+    public var scannedImage: UIImage?
+    
+    @available(*, unavailable, renamed: "enhancedScan")
+    public var enhancedImage: UIImage?
+    
+    @available(*, unavailable, renamed: "doesUserPreferEnhancedScan")
+    public var doesUserPreferEnhancedImage: Bool = false
+    
+    init(detectedRectangle: Quadrilateral, originalScan: ImageScannerScan, croppedScan: ImageScannerScan, enhancedScan: ImageScannerScan?, doesUserPreferEnhancedScan: Bool = false) {
+        self.detectedRectangle = detectedRectangle
+        
+        self.originalScan = originalScan
+        self.croppedScan = croppedScan
+        self.enhancedScan = enhancedScan
+        
+        self.doesUserPreferEnhancedScan = doesUserPreferEnhancedScan
+    }
 }

@@ -11,7 +11,7 @@ import Foundation
 
 /// Class used to detect rectangles from an image.
 @available(iOS 11.0, *)
-struct VisionRectangleDetector {
+enum VisionRectangleDetector {
 
     private static func completeImageRequest(for request: VNImageRequestHandler, width: CGFloat, height: CGFloat, completion: @escaping ((Quadrilateral?) -> Void)) {
         // Create the rectangle request, and, if found, return the biggest rectangle (else return nothing).
@@ -78,4 +78,11 @@ struct VisionRectangleDetector {
             height: image.extent.height, completion: completion)
     }
     
+    static func rectangle(forImage image: CIImage, orientation: CGImagePropertyOrientation, completion: @escaping ((Quadrilateral?) -> Void)) {
+        let imageRequestHandler = VNImageRequestHandler(ciImage: image, orientation: orientation, options: [:])
+        let orientedImage = image.oriented(orientation)
+        VisionRectangleDetector.completeImageRequest(
+            for: imageRequestHandler, width: orientedImage.extent.width,
+            height: orientedImage.extent.height, completion: completion)
+    }
 }

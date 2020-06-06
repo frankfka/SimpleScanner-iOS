@@ -17,7 +17,7 @@ final class EditScanCornerView: UIView {
     private var image: UIImage?
     private(set) var isHighlighted = false
     
-    lazy private var circleLayer: CAShapeLayer = {
+    private lazy var circleLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.fillColor = UIColor.clear.cgColor
         layer.strokeColor = UIColor.white.cgColor

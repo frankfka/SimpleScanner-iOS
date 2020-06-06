@@ -64,19 +64,19 @@ final class QuadrilateralView: UIView {
         }
     }
     
-    lazy private var topLeftCornerView: EditScanCornerView = {
+    private lazy var topLeftCornerView: EditScanCornerView = {
         return EditScanCornerView(frame: CGRect(origin: .zero, size: cornerViewSize), position: .topLeft)
     }()
     
-    lazy private var topRightCornerView: EditScanCornerView = {
+    private lazy var topRightCornerView: EditScanCornerView = {
         return EditScanCornerView(frame: CGRect(origin: .zero, size: cornerViewSize), position: .topRight)
     }()
     
-    lazy private var bottomRightCornerView: EditScanCornerView = {
+    private lazy var bottomRightCornerView: EditScanCornerView = {
         return EditScanCornerView(frame: CGRect(origin: .zero, size: cornerViewSize), position: .bottomRight)
     }()
     
-    lazy private var bottomLeftCornerView: EditScanCornerView = {
+    private lazy var bottomLeftCornerView: EditScanCornerView = {
         return EditScanCornerView(frame: CGRect(origin: .zero, size: cornerViewSize), position: .bottomLeft)
     }()
     
@@ -90,7 +90,7 @@ final class QuadrilateralView: UIView {
         commonInit()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

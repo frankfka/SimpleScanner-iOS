@@ -13,15 +13,14 @@ final class ZoomGestureController {
     
     private let image: UIImage
     private let quadView: QuadrilateralView
-    
+    private var previousPanPosition: CGPoint?
+    private var closestCorner: CornerPosition?
+
     init(image: UIImage, quadView: QuadrilateralView) {
         self.image = image
         self.quadView = quadView
     }
-    
-    private var previousPanPosition: CGPoint?
-    private var closestCorner: CornerPosition?
-    
+
     @objc func handle(pan: UIGestureRecognizer) {
         guard let drawnQuad = quadView.quad else {
             return

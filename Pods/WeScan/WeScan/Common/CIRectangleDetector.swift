@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 
 /// Class used to detect rectangles from an image.
-struct CIRectangleDetector {
+enum CIRectangleDetector {
     
     static let rectangleDetector = CIDetector(ofType: CIDetectorTypeRectangle,
                                               context: CIContext(options: nil),

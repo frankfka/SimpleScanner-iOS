@@ -37,6 +37,7 @@
 #import "PINRemoteImageMacros.h"
 #import "PINRemoteImageManager+Private.h"
 #import "PINRemoteImageManager.h"
+#import "PINRemoteImageManagerConfiguration.h"
 #import "PINRemoteImageManagerResult.h"
 #import "PINRemoteImageMemoryContainer.h"
 #import "PINRemoteImageProcessorTask.h"
