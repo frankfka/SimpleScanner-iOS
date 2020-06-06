@@ -21,14 +21,14 @@ class NewScanState {
     let dismissNewScanVC: Bool
 
     init(
-            pages: [PDFPage] = [],
-            state: ActivityState = .none,
-            error: UserFriendlyError? = nil,
-            showScanVC: Bool = false,
-            showPageActionsWithIndex: Int? = nil,
-            showPageWithIndex: Int? = nil,
-            dismissNewScanVC: Bool = false,
-            exportedPDF: PDF? = nil
+        pages: [PDFPage] = [],
+        state: ActivityState = .none,
+        error: UserFriendlyError? = nil,
+        showScanVC: Bool = false,
+        showPageActionsWithIndex: Int? = nil,
+        showPageWithIndex: Int? = nil,
+        dismissNewScanVC: Bool = false,
+        exportedPDF: PDF? = nil
     ) {
         self.state = state
         self.error = error
@@ -54,7 +54,7 @@ class NewScanState {
             // Add arrays to create new array
             return NewScanState(pages: self.pages + [action.new])
         case _ as AddPageErrorAction:
-            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.WritePageErrorMsg))
+            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: TextConstants.WritePageErrorMsg))
         case let action as SwitchPageAction:
             return switchPage(action, state)
         case let action as PageIconTappedAction:
@@ -68,7 +68,7 @@ class NewScanState {
         case let action as SaveDocumentSuccessAction:
             return NewScanState(exportedPDF: action.pdf)
         case _ as SaveDocumentErrorAction:
-            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.ExportPDFErrorMsg))
+            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: TextConstants.ExportPDFErrorMsg))
         case _ as NewScanNavigateAwayAction:
             return didNavigateAway(action, state)
         default:

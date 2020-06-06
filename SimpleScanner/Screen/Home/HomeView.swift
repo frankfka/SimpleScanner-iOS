@@ -20,7 +20,8 @@ class HomeView: UIView {
     private let showPDFTapped: TapIndexCallback
     private let showPDFOptionsTapped: TapIndexCallback
 
-    init(viewModel: HomeViewModel, newScanTapped: @escaping VoidCallback, showPDFTapped: @escaping TapIndexCallback, showPDFOptionsTapped: @escaping TapIndexCallback) {
+    init(viewModel: HomeViewModel, newScanTapped: @escaping VoidCallback,
+         showPDFTapped: @escaping TapIndexCallback, showPDFOptionsTapped: @escaping TapIndexCallback) {
         self.vm = viewModel
         self.newScanTapped = newScanTapped
         self.showPDFTapped = showPDFTapped
@@ -48,11 +49,11 @@ extension HomeView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return View.DocumentCollectionViewSize(frameWidth: collectionView.frame.width)
+        return ViewConstants.DocumentCollectionViewSize(frameWidth: collectionView.frame.width)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let documentCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.DocumentCollectionCellReuseID, for: indexPath) as! PDFCollectionViewCell
+        let documentCell = collectionView.dequeueReusableCell(withReuseIdentifier: ViewConstants.DocumentCollectionCellReuseID, for: indexPath) as! PDFCollectionViewCell
         let cellModel = PDFCollectionViewCellModel(from: vm.documents[indexPath.row], index: indexPath.row)
         documentCell.loadCell(with: cellModel, onOptionsTap: showPDFOptionsTapped, onThumbnailTap: showPDFTapped)
         return documentCell
@@ -75,14 +76,14 @@ extension HomeView {
         bottomBar = UIView()
         bottomBar.backgroundColor = Color.BodyBackgroundContrast
         // New Scan Button
-        newScanButton = TextButton(text: Text.NewScanButton, onTap: newScanTapped)
+        newScanButton = TextButton(text: TextConstants.NewScanButton, onTap: newScanTapped)
         bottomBar.addSubview(newScanButton)
         addSubview(bottomBar)
         newScanButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().inset(View.SectionVerticalMargin)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(View.SectionVerticalMargin)
-            make.left.equalToSuperview().inset(View.ViewPadding)
-            make.right.equalToSuperview().inset(View.ViewPadding)
+            make.top.equalToSuperview().inset(ViewConstants.SectionVerticalMargin)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(ViewConstants.SectionVerticalMargin)
+            make.left.equalToSuperview().inset(ViewConstants.ViewPadding)
+            make.right.equalToSuperview().inset(ViewConstants.ViewPadding)
             make.centerX.equalToSuperview()
         }
         bottomBar.sizeToFit()
@@ -95,13 +96,13 @@ extension HomeView {
 
     private func initDocumentCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = View.DocumentCollectionViewSectionInsets
-        flowLayout.minimumLineSpacing = View.CollectionViewCellVerticalMargin
+        flowLayout.sectionInset = ViewConstants.DocumentCollectionViewSectionInsets
+        flowLayout.minimumLineSpacing = ViewConstants.CollectionViewCellVerticalMargin
         documentCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         documentCollectionView.backgroundColor = Color.BodyBackground
         documentCollectionView.delegate = self
         documentCollectionView.dataSource = self
-        documentCollectionView.register(PDFCollectionViewCell.self, forCellWithReuseIdentifier: View.DocumentCollectionCellReuseID)
+        documentCollectionView.register(PDFCollectionViewCell.self, forCellWithReuseIdentifier: ViewConstants.DocumentCollectionCellReuseID)
         addSubview(documentCollectionView)
         documentCollectionView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()

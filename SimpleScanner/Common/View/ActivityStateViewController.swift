@@ -7,7 +7,6 @@ import UIKit
 
 // Handles state by showing the proper animation
 extension UIViewController {
-
     func showAnimation(for state: ActivityState, with message: String? = nil) {
         // Handle State
         switch state {
@@ -19,5 +18,4 @@ extension UIViewController {
             HUD.loading(show: false)
         }
     }
-
 }

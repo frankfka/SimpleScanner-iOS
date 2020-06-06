@@ -17,15 +17,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         // Set up main navigation
         let mainNavController = UINavigationController(
-                rootViewController: HomeController()
+            rootViewController: HomeController()
         )
-        UINavigationBar.appearance().prefersLargeTitles = true
-        UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().backgroundColor = Color.BodyBackgroundContrast
-        UINavigationBar.appearance().tintColor = Color.NavTint
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.backgroundColor = Color.BodyBackgroundContrast
+            appearance.titleTextAttributes = [.foregroundColor: Color.NavTint]
+            appearance.largeTitleTextAttributes = [.foregroundColor: Color.NavTint]
+
+            UINavigationBar.appearance().tintColor = Color.NavTint
+            UINavigationBar.appearance().prefersLargeTitles = true
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().compactAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        } else {
+            UINavigationBar.appearance().prefersLargeTitles = true
+            UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().backgroundColor = Color.BodyBackgroundContrast
+            UINavigationBar.appearance().barTintColor = Color.NavTint
+            UINavigationBar.appearance().tintColor = Color.NavTint
+        }
         window?.rootViewController = mainNavController
-        window?.makeKeyAndVisible()
         window?.tintColor = Color.Primary
+        window?.makeKeyAndVisible()
         return true
     }
 

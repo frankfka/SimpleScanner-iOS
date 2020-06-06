@@ -66,11 +66,11 @@ extension NewScanView: UICollectionViewDelegate, UICollectionViewDataSource, UIC
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return View.PagesCollectionViewSize(frameWidth: collectionView.frame.width)
+        return ViewConstants.PagesCollectionViewSize(frameWidth: collectionView.frame.width)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: View.PageCollectionCellReuseID, for: indexPath) as! PageCollectionViewCell
+        let pageCell = collectionView.dequeueReusableCell(withReuseIdentifier: ViewConstants.PageCollectionCellReuseID, for: indexPath) as! PageCollectionViewCell
         let cellModel = PageCollectionViewCellModel(page: vm.pages[indexPath.row], pageNum: indexPath.row + 1, totalPages: vm.pages.count)
         pageCell.loadCell(with: cellModel)
         pageCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellTapped(sender:))))
@@ -144,14 +144,14 @@ extension NewScanView {
         bottomBar = UIView()
         bottomBar.backgroundColor = Color.BodyBackgroundContrast
         // New Scan Button
-        newScanButton = TextButton(text: Text.AddPageButton, onTap: newPageTapped)
+        newScanButton = TextButton(text: TextConstants.AddPageButton, onTap: newPageTapped)
         bottomBar.addSubview(newScanButton)
         addSubview(bottomBar)
         newScanButton.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().inset(View.SectionVerticalMargin)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(View.SectionVerticalMargin)
-            make.left.equalToSuperview().inset(View.ViewPadding)
-            make.right.equalToSuperview().inset(View.ViewPadding)
+            make.top.equalToSuperview().inset(ViewConstants.SectionVerticalMargin)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(ViewConstants.SectionVerticalMargin)
+            make.left.equalToSuperview().inset(ViewConstants.ViewPadding)
+            make.right.equalToSuperview().inset(ViewConstants.ViewPadding)
             make.centerX.equalToSuperview()
         }
         bottomBar.sizeToFit()
@@ -164,8 +164,8 @@ extension NewScanView {
 
     private func initPagesCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumLineSpacing = View.CollectionViewCellVerticalMargin
-        flowLayout.sectionInset = View.PagesCollectionViewSectionInsets
+        flowLayout.minimumLineSpacing = ViewConstants.CollectionViewCellVerticalMargin
+        flowLayout.sectionInset = ViewConstants.PagesCollectionViewSectionInsets
         pagesCollectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         pagesCollectionView.backgroundColor = Color.BodyBackground
         pagesCollectionView.dragInteractionEnabled = true
@@ -173,7 +173,7 @@ extension NewScanView {
         pagesCollectionView.dragDelegate = self
         pagesCollectionView.delegate = self
         pagesCollectionView.dataSource = self
-        pagesCollectionView.register(PageCollectionViewCell.self, forCellWithReuseIdentifier: View.PageCollectionCellReuseID)
+        pagesCollectionView.register(PageCollectionViewCell.self, forCellWithReuseIdentifier: ViewConstants.PageCollectionCellReuseID)
         addSubview(pagesCollectionView)
         pagesCollectionView.snp.makeConstraints { (make) in
             make.right.equalToSuperview()

@@ -13,7 +13,7 @@ class PageCollectionViewCellModel {
     let pageLabel: String
 
     init(page: PDFPage, pageNum: Int, totalPages: Int) {
-        self.pageLabel = Text.PageCellNumberLabel(currentPage: pageNum, totalPages: totalPages)
+        self.pageLabel = TextConstants.PageCellNumberLabel(currentPage: pageNum, totalPages: totalPages)
         self.thumbnail = ImageService.shared.getThumbnailForPage(page: page)
     }
 }
@@ -54,7 +54,7 @@ class PageCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
 
-        pageNumLabel.font = View.NormalFont
+        pageNumLabel.font = ViewConstants.NormalFont
         pageNumLabel.textColor = Color.Text
         pageNumLabel.textAlignment = .center
         thumbnailView.contentMode = .scaleAspectFit
@@ -64,7 +64,7 @@ class PageCollectionViewCell: UICollectionViewCell {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.equalTo(pageNumLabel.font.pointSize + View.TextLabelPadding)
+            make.height.equalTo(pageNumLabel.font.pointSize + ViewConstants.TextLabelPadding)
         }
         thumbnailView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()

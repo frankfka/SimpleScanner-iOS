@@ -5,7 +5,7 @@
 
 import UIKit
 
-class View {
+class ViewConstants {
 
     // General
     static let ViewPadding: CGFloat = 16

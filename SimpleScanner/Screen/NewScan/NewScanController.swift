@@ -28,7 +28,7 @@ class NewScanController: UIViewController {
 
     override func loadView() {
         // Title and Bar Button Items
-        self.title = Text.NewScanTitle
+        self.title = TextConstants.NewScanTitle
         self.cancelBarButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelTapped))
         self.saveBarButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped))
         navigationItem.leftBarButtonItem = cancelBarButton
@@ -143,10 +143,10 @@ extension NewScanController: StoreSubscriber {
         } else if let pageIndex = state.showPageActionsWithIndex {
             // Launch dialog with delete & view actions
             let actionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionsController.addAction(UIAlertAction(title: Text.PageActionsView, style: .default) { _ in
+            actionsController.addAction(UIAlertAction(title: TextConstants.PageActionsView, style: .default) { _ in
                 self.store.dispatch(PresentPageAction(index: pageIndex))
             })
-            actionsController.addAction(UIAlertAction(title: Text.Delete, style: .destructive) { _ in
+            actionsController.addAction(UIAlertAction(title: TextConstants.Delete, style: .destructive) { _ in
                 self.store.dispatch(DeletePageAction(index: pageIndex))
             })
             actionsController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))

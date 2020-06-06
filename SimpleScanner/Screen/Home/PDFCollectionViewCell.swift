@@ -23,7 +23,7 @@ class PDFCollectionViewCellModel {
             self.thumbnail = nil
         }
         fileName = pdf.fileName
-        dateCreated = Text.DateString(for: pdf.dateCreated)
+        dateCreated = TextConstants.DateString(for: pdf.dateCreated)
         self.index = index
     }
 }
@@ -39,7 +39,9 @@ class PDFCollectionViewCell: UICollectionViewCell {
     private var fileNameLabel: UILabel?
     private var dateCreatedLabel: UILabel?
 
-    func loadCell(with model: PDFCollectionViewCellModel, onOptionsTap: @escaping TapIndexCallback, onThumbnailTap: @escaping TapIndexCallback) {
+    func loadCell(with model: PDFCollectionViewCellModel,
+                  onOptionsTap: @escaping TapIndexCallback,
+                  onThumbnailTap: @escaping TapIndexCallback) {
         self.vm = model
         self.onOptionsTap = onOptionsTap
         self.onThumbnailTap = onThumbnailTap
@@ -73,29 +75,30 @@ class PDFCollectionViewCell: UICollectionViewCell {
         showMore.contentMode = .scaleAspectFit
         showMore.image = UIImage(named: "Show More")
 
-        nameLabel.font = View.NormalFont
+        nameLabel.font = ViewConstants.NormalFont
         nameLabel.textColor = Color.Text
         nameLabel.lineBreakMode = .byTruncatingTail
         nameLabel.numberOfLines = 1
 
-        dateLabel.font = View.SmallFont
+        dateLabel.font = ViewConstants.SmallFont
         dateLabel.textColor = Color.LightText
         dateLabel.lineBreakMode = .byTruncatingTail
         dateLabel.numberOfLines = 1
 
         textViews.addSubview(nameLabel)
         textViews.addSubview(dateLabel)
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalToSuperview()
-            make.height.equalTo(nameLabel.font.pointSize + View.TextLabelPadding)
+            make.height.equalTo(nameLabel.font.pointSize + ViewConstants.TextLabelPadding)
             make.bottom.equalTo(dateLabel.snp.top)
         }
         dateLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.height.equalTo(dateLabel.font.pointSize + View.TextLabelPadding)
+            make.height.equalTo(dateLabel.font.pointSize + ViewConstants.TextLabelPadding)
             make.bottom.equalToSuperview()
         }
 
@@ -106,13 +109,13 @@ class PDFCollectionViewCell: UICollectionViewCell {
         textViews.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.top.equalTo(thumbnailView.snp.bottom).offset(View.CollectionViewSubviewPadding)
+            make.top.equalTo(thumbnailView.snp.bottom).offset(ViewConstants.CollectionViewSubviewPadding)
         }
         thumbnailView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.bottom.equalTo(textViews.snp.top).offset(-View.CollectionViewSubviewPadding)
+            make.bottom.equalTo(textViews.snp.top).offset(-ViewConstants.CollectionViewSubviewPadding)
         }
         showMore.snp.makeConstraints { (make) in
             make.left.equalTo(textViews.snp.right)

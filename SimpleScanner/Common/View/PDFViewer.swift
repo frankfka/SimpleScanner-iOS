@@ -11,7 +11,7 @@ class PDFViewer {
     static func show(pdf: PDF, sender: UIViewController, dismissalDelegate: SimplePDFViewOnDismissDelegate? = nil, completion: VoidCallback? = nil) {
         let pdfViewer = SimplePDFViewController(url: getDocumentsDirectory().appendingPathComponent(pdf.fileName).appendingPathExtension("pdf"))
         pdfViewer.dismissalDelegate = dismissalDelegate
-        pdfViewer.errorMessage = Text.PDFViewError
+        pdfViewer.errorMessage = TextConstants.PDFViewError
         pdfViewer.exportPDFName = pdf.fileName
         pdfViewer.tint = Color.NavTint
         sender.present(pdfViewer, animated: true, completion: completion)

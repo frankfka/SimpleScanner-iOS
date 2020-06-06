@@ -17,9 +17,9 @@ class TextButton: UIView {
 
         button = UIButton(type: .system)
         button.backgroundColor = Color.Button
-        button.contentEdgeInsets = UIEdgeInsets(top: View.ButtonVerticalInset, left: View.ButtonHorizontalInset, bottom: View.ButtonVerticalInset, right: View.ButtonHorizontalInset)
-        button.layer.cornerRadius = View.ButtonRadius
-        button.titleLabel?.font = View.ButtonFont
+        button.contentEdgeInsets = UIEdgeInsets(top: ViewConstants.ButtonVerticalInset, left: ViewConstants.ButtonHorizontalInset, bottom: ViewConstants.ButtonVerticalInset, right: ViewConstants.ButtonHorizontalInset)
+        button.layer.cornerRadius = ViewConstants.ButtonRadius
+        button.titleLabel?.font = ViewConstants.ButtonFont
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         // Normal State
         button.setTitle(text, for: .normal)
@@ -28,7 +28,7 @@ class TextButton: UIView {
         addSubview(button)
 
         button.snp.makeConstraints { (make) in
-            make.height.equalTo(View.ButtonHeight)
+            make.height.equalTo(ViewConstants.ButtonHeight)
             make.edges.equalToSuperview()
         }
     }
