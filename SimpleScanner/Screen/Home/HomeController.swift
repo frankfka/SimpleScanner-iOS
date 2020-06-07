@@ -31,10 +31,10 @@ class HomeController: UIViewController {
     override func loadView() {
         self.title = TextConstants.HomeViewTitle
         homeView = HomeView(
-                viewModel: self.vm,
-                newScanTapped: newScanTapped,
-                showPDFTapped: showPDFTapped,
-                showPDFOptionsTapped: showPDFOptionsTapped
+            viewModel: self.vm,
+            newScanTapped: newScanTapped,
+            showPDFTapped: showPDFTapped,
+            showPDFOptionsTapped: showPDFOptionsTapped
         )
         self.view = homeView
     }
@@ -92,6 +92,7 @@ extension HomeController: StoreSubscriber {
             newScanVc.modalPresentationStyle = .fullScreen
             self.present(newScanVc, animated: true)
         } else if let docIndex = state.showDocumentOptionsWithIndex {
+            // Note: This breaks constraints - known bug in ios 13.5
             // Present document options if state calls for it
             let documentOptionsDialog = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             documentOptionsDialog.addAction(UIAlertAction(title: TextConstants.Delete, style: .destructive, handler: deletePDFTapped(index: docIndex)))
@@ -103,7 +104,6 @@ extension HomeController: StoreSubscriber {
         }
         // Update Views
         homeView.update(viewModel: self.vm)
-
     }
 
 }

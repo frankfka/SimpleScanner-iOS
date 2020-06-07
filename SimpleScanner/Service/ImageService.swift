@@ -28,7 +28,6 @@ class ImageService {
         let scale = UIScreen.main.scale * pdfScale
         let screenSize = CGSize(width: pageSize.width * scale,
                 height: pageSize.height * scale)
-
         return page.thumbnail(of: screenSize, for: imageMode)
     }
 

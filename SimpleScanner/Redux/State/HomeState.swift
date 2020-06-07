@@ -37,7 +37,7 @@ struct HomeState {
             return HomeState(state: .loading)
         case _ as DeleteDocumentSuccessAction:
             return reset()
-        case _ as DeleteDocumentErrorAction:
+        case _ as DeleteDocumentErrorAction: // TODO: reset after?
             return HomeState(state: .error)
         case _ as HomeNavigateAwayAction:
             return reset()

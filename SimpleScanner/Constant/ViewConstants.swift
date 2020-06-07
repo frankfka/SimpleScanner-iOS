@@ -53,7 +53,7 @@ class ViewConstants {
 
     // Computes width of a collection view cell
     private static func computeCollectionViewCellWidth(frameWidth: CGFloat, insets: UIEdgeInsets, itemsPerRow: CGFloat) -> CGFloat {
-        let paddingSpace = insets.left * (itemsPerRow + 1)
+        let paddingSpace = insets.left * itemsPerRow + insets.right * itemsPerRow
         let availableWidth = frameWidth - paddingSpace
         return availableWidth / itemsPerRow
     }

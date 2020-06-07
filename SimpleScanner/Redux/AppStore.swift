@@ -14,9 +14,9 @@ public let appStore = AppStore(reducer: appReducer, state: nil, middleware: allM
 func appReducer(action: Action, state: AppState?) -> AppState {
     // Default state if state does not exist
     let state = state ?? AppState(
-            homeState: HomeState(),
-            newScanState: NewScanState(),
-            documentState: DocumentState(all: PDFService.shared.getAllPDFs())
+        homeState: HomeState(),
+        newScanState: NewScanState(),
+        documentState: DocumentState(all: PDFService.shared.getAllPDFs().sorted(byKeyPath: "dateCreated", ascending: false))
     )
     return state.reduce(action: action, state: state)
 }

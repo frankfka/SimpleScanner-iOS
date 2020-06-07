@@ -15,9 +15,9 @@ public struct AppState: StateType {
 
     func reduce(action: Action, state: AppState) -> AppState {
         return AppState(
-                homeState: homeState.reduce(action: action, state: state.homeState),
-                newScanState: newScanState.reduce(action: action, state: state.newScanState),
-                documentState: documentState // Realm is self-updating, no reducer required
+            homeState: homeState.reduce(action: action, state: state.homeState),
+            newScanState: newScanState.reduce(action: action, state: state.newScanState),
+            documentState: documentState // Realm is self-updating, no reducer required
         )
     }
 }

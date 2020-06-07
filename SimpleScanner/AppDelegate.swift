@@ -19,23 +19,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mainNavController = UINavigationController(
             rootViewController: HomeController()
         )
+        let mainNavBar = mainNavController.navigationBar
+        mainNavBar.prefersLargeTitles = true
+        mainNavBar.isTranslucent = false
+        mainNavBar.backgroundColor = Color.BodyBackgroundContrast
+        mainNavBar.barTintColor = Color.NavTint
         if #available(iOS 13.0, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.backgroundColor = Color.BodyBackgroundContrast
-            appearance.titleTextAttributes = [.foregroundColor: Color.NavTint]
-            appearance.largeTitleTextAttributes = [.foregroundColor: Color.NavTint]
-
-            UINavigationBar.appearance().tintColor = Color.NavTint
-            UINavigationBar.appearance().prefersLargeTitles = true
-            UINavigationBar.appearance().standardAppearance = appearance
-            UINavigationBar.appearance().compactAppearance = appearance
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        } else {
-            UINavigationBar.appearance().prefersLargeTitles = true
-            UINavigationBar.appearance().isTranslucent = false
-            UINavigationBar.appearance().backgroundColor = Color.BodyBackgroundContrast
-            UINavigationBar.appearance().barTintColor = Color.NavTint
-            UINavigationBar.appearance().tintColor = Color.NavTint
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: Color.NavTint]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: Color.NavTint]
+            navBarAppearance.backgroundColor = Color.BodyBackgroundContrast
+            mainNavBar.standardAppearance = navBarAppearance
+            mainNavBar.scrollEdgeAppearance = navBarAppearance
         }
         window?.rootViewController = mainNavController
         window?.tintColor = Color.Primary

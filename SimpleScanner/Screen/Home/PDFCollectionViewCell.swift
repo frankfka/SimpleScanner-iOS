@@ -15,6 +15,7 @@ class PDFCollectionViewCellModel {
     let index: Int
 
     init(from pdf: PDF, index: Int) {
+        // Ideally we would want a cached lookup, so we're not getting multiple PDF documents at once..
         if let pdfDoc = PDFService.shared.getPDFDocument(fileName: pdf.fileName),
            let thumbnail = ImageService.shared.getThumbnailForDocument(pdf: pdfDoc) {
             self.thumbnail = thumbnail
@@ -87,7 +88,6 @@ class PDFCollectionViewCell: UICollectionViewCell {
 
         textViews.addSubview(nameLabel)
         textViews.addSubview(dateLabel)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
@@ -106,23 +106,22 @@ class PDFCollectionViewCell: UICollectionViewCell {
         mainView.addSubview(showMore)
         mainView.addSubview(textViews)
 
+        thumbnailView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+        }
         textViews.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.bottom.equalToSuperview()
             make.top.equalTo(thumbnailView.snp.bottom).offset(ViewConstants.CollectionViewSubviewPadding)
         }
-        thumbnailView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalTo(textViews.snp.top).offset(-ViewConstants.CollectionViewSubviewPadding)
-        }
         showMore.snp.makeConstraints { (make) in
             make.left.equalTo(textViews.snp.right)
             make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(16)
-            make.width.equalTo(16)
+            make.bottom.equalToSuperview().offset(-ViewConstants.CollectionViewSubviewPadding * 2)
+            make.top.equalTo(thumbnailView.snp.bottom).offset(ViewConstants.CollectionViewSubviewPadding * 2)
+            make.width.equalTo(showMore.snp.height)
         }
         thumbnailView.isUserInteractionEnabled = true
         thumbnailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(thumbnailTapped)))

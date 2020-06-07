@@ -9,6 +9,7 @@ import SnapKit
 class HomeView: UIView {
 
     private var vm: HomeViewModel
+    private var prevDocCount: Int
 
     // UI
     private var newScanButton: TextButton!
@@ -26,6 +27,7 @@ class HomeView: UIView {
         self.newScanTapped = newScanTapped
         self.showPDFTapped = showPDFTapped
         self.showPDFOptionsTapped = showPDFOptionsTapped
+        self.prevDocCount = vm.documents.count
         super.init(frame: CGRect.zero)
         initSubviews()
     }
@@ -35,8 +37,13 @@ class HomeView: UIView {
     }
 
     func update(viewModel: HomeViewModel) {
+        if self.prevDocCount != viewModel.documents.count {
+            // Refresh collectionview only if we've changed the # of docs
+            // Ideally we would implement comparable to diff, so we don't have to refresh everything
+            documentCollectionView.reloadData()
+            self.prevDocCount = viewModel.documents.count
+        }
         self.vm = viewModel
-        documentCollectionView.reloadData()
     }
 
 }

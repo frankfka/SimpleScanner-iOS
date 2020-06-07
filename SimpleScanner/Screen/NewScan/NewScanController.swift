@@ -78,9 +78,11 @@ class NewScanController: UIViewController {
     @objc private func saveTapped() {
         let saveDialog = SavePDFDialog(presentingVC: self) { fileName in
             // Dispatch the save action with the specified file name
-            self.store.dispatch(SaveDocumentPressedAction(
+            self.store.dispatch(
+                SaveDocumentPressedAction(
                     pages: self.store.state.newScanState.pages,
-                    fileName: fileName)
+                    fileName: fileName
+                )
             )
         }
         saveDialog.display()
@@ -99,7 +101,7 @@ extension NewScanController: ImageScannerControllerDelegate {
         if let enhancedImage = results.enhancedScan?.image, results.doesUserPreferEnhancedScan {
             newPage = enhancedImage
         } else {
-            newPage = results.originalScan.image
+            newPage = results.croppedScan.image
         }
         store.dispatch(AddPageScanSuccessAction(new: newPage))
         scanner.dismiss(animated: true)
@@ -135,9 +137,6 @@ extension NewScanController: StoreSubscriber {
         } else if state.showScanVC {
             // Create and launch a WeScan controller
             let scannerVC = ImageScannerController()
-            scannerVC.navigationBar.backgroundColor = .white
-            scannerVC.navigationBar.prefersLargeTitles = false
-            scannerVC.navigationBar.tintColor = Color.NavTint
             scannerVC.imageScannerDelegate = self
             present(scannerVC, animated: true)
         } else if let pageIndex = state.showPageActionsWithIndex {
