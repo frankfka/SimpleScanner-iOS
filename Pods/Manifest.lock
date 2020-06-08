@@ -22,7 +22,7 @@ PODS:
   - RealmSwift (5.0.2):
     - Realm (= 5.0.2)
   - ReSwift (5.0.0)
-  - SimplePDFViewer (0.1.1):
+  - SimplePDFViewer (0.1.2):
     - SnapKit (~> 5.0.0)
   - SnapKit (5.0.1)
   - SVProgressHUD (2.2.5)
@@ -59,11 +59,11 @@ SPEC CHECKSUMS:
   Realm: 6b6f096671b64b04d08974177cabb2ff9343d153
   RealmSwift: a3db6be0488bf3e1d5314c2956cefe98a65cdd01
   ReSwift: 628f1a9b3ee52e3b3ca2a644435472fd77afafe1
-  SimplePDFViewer: 8cb94e745d13bb840d19bdb8807586f512016de9
+  SimplePDFViewer: ae980e998b99371d9bb5d82429eb537d3026674c
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   WeScan: b2e47d07f5da3dbf3db14b742e403a8924cf32b2
 
-PODFILE CHECKSUM: 63f67a75df3ba3c89880f02e678cc3e1b94f5aea
+PODFILE CHECKSUM: 0d6905369d54a5d552cc7cdb95aed714a81095c6
 
 COCOAPODS: 1.9.3

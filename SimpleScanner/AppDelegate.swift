@@ -17,15 +17,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         // Set up main navigation
         let mainNavController = UINavigationController(
-                rootViewController: HomeController()
+            rootViewController: HomeController()
         )
-        UINavigationBar.appearance().prefersLargeTitles = true
-        UINavigationBar.appearance().isTranslucent = false
-        UINavigationBar.appearance().backgroundColor = Color.BodyBackgroundContrast
-        UINavigationBar.appearance().tintColor = Color.NavTint
+        let mainNavBar = mainNavController.navigationBar
+        mainNavBar.prefersLargeTitles = true
+        mainNavBar.isTranslucent = false
+        mainNavBar.backgroundColor = Color.BodyBackgroundContrast
+        mainNavBar.barTintColor = Color.NavTint
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: Color.NavTint]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: Color.NavTint]
+            navBarAppearance.backgroundColor = Color.BodyBackgroundContrast
+            mainNavBar.standardAppearance = navBarAppearance
+            mainNavBar.scrollEdgeAppearance = navBarAppearance
+        }
         window?.rootViewController = mainNavController
-        window?.makeKeyAndVisible()
         window?.tintColor = Color.Primary
+        window?.makeKeyAndVisible()
         return true
     }
 

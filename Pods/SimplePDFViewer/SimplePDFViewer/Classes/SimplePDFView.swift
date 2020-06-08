@@ -10,19 +10,19 @@ import UIKit
 import PDFKit
 
 protocol SimplePDFViewerStatusDelegate: AnyObject {
-    func didLoadSuccessfully(_ sender: SimplePDFViewer)
-    func didLoadWithError(_ sender: SimplePDFViewer)
-    func onPageChange(_ sender: SimplePDFViewer)
+    func didLoadSuccessfully(_ sender: SimplePDFView)
+    func didLoadWithError(_ sender: SimplePDFView)
+    func onPageChange(_ sender: SimplePDFView)
 }
 
-class SimplePDFViewer: UIView {
+class SimplePDFView: UIView {
     
     // State
     public private(set) var pdf: PDFDocument?
     public private(set) var currentPageNumber = 1
     
     // Views
-    let pdfView: PDFView! = PDFView()
+    let pdfView: PDFView = PDFView()
     private var loadingSpinner: UIView?
     
     // Customizable properties
@@ -169,7 +169,7 @@ class SimplePDFViewer: UIView {
 }
 
 // MARK: Extension to show loading and error states
-extension SimplePDFViewer {
+extension SimplePDFView {
     
     func showErrorMessage() {
         let errorLabel = UILabel()

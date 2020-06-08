@@ -29,8 +29,8 @@ class SavePDFDialog: NSObject {
         self.presentingVC = presentingVC
         self.onConfirm = onConfirm
         super.init()
-        dialog = UIAlertController(title: Text.SavePDFTitle, message: Text.SavePDFDescription, preferredStyle: .alert)
-        confirmAction = UIAlertAction(title: Text.Confirm, style: .default) { _ in
+        dialog = UIAlertController(title: TextConstants.SavePDFTitle, message: TextConstants.SavePDFDescription, preferredStyle: .alert)
+        confirmAction = UIAlertAction(title: TextConstants.Confirm, style: .default) { _ in
             guard let fileName = self.textField.text else {
                 print("No text in text field")
                 return
@@ -38,7 +38,7 @@ class SavePDFDialog: NSObject {
             self.onConfirm(fileName)
         }
         dialog.addAction(confirmAction)
-        dialog.addAction(UIAlertAction(title: Text.Cancel, style: .cancel))
+        dialog.addAction(UIAlertAction(title: TextConstants.Cancel, style: .cancel))
         dialog.addTextField() { textField in
             self.textField = textField
             textField.delegate = self

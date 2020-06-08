@@ -15,6 +15,7 @@ class PDFCollectionViewCellModel {
     let index: Int
 
     init(from pdf: PDF, index: Int) {
+        // Ideally we would want a cached lookup, so we're not getting multiple PDF documents at once..
         if let pdfDoc = PDFService.shared.getPDFDocument(fileName: pdf.fileName),
            let thumbnail = ImageService.shared.getThumbnailForDocument(pdf: pdfDoc) {
             self.thumbnail = thumbnail
@@ -23,7 +24,7 @@ class PDFCollectionViewCellModel {
             self.thumbnail = nil
         }
         fileName = pdf.fileName
-        dateCreated = Text.DateString(for: pdf.dateCreated)
+        dateCreated = TextConstants.DateString(for: pdf.dateCreated)
         self.index = index
     }
 }
@@ -39,7 +40,9 @@ class PDFCollectionViewCell: UICollectionViewCell {
     private var fileNameLabel: UILabel?
     private var dateCreatedLabel: UILabel?
 
-    func loadCell(with model: PDFCollectionViewCellModel, onOptionsTap: @escaping TapIndexCallback, onThumbnailTap: @escaping TapIndexCallback) {
+    func loadCell(with model: PDFCollectionViewCellModel,
+                  onOptionsTap: @escaping TapIndexCallback,
+                  onThumbnailTap: @escaping TapIndexCallback) {
         self.vm = model
         self.onOptionsTap = onOptionsTap
         self.onThumbnailTap = onThumbnailTap
@@ -73,12 +76,12 @@ class PDFCollectionViewCell: UICollectionViewCell {
         showMore.contentMode = .scaleAspectFit
         showMore.image = UIImage(named: "Show More")
 
-        nameLabel.font = View.NormalFont
+        nameLabel.font = ViewConstants.NormalFont
         nameLabel.textColor = Color.Text
         nameLabel.lineBreakMode = .byTruncatingTail
         nameLabel.numberOfLines = 1
 
-        dateLabel.font = View.SmallFont
+        dateLabel.font = ViewConstants.SmallFont
         dateLabel.textColor = Color.LightText
         dateLabel.lineBreakMode = .byTruncatingTail
         dateLabel.numberOfLines = 1
@@ -89,13 +92,13 @@ class PDFCollectionViewCell: UICollectionViewCell {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalToSuperview()
-            make.height.equalTo(nameLabel.font.pointSize + View.TextLabelPadding)
+            make.height.equalTo(nameLabel.font.pointSize + ViewConstants.TextLabelPadding)
             make.bottom.equalTo(dateLabel.snp.top)
         }
         dateLabel.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.height.equalTo(dateLabel.font.pointSize + View.TextLabelPadding)
+            make.height.equalTo(dateLabel.font.pointSize + ViewConstants.TextLabelPadding)
             make.bottom.equalToSuperview()
         }
 
@@ -103,23 +106,22 @@ class PDFCollectionViewCell: UICollectionViewCell {
         mainView.addSubview(showMore)
         mainView.addSubview(textViews)
 
-        textViews.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.top.equalTo(thumbnailView.snp.bottom).offset(View.CollectionViewSubviewPadding)
-        }
         thumbnailView.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.bottom.equalTo(textViews.snp.top).offset(-View.CollectionViewSubviewPadding)
+        }
+        textViews.snp.makeConstraints { (make) in
+            make.left.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.top.equalTo(thumbnailView.snp.bottom).offset(ViewConstants.CollectionViewSubviewPadding)
         }
         showMore.snp.makeConstraints { (make) in
             make.left.equalTo(textViews.snp.right)
             make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(16)
-            make.width.equalTo(16)
+            make.bottom.equalToSuperview().offset(-ViewConstants.CollectionViewSubviewPadding * 3)
+            make.top.equalTo(thumbnailView.snp.bottom).offset(ViewConstants.CollectionViewSubviewPadding * 3)
+            make.width.equalTo(showMore.snp.height)
         }
         thumbnailView.isUserInteractionEnabled = true
         thumbnailView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(thumbnailTapped)))

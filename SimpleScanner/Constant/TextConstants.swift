@@ -5,7 +5,7 @@
 
 import Foundation
 
-class Text {
+class TextConstants {
 
     // General
     static let Confirm = "Confirm"

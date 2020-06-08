@@ -29,12 +29,12 @@ class HomeController: UIViewController {
     }
     
     override func loadView() {
-        self.title = Text.HomeViewTitle
+        self.title = TextConstants.HomeViewTitle
         homeView = HomeView(
-                viewModel: self.vm,
-                newScanTapped: newScanTapped,
-                showPDFTapped: showPDFTapped,
-                showPDFOptionsTapped: showPDFOptionsTapped
+            viewModel: self.vm,
+            newScanTapped: newScanTapped,
+            showPDFTapped: showPDFTapped,
+            showPDFOptionsTapped: showPDFOptionsTapped
         )
         self.view = homeView
     }
@@ -70,7 +70,7 @@ class HomeController: UIViewController {
         store.dispatch(ShowDocumentOptionsTappedAction(index: index))
     }
 
-    private func deletePDFTapped(index: Int) -> ((UIAlertAction) -> Void) {
+    private func deletePDFTapped(index: Int) -> (UIAlertAction) -> Void {
         return { _ in
             self.store.dispatch(DeleteDocumentAction(index: index))
         }
@@ -82,27 +82,28 @@ class HomeController: UIViewController {
 extension HomeController: StoreSubscriber {
 
     public func newState(state: HomeState) {
-
         // Handle State
-        self.showAnimation(for: state.state, with: nil)
+        self.showAnimation(for: state.state)
 
         self.vm = HomeViewModel(state: state, documents: vm.documents)
         if state.showAddDocument {
             // Present new scan screen if state calls for it
-            self.present(UINavigationController(rootViewController: NewScanController(store: appStore)), animated: true)
+            let newScanVc = UINavigationController(rootViewController: NewScanController(store: appStore))
+            newScanVc.modalPresentationStyle = .fullScreen
+            self.present(newScanVc, animated: true)
         } else if let docIndex = state.showDocumentOptionsWithIndex {
+            // Note: This breaks constraints - known bug in ios 13.5
             // Present document options if state calls for it
             let documentOptionsDialog = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            documentOptionsDialog.addAction(UIAlertAction(title: Text.Delete, style: .destructive, handler: deletePDFTapped(index: docIndex)))
-            documentOptionsDialog.addAction(UIAlertAction(title: Text.Cancel, style: .cancel))
-            present(documentOptionsDialog, animated: true)
+            documentOptionsDialog.addAction(UIAlertAction(title: TextConstants.Delete, style: .destructive, handler: deletePDFTapped(index: docIndex)))
+            documentOptionsDialog.addAction(UIAlertAction(title: TextConstants.Cancel, style: .cancel))
+            self.present(documentOptionsDialog, animated: true)
         } else if let docIndex = state.showDocumentWithIndex {
             // Present PDF if state calls for it
             PDFViewer.show(pdf: vm.documents[docIndex], sender: self)
         }
         // Update Views
         homeView.update(viewModel: self.vm)
-
     }
 
 }

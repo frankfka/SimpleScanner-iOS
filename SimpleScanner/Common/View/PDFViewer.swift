@@ -6,14 +6,16 @@
 import Foundation
 import SimplePDFViewer
 
-class PDFViewer {
+struct PDFViewer {
 
     static func show(pdf: PDF, sender: UIViewController, dismissalDelegate: SimplePDFViewOnDismissDelegate? = nil, completion: VoidCallback? = nil) {
         let pdfViewer = SimplePDFViewController(url: getDocumentsDirectory().appendingPathComponent(pdf.fileName).appendingPathExtension("pdf"))
         pdfViewer.dismissalDelegate = dismissalDelegate
-        pdfViewer.errorMessage = Text.PDFViewError
+        pdfViewer.errorMessage = TextConstants.PDFViewError
         pdfViewer.exportPDFName = pdf.fileName
+        pdfViewer.viewTitle = pdf.fileName
         pdfViewer.tint = Color.NavTint
+        pdfViewer.modalPresentationStyle = .fullScreen
         sender.present(pdfViewer, animated: true, completion: completion)
     }
 

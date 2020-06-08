@@ -13,7 +13,7 @@ class HomeViewModel {
 
     init(state: HomeState, documents: Results<PDF>) {
         // Reverse chronological order
-        self.documents = documents.sorted(byKeyPath: "dateCreated", ascending: false)
+        self.documents = documents
     }
 
 }

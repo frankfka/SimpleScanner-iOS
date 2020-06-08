@@ -27,5 +27,4 @@ class HUD {
         SVProgressHUD.showError(withStatus: message)
         SVProgressHUD.dismiss(withDelay: HUD.DisplayDuration)
     }
-
 }

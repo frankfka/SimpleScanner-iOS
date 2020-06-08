@@ -21,14 +21,14 @@ class NewScanState {
     let dismissNewScanVC: Bool
 
     init(
-            pages: [PDFPage] = [],
-            state: ActivityState = .none,
-            error: UserFriendlyError? = nil,
-            showScanVC: Bool = false,
-            showPageActionsWithIndex: Int? = nil,
-            showPageWithIndex: Int? = nil,
-            dismissNewScanVC: Bool = false,
-            exportedPDF: PDF? = nil
+        pages: [PDFPage] = [],
+        state: ActivityState = .none,
+        error: UserFriendlyError? = nil,
+        showScanVC: Bool = false,
+        showPageActionsWithIndex: Int? = nil,
+        showPageWithIndex: Int? = nil,
+        dismissNewScanVC: Bool = false,
+        exportedPDF: PDF? = nil
     ) {
         self.state = state
         self.error = error
@@ -47,20 +47,20 @@ class NewScanState {
         case _ as ExportedPDFViewDismissedAction:
             return NewScanState(dismissNewScanVC: true)
         case _ as AddPagePressedAction:
-            return NewScanState(pages: self.pages, state: .loading, showScanVC: true)
+            return NewScanState(pages: self.pages, showScanVC: true)
         case _ as AddPageScanSuccessAction:
             return NewScanState(pages: self.pages, state: .loading)
         case let action as AddPageSuccessAction:
             // Add arrays to create new array
             return NewScanState(pages: self.pages + [action.new])
-        case _ as AddPageErrorAction:
-            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.WritePageErrorMsg))
+        case _ as AddPageErrorAction: // TODO: What happens after?
+            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: TextConstants.WritePageErrorMsg))
         case let action as SwitchPageAction:
             return switchPage(action, state)
         case let action as PageIconTappedAction:
             return NewScanState(pages: self.pages, showPageActionsWithIndex: action.index)
         case let action as PresentPageAction:
-            return NewScanState(pages: self.pages, state: .loading, showPageWithIndex: action.index)
+            return NewScanState(pages: self.pages, showPageWithIndex: action.index)
         case let action as DeletePageAction:
             return deletePage(action, state)
         case _ as SaveDocumentPressedAction:
@@ -68,7 +68,7 @@ class NewScanState {
         case let action as SaveDocumentSuccessAction:
             return NewScanState(exportedPDF: action.pdf)
         case _ as SaveDocumentErrorAction:
-            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: Text.ExportPDFErrorMsg))
+            return NewScanState(pages: self.pages, state: .error, error: UserFriendlyError(displayStr: TextConstants.ExportPDFErrorMsg))
         case _ as NewScanNavigateAwayAction:
             return didNavigateAway(action, state)
         default:

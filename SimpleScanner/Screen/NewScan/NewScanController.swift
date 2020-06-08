@@ -28,7 +28,7 @@ class NewScanController: UIViewController {
 
     override func loadView() {
         // Title and Bar Button Items
-        self.title = Text.NewScanTitle
+        self.title = TextConstants.NewScanTitle
         self.cancelBarButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelTapped))
         self.saveBarButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveTapped))
         navigationItem.leftBarButtonItem = cancelBarButton
@@ -78,9 +78,11 @@ class NewScanController: UIViewController {
     @objc private func saveTapped() {
         let saveDialog = SavePDFDialog(presentingVC: self) { fileName in
             // Dispatch the save action with the specified file name
-            self.store.dispatch(SaveDocumentPressedAction(
+            self.store.dispatch(
+                SaveDocumentPressedAction(
                     pages: self.store.state.newScanState.pages,
-                    fileName: fileName)
+                    fileName: fileName
+                )
             )
         }
         saveDialog.display()
@@ -99,7 +101,7 @@ extension NewScanController: ImageScannerControllerDelegate {
         if let enhancedImage = results.enhancedScan?.image, results.doesUserPreferEnhancedScan {
             newPage = enhancedImage
         } else {
-            newPage = results.originalScan.image
+            newPage = results.croppedScan.image
         }
         store.dispatch(AddPageScanSuccessAction(new: newPage))
         scanner.dismiss(animated: true)
@@ -135,18 +137,15 @@ extension NewScanController: StoreSubscriber {
         } else if state.showScanVC {
             // Create and launch a WeScan controller
             let scannerVC = ImageScannerController()
-            scannerVC.navigationBar.backgroundColor = .white
-            scannerVC.navigationBar.prefersLargeTitles = false
-            scannerVC.navigationBar.tintColor = Color.NavTint
             scannerVC.imageScannerDelegate = self
             present(scannerVC, animated: true)
         } else if let pageIndex = state.showPageActionsWithIndex {
             // Launch dialog with delete & view actions
             let actionsController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionsController.addAction(UIAlertAction(title: Text.PageActionsView, style: .default) { _ in
+            actionsController.addAction(UIAlertAction(title: TextConstants.PageActionsView, style: .default) { _ in
                 self.store.dispatch(PresentPageAction(index: pageIndex))
             })
-            actionsController.addAction(UIAlertAction(title: Text.Delete, style: .destructive) { _ in
+            actionsController.addAction(UIAlertAction(title: TextConstants.Delete, style: .destructive) { _ in
                 self.store.dispatch(DeletePageAction(index: pageIndex))
             })
             actionsController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
