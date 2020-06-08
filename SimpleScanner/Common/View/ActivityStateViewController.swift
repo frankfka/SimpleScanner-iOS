@@ -7,11 +7,11 @@ import UIKit
 
 // Handles state by showing the proper animation
 extension UIViewController {
-    func showAnimation(for state: ActivityState, with message: String? = nil) {
+    func showAnimation(for state: ActivityState, with errorMessage: String? = "Something Went Wrong") {
         // Handle State
         switch state {
         case .error:
-            HUD.showError(message: message)
+            HUD.showError(message: errorMessage)
         case.loading:
             HUD.loading(show: true)
         case.none:

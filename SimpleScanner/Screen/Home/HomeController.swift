@@ -83,7 +83,7 @@ extension HomeController: StoreSubscriber {
 
     public func newState(state: HomeState) {
         // Handle State
-        self.showAnimation(for: state.state, with: nil)
+        self.showAnimation(for: state.state)
 
         self.vm = HomeViewModel(state: state, documents: vm.documents)
         if state.showAddDocument {

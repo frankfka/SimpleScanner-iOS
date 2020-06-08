@@ -13,9 +13,9 @@ struct PDFViewer {
         pdfViewer.dismissalDelegate = dismissalDelegate
         pdfViewer.errorMessage = TextConstants.PDFViewError
         pdfViewer.exportPDFName = pdf.fileName
+        pdfViewer.viewTitle = pdf.fileName
         pdfViewer.tint = Color.NavTint
-        // TODO: Uncomment this
-//        pdfViewer.modalPresentationStyle = .fullScreen
+        pdfViewer.modalPresentationStyle = .fullScreen
         sender.present(pdfViewer, animated: true, completion: completion)
     }
 

@@ -52,6 +52,7 @@
 		1C27DC8989C598E18BE5F6C707865A2C /* ConstraintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82782E9CBFA510B344871566F1F7295 /* ConstraintView.swift */; };
 		1D93105DBE379AC7ED41F1C78DCD4507 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C3DC1AC3FFB1F98CB1C250764BF371 /* Optional.swift */; };
 		1E49483D98FA669168673F1CAB7EDE60 /* BFRImageTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FC20B8B8F7B001DAA0A8BADE32411E /* BFRImageTransitionAnimator.m */; };
+		1EAF19DAA301B259A0354CB1120B16F3 /* SimplePDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB363ACC7E07AE5E2F4256D2188511B /* SimplePDFViewController.swift */; };
 		1FEF90BF76CCFF7F8F27CA622392065F /* PINRemoteImageCaching.h in Headers */ = {isa = PBXBuildFile; fileRef = B743387871F3EB23D004FB7B2C2656D9 /* PINRemoteImageCaching.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		20B38E40CE04EE57FBF43C552228E661 /* RLMQueryUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2A2B46397227AA91B68BA06FC41DDA97 /* RLMQueryUtil.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		20C5E247139289FFBCFE21CDB8294868 /* RLMObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 419B7839B5F7C52D5A36EFED4BB9CBEF /* RLMObject.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
@@ -183,7 +184,7 @@
 		6B09B13083DCB784B97D7884B49641F5 /* SnapKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 71119F3B7F5DFDCEFA592A7C81FE017E /* SnapKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BA5110223A750D03F0D50A2E5DEE9C0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD8831CB229F9F451B30E433F45CAF8 /* Security.framework */; };
 		6BB9F5E46F85F2D480A3D5769727E968 /* flashUnavailable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4EA8BAE513C08B9BDDC5FF700FFA479 /* flashUnavailable@2x.png */; };
-		6BCB4C610E003317C9F688398B7BA5B1 /* SimplePDFViewer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = DFC86F57EC26ABA9CFF3254A5D1174C6 /* SimplePDFViewer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6BCB4C610E003317C9F688398B7BA5B1 /* SimplePDFViewer-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 59F85FFEF71CF68DDA7DD1952C518BE4 /* SimplePDFViewer-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C6C7D707578A7C9C241432A86D665EA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E65F30268D845258D64BD3723FE5AD7 /* Foundation.framework */; };
 		6CD2E690E23D56B5B78365E223255624 /* RLMSyncCredentials.h in Copy . Public Headers */ = {isa = PBXBuildFile; fileRef = E70FD8D72FEE4BA27F5A82612177542C /* RLMSyncCredentials.h */; };
 		6E4760CB9767A7EE122F523376C1F5D0 /* PINRemoteImageManager+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55AF15B6AA850C4601CA0D6303EFA279 /* PINRemoteImageManager+Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -231,6 +232,7 @@
 		82FCA57959BE3BE88256C0ADD7C5505E /* LinkingObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAADF5DCA4F93FCDA6EBB40784E12663 /* LinkingObjects.swift */; };
 		83343D226B32B17E4105CCAEB03F37D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E65F30268D845258D64BD3723FE5AD7 /* Foundation.framework */; };
 		837619973A600196FA4FD49D41B0867F /* PINCacheObjectSubscripting.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E4B190C240075C3495ADC696C595397 /* PINCacheObjectSubscripting.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		838A6C4E00891E87324BDAC704FBF73D /* SimplePDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F1E2ACB4E03A9BB99135A66F8F5CBD /* SimplePDFView.swift */; };
 		83D237CB9BF0DB8B9B7AE573F65AA52D /* RLMArray_Private.h in Copy . Private Headers */ = {isa = PBXBuildFile; fileRef = 546B74791F93392CCEA58DBAFB36E05A /* RLMArray_Private.h */; };
 		842649FD116106DEB6DC24A145ED1322 /* PINRemoteLock.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EEF47EF06F7379CEC51E32431E5EBF /* PINRemoteLock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8546ECB580FFC7EC410D0A3E178748DB /* RLMRealm+Sync.mm in Sources */ = {isa = PBXBuildFile; fileRef = F1B6C8620124C681E76EDEE8F3919EE8 /* RLMRealm+Sync.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
@@ -239,7 +241,6 @@
 		86488C7395299D62D524FEED908C8AC8 /* RLMObjectSchema.h in Copy . Public Headers */ = {isa = PBXBuildFile; fileRef = 2AC6C372219D941BC6CB0CEB8378E572 /* RLMObjectSchema.h */; };
 		86C561A41EC3F10654AD322BD3CFCA86 /* RLMObject_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = D916ABA67B919C9FA79EB2486E7CF363 /* RLMObject_Private.h */; };
 		89051B27EBE6143ABC50525F675FCA61 /* CaptureSession+Flash.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6508C7BC19D73CB4E0020FDAD8B92C7 /* CaptureSession+Flash.swift */; };
-		89951943611099C6AA3314E0C8CAC65F /* SimplePDFViewer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD21602B3330F501BDB1CD2FD93B9547 /* SimplePDFViewer-dummy.m */; };
 		8A2527448D6AFBF90C0E0782946ECA87 /* RLMNetworkClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7871722C6E883ECB2D9B39F9DE5D09B3 /* RLMNetworkClient.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		8D6A5DBD59AC4895DC065298AE5CECD1 /* RLMObservation.mm in Sources */ = {isa = PBXBuildFile; fileRef = D84B7DC2135D660020C167B458992C8B /* RLMObservation.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		8DDB03CEC368AA12BEC1A508A3594562 /* PINOperation-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBF7F8B011A3C75A7F8BDC76C110294 /* PINOperation-dummy.m */; };
@@ -252,7 +253,6 @@
 		922C6139A1B46AA2DD907A8F946C268A /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF640D4AEA84C6740F543F6EBC2EC6DE /* Subscription.swift */; };
 		929ECA88999FD61884E753379B31D062 /* ObjectiveCSupport+Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B021010E820756D21A8BA6E5E612B2 /* ObjectiveCSupport+Sync.swift */; };
 		92D47F0311E3B44B46B3AD8D7A5C4B7B /* RLMRealmConfiguration_Private.h in Copy . Private Headers */ = {isa = PBXBuildFile; fileRef = 73CDC0394CA6D24E63D4F2D51C7506B8 /* RLMRealmConfiguration_Private.h */; };
-		95B71C4CB977B1C9B1BB1FCB40680291 /* SimplePDFBottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E81AC2D6EE5D134DD2ED0AFCA323CC /* SimplePDFBottomBarView.swift */; };
 		96E050C85ACF9267C98C843BC6C4A93E /* PINImage+WebP.h in Headers */ = {isa = PBXBuildFile; fileRef = BC94AA72F1861274634B143A843BB5EE /* PINImage+WebP.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		96EADE99073DBA8FCE7904627E2D18EE /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 011B7AA4AD9C336142DE736E51C2B62D /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9718CE4BFD9F31F379094F6D500E6053 /* CGImagePropertyOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9C98A9F15D5D5545BDB53349A80300E /* CGImagePropertyOrientation.swift */; };
@@ -283,7 +283,6 @@
 		A4C8285E5203F6C471882FCAE61948FF /* RLMSyncUser.h in Copy . Public Headers */ = {isa = PBXBuildFile; fileRef = 90F8CB6B75D47BD9E98184785A89DDB2 /* RLMSyncUser.h */; };
 		A4C8BB1528360B0B26F874380328A685 /* ConstraintMakerExtendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4E9706ABA9173A9DE73776A2EA3467 /* ConstraintMakerExtendable.swift */; };
 		A4DC96082EE8BC7004AF69F73AE33A56 /* work_queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A6F010EEA0872221D1C2D4C38EAC344F /* work_queue.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
-		A55BA33F2936B8AC8B71C3E8AD1C6E88 /* SimplePDFJumpToPageDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B97C859274E0CE92877D0DF7DF612FC /* SimplePDFJumpToPageDialog.swift */; };
 		A5E96776B41784BC70699A21D0DECD20 /* RLMRealmConfiguration+Sync.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79D6B7D77B58ED9F3424BF9679F03CA6 /* RLMRealmConfiguration+Sync.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		A7390BF1B8D151185450902D4F855E18 /* RLMRealmConfiguration_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 73CDC0394CA6D24E63D4F2D51C7506B8 /* RLMRealmConfiguration_Private.h */; };
 		A8F064C66E4C4BA4A31BF7DFB02A374B /* RLMRealmConfiguration+Sync.h in Headers */ = {isa = PBXBuildFile; fileRef = D95278C22A3BAF549B9913A7CCD5C915 /* RLMRealmConfiguration+Sync.h */; };
@@ -304,7 +303,7 @@
 		B29CA6E05D3A08BE9CE19200717E635F /* RLMResults_Private.h in Copy . Private Headers */ = {isa = PBXBuildFile; fileRef = 2C3FDABEA7321C8EA754F0B54CD12B46 /* RLMResults_Private.h */; };
 		B303A74A554AE72EBBDD6A8B3E4274A2 /* RLMSyncConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D9227176D995EBC158A55D831D82D0E /* RLMSyncConfiguration.h */; };
 		B343599BD16628F4496E2E2F7ABD40A4 /* RLMListBase.h in Copy . Private Headers */ = {isa = PBXBuildFile; fileRef = 2AB7D2E949E2D33AACAA867C4F918C66 /* RLMListBase.h */; };
-		B3490B4AC036D0B86BBB4FF2D1A7F699 /* SimplePDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16220A0A32B58299C492D5E831D2DEF4 /* SimplePDFViewController.swift */; };
+		B41C69FD68E1448DE4F9D791639E9929 /* SimplePDFBottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6202C1175A2D70DC7240C0EA611513 /* SimplePDFBottomBarView.swift */; };
 		B4937D4B747B7AC323EAABFFAC8C42F0 /* RealmSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3C9385CF42842F4D93F8323E0EB20 /* RealmSwift-dummy.m */; };
 		B4E7BD0C5A0357A830B9C14952104599 /* RLMRealm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 16CDFD205CBC2F5AB897FB4C40000C49 /* RLMRealm.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		B51E2862945E1FC1E336244132258135 /* BFRImageContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AEF842106DB45BB7FC7971FBE24352D2 /* BFRImageContainerViewController.m */; };
@@ -360,6 +359,7 @@
 		CD72CAC8991D278F5C7161A7A03618A8 /* ConstraintAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD95196AE91D48F4A544774001C55D5E /* ConstraintAttributes.swift */; };
 		CD979D418C4565B588D57CF188B520F6 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18213C28D7225D18493B4C9AD9387AA /* Error.swift */; };
 		CE2D1D4DB96675C627BDCCA230548957 /* WeScan-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 19C5A4312D4327C544EA8498979C7A09 /* WeScan-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CF10A468924508E2FCA63B9FA62D94FC /* SimplePDFViewer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DE4CE7311E2CE927AF83A6C42316FE /* SimplePDFViewer-dummy.m */; };
 		CF48C0EBA09F45EFC2A0AFD000C55DD0 /* PINProgressiveImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A2A5422C44BAAB1272021E94E623E8 /* PINProgressiveImage.m */; };
 		CF543FF1059811D60ACBE9147F80AFA9 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = B9940D4624FD131A15CF762AE2ABCB06 /* cross.png */; };
 		CF9896906630080AF24D3B70E35D43E3 /* ConstraintView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 997B9FA7D4951F6B1442B90A12189C58 /* ConstraintView+Extensions.swift */; };
@@ -375,6 +375,7 @@
 		D4D4466507E46650DAB4FD9719D7B8B2 /* RLMRealm_Dynamic.h in Headers */ = {isa = PBXBuildFile; fileRef = E7E50359F03D0452133DB84B139810A7 /* RLMRealm_Dynamic.h */; };
 		D6A5E0A7D3A764B88F95358826689C28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E65F30268D845258D64BD3723FE5AD7 /* Foundation.framework */; };
 		D6A97DACCD1AF7043D83BF664856C523 /* PINRemoteImageManagerResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583C6A5CE70978DA818D8BBCB354DB3 /* PINRemoteImageManagerResult.m */; };
+		D7A5A57A5801B508C963FA15542E5109 /* SimplePDFTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220DE5DAD6C7A16206EC61E11FA0CCED /* SimplePDFTopBarView.swift */; };
 		D87B2D5ED73534ACF97CE0A52FA18AE4 /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F542D3642E427328B15A1ADBF6818C87 /* SVRadialGradientLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D901B56D2B5EBC1CFA727D952AA51220 /* PINRemoteImageTask.h in Headers */ = {isa = PBXBuildFile; fileRef = A3FA0FB53C7223734E0D2262707A051E /* PINRemoteImageTask.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA8D1369E0F3A4B7EAC80829AE6617E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38B41A3BE8786E7AF8E94627E48BE1CA /* UIKit.framework */; };
@@ -400,6 +401,7 @@
 		E787FAB35B45F579B30D5304CD8E0E79 /* collection_notifications.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1D958B049C1565B415A9D4F8437587F2 /* collection_notifications.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		E86BBAAB1410B81658FAC4FBDA63B171 /* thread_safe_reference.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECE36C8E2B3EC947B1FE4C7AB2B2DF46 /* thread_safe_reference.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		E8D072CFB16940A770F237D2DD823FCC /* Realm-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 86CF0BF2FC03F48BCFE06A8B0946F472 /* Realm-dummy.m */; };
+		E8F56DB24FD7CF27C7624250F662B057 /* SimplePDFJumpToPageDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C41BF9830D73C40A8D86E4B2FE72625 /* SimplePDFJumpToPageDialog.swift */; };
 		E91FC4A77B29BFE88136E10B7659A99A /* RLMSyncManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3C4732E2CFB7B3C2C04251C315E1D88F /* RLMSyncManager.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		E9EF08352E83AD0462F6ED8A9FE3F19D /* NSData+ImageDetectors.h in Headers */ = {isa = PBXBuildFile; fileRef = B63ADA308C85862EF21D6153C1955F0A /* NSData+ImageDetectors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA127561CF22EC35CBF6DC1652C2EAF8 /* PINRequestRetryStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 740986C1F3EE76333F3E044A7A327A6A /* PINRequestRetryStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -423,7 +425,6 @@
 		F216FA7AF46B782F11DB36A67226B62C /* BFRImageContainerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 343F8BFC48D17A90DEEE186887895B5C /* BFRImageContainerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F255B1D81CBE08BB1B9FFAD477083EE5 /* RLMSyncUser.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5D1522FAFD556C027868B35B3D973F46 /* RLMSyncUser.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
 		F28BF3ACE7B11900C7981422A539B7A6 /* flash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41F25E96D20F88EDC6168566D4DAE208 /* flash@3x.png */; };
-		F30BA4622EA78DC6529318921FDFAAEE /* SimplePDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A668D0185C31857B4FC8AF53FB4DAC7B /* SimplePDFViewer.swift */; };
 		F3BB8C9051B04633DF528833E93BB22A /* NSHTTPURLResponse+MaxAge.h in Headers */ = {isa = PBXBuildFile; fileRef = 5842412A1583B599207C12ED9556AD30 /* NSHTTPURLResponse+MaxAge.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F3DCB1E7F01ED98F9F2B6BDA4A456B92 /* RLMObject.h in Copy . Public Headers */ = {isa = PBXBuildFile; fileRef = 29C7E4C0ADEAE540524C90A7983F1036 /* RLMObject.h */; };
 		F3DF097C9112408861E9BE5CC2C02FBE /* RLMSyncSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77CBDF3A8A6626318E65BBB10345DB36 /* RLMSyncSession.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
@@ -438,7 +439,6 @@
 		F671644BC7CBCE8BCBD782BCB034C04C /* WeScan-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FF934D867EE33F3F0DCA76357DEE8127 /* WeScan-dummy.m */; };
 		F72F47B3755CE00EFEFB8568DB01953B /* RLMProperty_Private.h in Copy . Private Headers */ = {isa = PBXBuildFile; fileRef = 32E16E23C90E4D02144A63265991FDFD /* RLMProperty_Private.h */; };
 		F86446683EB0B5F94E37BCC2DAA018F9 /* RLMClassInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 55C6316754929ECD3D00695350E49555 /* RLMClassInfo.mm */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
-		F896FF8E0CC10005F61935ED63D1FCA2 /* SimplePDFTopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DE42C50C7A134AF1E50499CAF7A14D /* SimplePDFTopBarView.swift */; };
 		F8B2D027C1C322893DB3B82870D42306 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAD641796191288D8CDED3DA1A00929 /* Action.swift */; };
 		F9046504EA3E111BBB818F466AA52090 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F8FA7F4A3566E8396720E2145564BEB /* Realm.framework */; };
 		F9427CEAA1266AAA9B04445776CF0A2D /* placeholder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D4E53902BDA5E1937E3B84A390C8DB1 /* placeholder.cpp */; settings = {COMPILER_FLAGS = "-DREALM_HAVE_CONFIG -DREALM_COCOA_VERSION='@\"5.0.2\"' -D__ASSERTMACROS__ -DREALM_ENABLE_SYNC"; }; };
@@ -667,7 +667,6 @@
 		05BAA194B55C8CFC061E85AC77282DF0 /* RLMProperty.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMProperty.mm; path = Realm/RLMProperty.mm; sourceTree = "<group>"; };
 		06881463BB7163A2CA1871E0C10576CC /* PINWebPAnimatedImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINWebPAnimatedImage.m; path = Source/Classes/AnimatedImages/PINWebPAnimatedImage.m; sourceTree = "<group>"; };
 		06E263A2E312AEB4491D738AFC3A44C1 /* PINRemoteImageBasicCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageBasicCache.m; path = Source/Classes/PINRemoteImageBasicCache.m; sourceTree = "<group>"; };
-		07DE42C50C7A134AF1E50499CAF7A14D /* SimplePDFTopBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFTopBarView.swift; path = SimplePDFViewer/Classes/SimplePDFTopBarView.swift; sourceTree = "<group>"; };
 		0888887917DF116C970758DFD95552CB /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		08C3DC1AC3FFB1F98CB1C250764BF371 /* Optional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Optional.swift; path = RealmSwift/Optional.swift; sourceTree = "<group>"; };
 		08C686D7D28318F0868E34344FF28C21 /* ConstraintRelation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelation.swift; path = Source/ConstraintRelation.swift; sourceTree = "<group>"; };
@@ -700,7 +699,6 @@
 		14AE17D072D9CF77D771F1E84D8FD990 /* Aliases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Aliases.swift; path = RealmSwift/Aliases.swift; sourceTree = "<group>"; };
 		14F6DC26D193693E99768148D63C2501 /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
 		15EEF47EF06F7379CEC51E32431E5EBF /* PINRemoteLock.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteLock.h; path = Source/Classes/PINRemoteLock.h; sourceTree = "<group>"; };
-		16220A0A32B58299C492D5E831D2DEF4 /* SimplePDFViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFViewController.swift; path = SimplePDFViewer/Classes/SimplePDFViewController.swift; sourceTree = "<group>"; };
 		16393546FF5D1DB079C026C1D61C3B60 /* PINRemoteWeakProxy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteWeakProxy.m; path = Source/Classes/PINRemoteWeakProxy.m; sourceTree = "<group>"; };
 		16CDFD205CBC2F5AB897FB4C40000C49 /* RLMRealm.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMRealm.mm; path = Realm/RLMRealm.mm; sourceTree = "<group>"; };
 		170112FF3F6847ACA931CFAB3236DB07 /* RLMConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMConstants.h; path = include/RLMConstants.h; sourceTree = "<group>"; };
@@ -724,6 +722,7 @@
 		20FDFE8ACFF5E28FF9BD7E379B7D3B7A /* ObjectiveCSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjectiveCSupport.swift; path = RealmSwift/ObjectiveCSupport.swift; sourceTree = "<group>"; };
 		215DB60ADE3EC8AE61389878A81BFC60 /* BFRImageViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BFRImageViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21856FF7A5A47FF947F4FDE9957C49B9 /* Combine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Combine.swift; path = RealmSwift/Combine.swift; sourceTree = "<group>"; };
+		220DE5DAD6C7A16206EC61E11FA0CCED /* SimplePDFTopBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFTopBarView.swift; path = SimplePDFViewer/Classes/SimplePDFTopBarView.swift; sourceTree = "<group>"; };
 		22645D6845673EFEA0C9E0FC7C05D361 /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Source/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
 		22C347595B1851A1E5B0A3762BB18EC9 /* PINOperation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PINOperation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2380CC4452073CF6117826B10C475D1A /* RLMSchema_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMSchema_Private.h; path = include/RLMSchema_Private.h; sourceTree = "<group>"; };
@@ -734,13 +733,13 @@
 		268B13DF4CB2BE11BEA4F0DBE4293DC6 /* UILayoutSupport+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UILayoutSupport+Extensions.swift"; path = "Source/UILayoutSupport+Extensions.swift"; sourceTree = "<group>"; };
 		272E5C8C71E3B3228555CDC84E407A4B /* SnapKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SnapKit-dummy.m"; sourceTree = "<group>"; };
 		2815501182A51F08FBD28E1D6F25535F /* PINDiskCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINDiskCache.h; path = Source/PINDiskCache.h; sourceTree = "<group>"; };
+		290C46048EEF0A59804FAF3A2F70A8ED /* SimplePDFViewer-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SimplePDFViewer-Info.plist"; sourceTree = "<group>"; };
 		29C7E4C0ADEAE540524C90A7983F1036 /* RLMObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObject.h; path = include/RLMObject.h; sourceTree = "<group>"; };
 		2A2B46397227AA91B68BA06FC41DDA97 /* RLMQueryUtil.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMQueryUtil.mm; path = Realm/RLMQueryUtil.mm; sourceTree = "<group>"; };
 		2A37DAFB78CC21495193883D409C032B /* PINOperationTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINOperationTypes.h; path = Source/PINOperationTypes.h; sourceTree = "<group>"; };
 		2AB7D2E949E2D33AACAA867C4F918C66 /* RLMListBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMListBase.h; path = include/RLMListBase.h; sourceTree = "<group>"; };
 		2AC6C372219D941BC6CB0CEB8378E572 /* RLMObjectSchema.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObjectSchema.h; path = include/RLMObjectSchema.h; sourceTree = "<group>"; };
 		2B7ABBB84C96FD2F2DD50282CC3DC5A0 /* PINAnimatedImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINAnimatedImage.h; path = Source/Classes/AnimatedImages/PINAnimatedImage.h; sourceTree = "<group>"; };
-		2B97C859274E0CE92877D0DF7DF612FC /* SimplePDFJumpToPageDialog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFJumpToPageDialog.swift; path = SimplePDFViewer/Classes/SimplePDFJumpToPageDialog.swift; sourceTree = "<group>"; };
 		2BCB661E0AF16EA8FA024FC4E48386DC /* rotate@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "rotate@3x.png"; path = "WeScan/Assets/rotate@3x.png"; sourceTree = "<group>"; };
 		2C0E8F952457F8A8DADD96698CC2D233 /* RLMRealm_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMRealm_Private.h; path = include/RLMRealm_Private.h; sourceTree = "<group>"; };
 		2C3FDABEA7321C8EA754F0B54CD12B46 /* RLMResults_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMResults_Private.h; path = include/RLMResults_Private.h; sourceTree = "<group>"; };
@@ -754,6 +753,7 @@
 		2F7269768963127D8366C5841E52E5F9 /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Source/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
 		2FA1D59B603607A37BBDD215620A5168 /* List.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = List.swift; path = RealmSwift/List.swift; sourceTree = "<group>"; };
 		3002AC42D769070BF72613611E6605E3 /* ConstraintRelatableTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelatableTarget.swift; path = Source/ConstraintRelatableTarget.swift; sourceTree = "<group>"; };
+		301A497FC3F04BB63E42FC6FA885B28E /* SimplePDFViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SimplePDFViewer.debug.xcconfig; sourceTree = "<group>"; };
 		307CBCB020BCEFC1933DB904D8DB606C /* ReSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReSwift-dummy.m"; sourceTree = "<group>"; };
 		30FDB9B31D47F5CCF75400CCB53BE6D0 /* QuadrilateralView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuadrilateralView.swift; path = WeScan/Common/QuadrilateralView.swift; sourceTree = "<group>"; };
 		31B1308AB7019CB0D45276C89C161D50 /* librealmcore-ios.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = "librealmcore-ios.a"; path = "core/librealmcore-ios.a"; sourceTree = "<group>"; };
@@ -816,6 +816,7 @@
 		57292D2C54AD6F91FEB6A8AF5ACC3991 /* results.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = results.cpp; path = Realm/ObjectStore/src/results.cpp; sourceTree = "<group>"; };
 		5842412A1583B599207C12ED9556AD30 /* NSHTTPURLResponse+MaxAge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSHTTPURLResponse+MaxAge.h"; path = "Source/Classes/Categories/NSHTTPURLResponse+MaxAge.h"; sourceTree = "<group>"; };
 		596237AAE92B793F5C96CEFADC1B51D2 /* RLMMigration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMMigration.h; path = include/RLMMigration.h; sourceTree = "<group>"; };
+		59F85FFEF71CF68DDA7DD1952C518BE4 /* SimplePDFViewer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SimplePDFViewer-umbrella.h"; sourceTree = "<group>"; };
 		5B97E856B82E31B4918114E577BB6D33 /* CGAffineTransform+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CGAffineTransform+Utils.swift"; path = "WeScan/Extensions/CGAffineTransform+Utils.swift"; sourceTree = "<group>"; };
 		5BAEC44D2E88A2BC73CF2EAFD4F5EA7C /* PINResume.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINResume.m; path = Source/Classes/PINResume.m; sourceTree = "<group>"; };
 		5CA2BED4D206F410062B237D24841BC3 /* PINCache-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PINCache-prefix.pch"; sourceTree = "<group>"; };
@@ -868,7 +869,6 @@
 		75325759BD389C97FF861DFEBB94B8FD /* RLMRealmConfiguration.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMRealmConfiguration.mm; path = Realm/RLMRealmConfiguration.mm; sourceTree = "<group>"; };
 		7614107EFE76292AF217A35EF352047E /* PINAnimatedImageView+PINRemoteImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINAnimatedImageView+PINRemoteImage.h"; path = "Source/Classes/ImageCategories/PINAnimatedImageView+PINRemoteImage.h"; sourceTree = "<group>"; };
 		7614A51890C1DCCF2495AC6109E7F11A /* RLMSyncCredentials.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RLMSyncCredentials.m; path = Realm/RLMSyncCredentials.m; sourceTree = "<group>"; };
-		7638D837138FB3E8ADB3E6CB5A0246D9 /* SimplePDFViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SimplePDFViewer.debug.xcconfig; sourceTree = "<group>"; };
 		766150A5D9CF5A739C6E9852B849C547 /* PINImage+WebP.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINImage+WebP.m"; path = "Source/Classes/Categories/PINImage+WebP.m"; sourceTree = "<group>"; };
 		77CBDF3A8A6626318E65BBB10345DB36 /* RLMSyncSession.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMSyncSession.mm; path = Realm/RLMSyncSession.mm; sourceTree = "<group>"; };
 		783A8E7E89D63E71AD5CDDEB3FAF7EF8 /* PINButton+PINRemoteImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINButton+PINRemoteImage.m"; path = "Source/Classes/ImageCategories/PINButton+PINRemoteImage.m"; sourceTree = "<group>"; };
@@ -925,13 +925,13 @@
 		922AEFFE8C1B999B3ADD37F914F70506 /* RLMConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RLMConstants.m; path = Realm/RLMConstants.m; sourceTree = "<group>"; };
 		93304FEA235BDF0420A029044FBB1955 /* PINRemoteImageManagerConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageManagerConfiguration.m; path = Source/Classes/PINRemoteImageManagerConfiguration.m; sourceTree = "<group>"; };
 		936B24CDA172C4FFD0A68A36C03E49A9 /* Pods-SimpleScanner-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SimpleScanner-umbrella.h"; sourceTree = "<group>"; };
+		93F1E2ACB4E03A9BB99135A66F8F5CBD /* SimplePDFView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFView.swift; path = SimplePDFViewer/Classes/SimplePDFView.swift; sourceTree = "<group>"; };
 		93F9859CDBA3DA1E7FB48557CCCFBAA5 /* NSHTTPURLResponse+MaxAge.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSHTTPURLResponse+MaxAge.m"; path = "Source/Classes/Categories/NSHTTPURLResponse+MaxAge.m"; sourceTree = "<group>"; };
 		948002950DB16B80F728BF85959F812E /* WeScan.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = WeScan.modulemap; sourceTree = "<group>"; };
 		954946609BA1A1E0C2C85C683BDAE5BA /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Source/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		95DB69DC25B557C3AF71FD8888A38F58 /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
 		966B0DB16ED58BAFC6F97E39263CE6EE /* PINSpeedRecorder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINSpeedRecorder.m; path = Source/Classes/PINSpeedRecorder.m; sourceTree = "<group>"; };
 		96EE951E4EDF48F68C45E3EF93B7D102 /* RLMPlatform.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMPlatform.h; path = include/RLMPlatform.h; sourceTree = "<group>"; };
-		974B12743EC02C9B12B855E5DE8F7622 /* SimplePDFViewer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SimplePDFViewer-prefix.pch"; sourceTree = "<group>"; };
 		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9898C549A6074B0E952C22B84264DD80 /* RLMSyncSubscription.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMSyncSubscription.h; path = include/RLMSyncSubscription.h; sourceTree = "<group>"; };
 		997B9FA7D4951F6B1442B90A12189C58 /* ConstraintView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintView+Extensions.swift"; path = "Source/ConstraintView+Extensions.swift"; sourceTree = "<group>"; };
@@ -941,6 +941,7 @@
 		9B1F4D291014ECD415BABC4F684D37DB /* ReSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BC52747A1EEF6724C8B756DFA47A44F /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Source/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		9BDDC03CC249DB5C3E89F667EE05C410 /* flash.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = flash.png; path = WeScan/Assets/flash.png; sourceTree = "<group>"; };
+		9C41BF9830D73C40A8D86E4B2FE72625 /* SimplePDFJumpToPageDialog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFJumpToPageDialog.swift; path = SimplePDFViewer/Classes/SimplePDFJumpToPageDialog.swift; sourceTree = "<group>"; };
 		9C6C82AC5B9F847A869F3987D60F694B /* Object.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Object.swift; path = RealmSwift/Object.swift; sourceTree = "<group>"; };
 		9D7A45A57A8E23D80F161BE95F093D7E /* RealmSwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RealmSwift-umbrella.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -961,7 +962,6 @@
 		A4F44E8DC57E7A925142D605155055D7 /* ShutterButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ShutterButton.swift; path = WeScan/Scan/ShutterButton.swift; sourceTree = "<group>"; };
 		A5544DA88E88F03B34793E79753A0766 /* PINDisplayLink.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINDisplayLink.m; path = Source/Classes/PINDisplayLink.m; sourceTree = "<group>"; };
 		A6380CAB14D43A8762C6EB71FFB50369 /* RLMCollection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMCollection.h; path = include/RLMCollection.h; sourceTree = "<group>"; };
-		A668D0185C31857B4FC8AF53FB4DAC7B /* SimplePDFViewer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFViewer.swift; path = SimplePDFViewer/Classes/SimplePDFViewer.swift; sourceTree = "<group>"; };
 		A6F010EEA0872221D1C2D4C38EAC344F /* work_queue.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = work_queue.cpp; path = Realm/ObjectStore/src/sync/impl/work_queue.cpp; sourceTree = "<group>"; };
 		A75AEA26FDE9F79D588576A34552FA00 /* Pods-SimpleScanner.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SimpleScanner.modulemap"; sourceTree = "<group>"; };
 		A8554B0F04A0DBD1F4B0F96F1BB4E02C /* PINRemoteImageManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageManager.m; path = Source/Classes/PINRemoteImageManager.m; sourceTree = "<group>"; };
@@ -979,6 +979,7 @@
 		B309B75E0A12AE33F2A9D7C23AE23427 /* UIImage+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIImage+Utils.swift"; path = "WeScan/Extensions/UIImage+Utils.swift"; sourceTree = "<group>"; };
 		B375FA803B9BC6C81FD556AAA68F8505 /* ThreadSafeReference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ThreadSafeReference.swift; path = RealmSwift/ThreadSafeReference.swift; sourceTree = "<group>"; };
 		B386756299773E7A8EEB5DBFCC3074CB /* external_commit_helper.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = external_commit_helper.cpp; path = Realm/ObjectStore/src/impl/apple/external_commit_helper.cpp; sourceTree = "<group>"; };
+		B3DE4CE7311E2CE927AF83A6C42316FE /* SimplePDFViewer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SimplePDFViewer-dummy.m"; sourceTree = "<group>"; };
 		B5307A2EF756BA26E44DD6605A34466C /* shared_realm.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = shared_realm.cpp; path = Realm/ObjectStore/src/shared_realm.cpp; sourceTree = "<group>"; };
 		B61AEA205461BCE3FF147AC2E668F125 /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Source/ConstraintInsets.swift; sourceTree = "<group>"; };
 		B63ADA308C85862EF21D6153C1955F0A /* NSData+ImageDetectors.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageDetectors.h"; path = "Source/Classes/Categories/NSData+ImageDetectors.h"; sourceTree = "<group>"; };
@@ -992,14 +993,12 @@
 		B81B5606267E051D1DF09C505BEA3FCE /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 		B8BC0FF4DEA899308CF81CE8BAA0A383 /* enhance@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "enhance@3x.png"; path = "WeScan/Assets/enhance@3x.png"; sourceTree = "<group>"; };
 		B9940D4624FD131A15CF762AE2ABCB06 /* cross.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = cross.png; path = BFRImageViewController/Resources/cross.png; sourceTree = "<group>"; };
-		B9E81AC2D6EE5D134DD2ED0AFCA323CC /* SimplePDFBottomBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFBottomBarView.swift; path = SimplePDFViewer/Classes/SimplePDFBottomBarView.swift; sourceTree = "<group>"; };
 		BC94AA72F1861274634B143A843BB5EE /* PINImage+WebP.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINImage+WebP.h"; path = "Source/Classes/Categories/PINImage+WebP.h"; sourceTree = "<group>"; };
 		BD11AFF6BC1D7B7D5530D83E520FB412 /* BFRImageViewerDownloadProgressView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFRImageViewerDownloadProgressView.h; path = BFRImageViewController/BFRImageViewerDownloadProgressView.h; sourceTree = "<group>"; };
 		BD1735848DE9B2603EBD471CB7CE0696 /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Source/Debugging.swift; sourceTree = "<group>"; };
 		BD95196AE91D48F4A544774001C55D5E /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
 		BE41A3DAB15F8E3197092301DD983073 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		BE88D0B4A0828D5A3C64B0620D063AE4 /* PINCachedAnimatedImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINCachedAnimatedImage.h; path = Source/Classes/AnimatedImages/PINCachedAnimatedImage.h; sourceTree = "<group>"; };
-		BEC62E51818ACD998ADCFDD55F80CDEF /* SimplePDFViewer-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SimplePDFViewer-Info.plist"; sourceTree = "<group>"; };
 		BED9B9B6D8E80A15D4778127296B02F0 /* PINRemoteImageProcessorTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = PINRemoteImageProcessorTask.m; path = Source/Classes/PINRemoteImageProcessorTask.m; sourceTree = "<group>"; };
 		C012B36D86E4BB8F2E0D346701B519A0 /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Source/Typealiases.swift; sourceTree = "<group>"; };
 		C024D7F44C44E12B5744C0F9A529F030 /* CaptureSession+Orientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CaptureSession+Orientation.swift"; path = "WeScan/Session/CaptureSession+Orientation.swift"; sourceTree = "<group>"; };
@@ -1009,7 +1008,6 @@
 		C1AE2593D533B5C37C8012D946FC1E2F /* StoreType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StoreType.swift; path = ReSwift/CoreTypes/StoreType.swift; sourceTree = "<group>"; };
 		C2ED19F8B2ABF99C1A123147257F729A /* PINRemoteImageCategoryManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageCategoryManager.h; path = Source/Classes/PINRemoteImageCategoryManager.h; sourceTree = "<group>"; };
 		C30B17223DABB5DE71680C4B6F312FA1 /* RLMProperty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMProperty.h; path = include/RLMProperty.h; sourceTree = "<group>"; };
-		C31271447020AF83F66B7B9B19FF40C3 /* SimplePDFViewer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SimplePDFViewer.modulemap; sourceTree = "<group>"; };
 		C333B7CB0B233D0F564FE1B517D8EC81 /* BFRImageViewer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "BFRImageViewer-umbrella.h"; sourceTree = "<group>"; };
 		C39D3D49BC79F4EF34C9955E8088F43F /* RLMSchema.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = RLMSchema.mm; path = Realm/RLMSchema.mm; sourceTree = "<group>"; };
 		C4519B8803ED1D63307D9C4CEE11E906 /* NSData+ImageDetectors.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSData+ImageDetectors.m"; path = "Source/Classes/Categories/NSData+ImageDetectors.m"; sourceTree = "<group>"; };
@@ -1017,11 +1015,13 @@
 		C6C09CD091A349F2E544C1A8B13368F2 /* PINCache+PINRemoteImageCaching.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINCache+PINRemoteImageCaching.h"; path = "Source/Classes/PINCache/PINCache+PINRemoteImageCaching.h"; sourceTree = "<group>"; };
 		C6E480AF6675D1C8075711CFAAE2051F /* PINRemoteWeakProxy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteWeakProxy.h; path = Source/Classes/PINRemoteWeakProxy.h; sourceTree = "<group>"; };
 		C70BB24893210C08BC31527A79B7A1D3 /* PINRemoteImage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PINRemoteImage.debug.xcconfig; sourceTree = "<group>"; };
+		C81FFAA255713A66813E6AA03EFF9153 /* SimplePDFViewer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SimplePDFViewer.modulemap; sourceTree = "<group>"; };
 		C8427DA9E06CA85855AC13FB37CDBAFE /* PINRemoteImageBasicCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINRemoteImageBasicCache.h; path = Source/Classes/PINRemoteImageBasicCache.h; sourceTree = "<group>"; };
 		C87BE7EDB2D6E142121CE59E91E52AD6 /* Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Error.swift; path = RealmSwift/Error.swift; sourceTree = "<group>"; };
 		C9B99B5A53B6A3F4D20F9248E294E98C /* PINCache+PINRemoteImageCaching.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "PINCache+PINRemoteImageCaching.m"; path = "Source/Classes/PINCache/PINCache+PINRemoteImageCaching.m"; sourceTree = "<group>"; };
 		C9DBBE785B26DABE5CDD8E9F00CEE030 /* ConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintItem.swift; path = Source/ConstraintItem.swift; sourceTree = "<group>"; };
 		C9DF2E2040060183F8FCFEC0950C37B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		CA80924B59CA2314D1CB65DD25333134 /* SimplePDFViewer-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SimplePDFViewer-prefix.pch"; sourceTree = "<group>"; };
 		CB1CBA35A5A426B4A04D3E878D5A962C /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Source/ConstraintMaker.swift; sourceTree = "<group>"; };
 		CB4EAE0C4BD4C0D1353B3C3A7F07FE1F /* TypeHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TypeHelper.swift; path = ReSwift/Utils/TypeHelper.swift; sourceTree = "<group>"; };
 		CDAD641796191288D8CDED3DA1A00929 /* Action.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Action.swift; path = ReSwift/CoreTypes/Action.swift; sourceTree = "<group>"; };
@@ -1036,6 +1036,7 @@
 		D345B8BF1817523E596C52066E4EDADC /* Coding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Coding.swift; path = ReSwift/Utils/Coding.swift; sourceTree = "<group>"; };
 		D3AFF73EE00F9857F461D42294BF07EE /* weak_realm_notifier.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = weak_realm_notifier.cpp; path = Realm/ObjectStore/src/impl/weak_realm_notifier.cpp; sourceTree = "<group>"; };
 		D47893E29B11214890660F131B830C24 /* ConstraintMakerPriortizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerPriortizable.swift; path = Source/ConstraintMakerPriortizable.swift; sourceTree = "<group>"; };
+		D54F473BF13241E608A0C33830018FD0 /* SimplePDFViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SimplePDFViewer.release.xcconfig; sourceTree = "<group>"; };
 		D580E24C85AE75B2D02B63B58BC7D629 /* BFRImageViewer.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = BFRImageViewer.modulemap; sourceTree = "<group>"; };
 		D5A198AA19A2B57BC43879C567629227 /* rotate@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "rotate@2x.png"; path = "WeScan/Assets/rotate@2x.png"; sourceTree = "<group>"; };
 		D5E441FAE52ABC2D421D54ABAF7C3642 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1062,10 +1063,10 @@
 		DD9B97EEFE17CD7658CC8C60D77AEA03 /* PINImageView+PINRemoteImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PINImageView+PINRemoteImage.h"; path = "Source/Classes/ImageCategories/PINImageView+PINRemoteImage.h"; sourceTree = "<group>"; };
 		DDB15ABABC5B597DD384034FB0C4EEB5 /* flashUnavailable@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "flashUnavailable@3x.png"; path = "WeScan/Assets/flashUnavailable@3x.png"; sourceTree = "<group>"; };
 		DDB7FEC2DA2E9F510EE823970CE397F8 /* Localizable.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DE6202C1175A2D70DC7240C0EA611513 /* SimplePDFBottomBarView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFBottomBarView.swift; path = SimplePDFViewer/Classes/SimplePDFBottomBarView.swift; sourceTree = "<group>"; };
 		DF00AA216E620342B8E22A233E0312B4 /* NSError+RLMSync.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSError+RLMSync.m"; path = "Realm/NSError+RLMSync.m"; sourceTree = "<group>"; };
 		DF640D4AEA84C6740F543F6EBC2EC6DE /* Subscription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Subscription.swift; path = ReSwift/CoreTypes/Subscription.swift; sourceTree = "<group>"; };
 		DFA007E3861BFEC9DE79D99C09DEB27A /* PINSpeedRecorder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINSpeedRecorder.h; path = Source/Classes/PINSpeedRecorder.h; sourceTree = "<group>"; };
-		DFC86F57EC26ABA9CFF3254A5D1174C6 /* SimplePDFViewer-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SimplePDFViewer-umbrella.h"; sourceTree = "<group>"; };
 		E003335BE977B4E8C9432F9D4F8C631B /* collection_change_builder.cpp */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.cpp; name = collection_change_builder.cpp; path = Realm/ObjectStore/src/impl/collection_change_builder.cpp; sourceTree = "<group>"; };
 		E08D8F62B315FC23700A6B6ED86EE11C /* PINOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PINOperation.h; path = Source/PINOperation.h; sourceTree = "<group>"; };
 		E116EC90785C80EB40B7AC3BBED1FAFC /* BFRImageViewerConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = BFRImageViewerConstants.h; path = BFRImageViewController/BFRImageViewerConstants.h; sourceTree = "<group>"; };
@@ -1117,16 +1118,15 @@
 		F7417AAA93F49A7DA1C14879C7DA5210 /* PINOperation-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PINOperation-umbrella.h"; sourceTree = "<group>"; };
 		F78532F38F269B37AC426A00FA13CFFE /* RLMSwiftSupport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RLMSwiftSupport.m; path = Realm/RLMSwiftSupport.m; sourceTree = "<group>"; };
 		F8094BF0917CEB9D347CA45853A83436 /* Pods-SimpleScanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SimpleScanner.debug.xcconfig"; sourceTree = "<group>"; };
-		F921115C4DC4417D40E5B2BFA9353642 /* SimplePDFViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SimplePDFViewer.release.xcconfig; sourceTree = "<group>"; };
 		F9C98A9F15D5D5545BDB53349A80300E /* CGImagePropertyOrientation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CGImagePropertyOrientation.swift; path = WeScan/Extensions/CGImagePropertyOrientation.swift; sourceTree = "<group>"; };
 		FA466C43AFE5438DBB09BE51420D117E /* Migration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Migration.swift; path = RealmSwift/Migration.swift; sourceTree = "<group>"; };
 		FAADF5DCA4F93FCDA6EBB40784E12663 /* LinkingObjects.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LinkingObjects.swift; path = RealmSwift/LinkingObjects.swift; sourceTree = "<group>"; };
+		FAB363ACC7E07AE5E2F4256D2188511B /* SimplePDFViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SimplePDFViewController.swift; path = SimplePDFViewer/Classes/SimplePDFViewController.swift; sourceTree = "<group>"; };
 		FAE6F0BD5DEA83F936DAA342A6945455 /* RLMObjectBase_Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObjectBase_Private.h; path = include/RLMObjectBase_Private.h; sourceTree = "<group>"; };
 		FBB24E34D15E5875811D138DCC67D236 /* SVProgressHUD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.debug.xcconfig; sourceTree = "<group>"; };
 		FBBB0F51E48C216303A3328EF55D775D /* RLMObjectStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RLMObjectStore.h; path = include/RLMObjectStore.h; sourceTree = "<group>"; };
 		FC32EE7A5C2937F76B0662F84471A9C1 /* RealmSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RealmSwift.release.xcconfig; sourceTree = "<group>"; };
 		FC405B32FE697614DD6448ED7BA680E0 /* DispatchingStoreType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DispatchingStoreType.swift; path = ReSwift/CoreTypes/DispatchingStoreType.swift; sourceTree = "<group>"; };
-		FD21602B3330F501BDB1CD2FD93B9547 /* SimplePDFViewer-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SimplePDFViewer-dummy.m"; sourceTree = "<group>"; };
 		FDD91B34CF51938EE29E806746B7BD75 /* ConstraintViewDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintViewDSL.swift; path = Source/ConstraintViewDSL.swift; sourceTree = "<group>"; };
 		FF76C9F8E65F4D856A44DE6AECD267AC /* Reducer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Reducer.swift; path = ReSwift/CoreTypes/Reducer.swift; sourceTree = "<group>"; };
 		FF934D867EE33F3F0DCA76357DEE8127 /* WeScan-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "WeScan-dummy.m"; sourceTree = "<group>"; };
@@ -1272,7 +1272,7 @@
 				763B5FADA9808A99F3ABCC15998688AA /* Realm */,
 				5A8E6D7FAC0DCD9BB7E3CE4B829339CD /* RealmSwift */,
 				837FCB188C85F9A92CD6B09AC25A69D0 /* ReSwift */,
-				FAD0B43EE1B41ACE2D5560B1BC419BF8 /* SimplePDFViewer */,
+				F041777DFC2AA98427824BDDA027FB70 /* SimplePDFViewer */,
 				F3A1B3661309C16364694552C37E6FA6 /* SnapKit */,
 				416DB1499671697BFA56974491C6038F /* SVProgressHUD */,
 				8D78753E18C74DB875DDB38B41C8D9CA /* WeScan */,
@@ -1508,21 +1508,6 @@
 			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
-		4E1B76C4FABE1971C7854ED7A718C182 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				C31271447020AF83F66B7B9B19FF40C3 /* SimplePDFViewer.modulemap */,
-				FD21602B3330F501BDB1CD2FD93B9547 /* SimplePDFViewer-dummy.m */,
-				BEC62E51818ACD998ADCFDD55F80CDEF /* SimplePDFViewer-Info.plist */,
-				974B12743EC02C9B12B855E5DE8F7622 /* SimplePDFViewer-prefix.pch */,
-				DFC86F57EC26ABA9CFF3254A5D1174C6 /* SimplePDFViewer-umbrella.h */,
-				7638D837138FB3E8ADB3E6CB5A0246D9 /* SimplePDFViewer.debug.xcconfig */,
-				F921115C4DC4417D40E5B2BFA9353642 /* SimplePDFViewer.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/SimplePDFViewer";
-			sourceTree = "<group>";
-		};
 		4E8D921AEFDE92BEF844AFFE4A97AD26 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1532,6 +1517,21 @@
 				0D07EB7247813E97E65E15FB2D379B70 /* cross@3x.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		508C11A0FEA7BD9213CF43040BB287CC /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C81FFAA255713A66813E6AA03EFF9153 /* SimplePDFViewer.modulemap */,
+				B3DE4CE7311E2CE927AF83A6C42316FE /* SimplePDFViewer-dummy.m */,
+				290C46048EEF0A59804FAF3A2F70A8ED /* SimplePDFViewer-Info.plist */,
+				CA80924B59CA2314D1CB65DD25333134 /* SimplePDFViewer-prefix.pch */,
+				59F85FFEF71CF68DDA7DD1952C518BE4 /* SimplePDFViewer-umbrella.h */,
+				301A497FC3F04BB63E42FC6FA885B28E /* SimplePDFViewer.debug.xcconfig */,
+				D54F473BF13241E608A0C33830018FD0 /* SimplePDFViewer.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SimplePDFViewer";
 			sourceTree = "<group>";
 		};
 		52377CE4527D896293FE8A598CCDDDCE /* Arc-exception-safe */ = {
@@ -1957,6 +1957,19 @@
 			path = PINCache;
 			sourceTree = "<group>";
 		};
+		F041777DFC2AA98427824BDDA027FB70 /* SimplePDFViewer */ = {
+			isa = PBXGroup;
+			children = (
+				DE6202C1175A2D70DC7240C0EA611513 /* SimplePDFBottomBarView.swift */,
+				9C41BF9830D73C40A8D86E4B2FE72625 /* SimplePDFJumpToPageDialog.swift */,
+				220DE5DAD6C7A16206EC61E11FA0CCED /* SimplePDFTopBarView.swift */,
+				93F1E2ACB4E03A9BB99135A66F8F5CBD /* SimplePDFView.swift */,
+				FAB363ACC7E07AE5E2F4256D2188511B /* SimplePDFViewController.swift */,
+				508C11A0FEA7BD9213CF43040BB287CC /* Support Files */,
+			);
+			path = SimplePDFViewer;
+			sourceTree = "<group>";
+		};
 		F3A1B3661309C16364694552C37E6FA6 /* SnapKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -2014,19 +2027,6 @@
 				2B8B8CBCABD3C9812D6CEBB063886384 /* Support Files */,
 			);
 			path = PINOperation;
-			sourceTree = "<group>";
-		};
-		FAD0B43EE1B41ACE2D5560B1BC419BF8 /* SimplePDFViewer */ = {
-			isa = PBXGroup;
-			children = (
-				B9E81AC2D6EE5D134DD2ED0AFCA323CC /* SimplePDFBottomBarView.swift */,
-				2B97C859274E0CE92877D0DF7DF612FC /* SimplePDFJumpToPageDialog.swift */,
-				07DE42C50C7A134AF1E50499CAF7A14D /* SimplePDFTopBarView.swift */,
-				16220A0A32B58299C492D5E831D2DEF4 /* SimplePDFViewController.swift */,
-				A668D0185C31857B4FC8AF53FB4DAC7B /* SimplePDFViewer.swift */,
-				4E1B76C4FABE1971C7854ED7A718C182 /* Support Files */,
-			);
-			path = SimplePDFViewer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2352,7 +2352,7 @@
 			buildConfigurationList = 989658E415940D1135DED1EBCF3542BC /* Build configuration list for PBXNativeTarget "SimplePDFViewer" */;
 			buildPhases = (
 				B277E4B41E90DF082AC0B3A699C52A48 /* Headers */,
-				DD68CD458A6935BA29E628BFA2DE8133 /* Sources */,
+				F0084E2707979A54381886CB6DA2220F /* Sources */,
 				DA90AD25DF377DF45F36991A9D703FAF /* Frameworks */,
 				C6ECC5B6359B8347882C226BB17EA604 /* Resources */,
 			);
@@ -2478,7 +2478,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1100;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -2911,19 +2911,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DD68CD458A6935BA29E628BFA2DE8133 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				95B71C4CB977B1C9B1BB1FCB40680291 /* SimplePDFBottomBarView.swift in Sources */,
-				A55BA33F2936B8AC8B71C3E8AD1C6E88 /* SimplePDFJumpToPageDialog.swift in Sources */,
-				F896FF8E0CC10005F61935ED63D1FCA2 /* SimplePDFTopBarView.swift in Sources */,
-				B3490B4AC036D0B86BBB4FF2D1A7F699 /* SimplePDFViewController.swift in Sources */,
-				89951943611099C6AA3314E0C8CAC65F /* SimplePDFViewer-dummy.m in Sources */,
-				F30BA4622EA78DC6529318921FDFAAEE /* SimplePDFViewer.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E58D29E9B5A0B6FDEF60E19596C64C65 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2951,6 +2938,19 @@
 				DDACB1D41F751390AA961F9EF2217A96 /* Sync.swift in Sources */,
 				283E78F17F95A92806B93C5DDA738BFD /* ThreadSafeReference.swift in Sources */,
 				055A7B9B964B27BB40CF2E1B1BB1DEA9 /* Util.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F0084E2707979A54381886CB6DA2220F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B41C69FD68E1448DE4F9D791639E9929 /* SimplePDFBottomBarView.swift in Sources */,
+				E8F56DB24FD7CF27C7624250F662B057 /* SimplePDFJumpToPageDialog.swift in Sources */,
+				D7A5A57A5801B508C963FA15542E5109 /* SimplePDFTopBarView.swift in Sources */,
+				838A6C4E00891E87324BDAC704FBF73D /* SimplePDFView.swift in Sources */,
+				1EAF19DAA301B259A0354CB1120B16F3 /* SimplePDFViewController.swift in Sources */,
+				CF10A468924508E2FCA63B9FA62D94FC /* SimplePDFViewer-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3270,7 +3270,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3335,7 +3334,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -3756,7 +3754,7 @@
 		};
 		D58F7297F35DC451CF0BCA96E9D547BA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7638D837138FB3E8ADB3E6CB5A0246D9 /* SimplePDFViewer.debug.xcconfig */;
+			baseConfigurationReference = 301A497FC3F04BB63E42FC6FA885B28E /* SimplePDFViewer.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -3970,7 +3968,7 @@
 		};
 		FB11D6A4158EB7DD3120962305DC0EA0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F921115C4DC4417D40E5B2BFA9353642 /* SimplePDFViewer.release.xcconfig */;
+			baseConfigurationReference = D54F473BF13241E608A0C33830018FD0 /* SimplePDFViewer.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";

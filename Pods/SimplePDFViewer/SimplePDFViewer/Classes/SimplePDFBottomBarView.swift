@@ -15,12 +15,12 @@ protocol SimplePDFBottomBarActionDelegate: AnyObject {
 }
 
 class SimplePDFBottomBarView: UIView {
-    
+
     private static let DISABLED_ALPHA = 0.4
     
-    private let bottomBar: UIToolbar! = UIToolbar()
-    private let bottomBarPageCount: UILabel! = UILabel()
-    
+    private var bottomBar: UIToolbar = UIToolbar()
+    private var bottomBarPageCount: UILabel = UILabel()
+
     // Configurable properties
     weak var delegate: SimplePDFBottomBarActionDelegate?
     var enabled = false {
@@ -46,19 +46,27 @@ class SimplePDFBottomBarView: UIView {
     }
     
     init() {
-        super.init(frame: CGRect.zero)
-        
-        let bottomBarItemPageNumber = UIBarButtonItem()
-        bottomBarItemPageNumber.customView = bottomBarPageCount
+        // Give a non-zero frame to initialize toolbar - correct size will be set when we create constraints
+        let frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+        super.init(frame: frame)
+
+        bottomBar = UIToolbar(frame: frame)
+        bottomBarPageCount = UILabel()
+
+        bottomBar.barTintColor = .white
+
         bottomBarPageCount.textAlignment = .center
-        bottomBarPageCount.translatesAutoresizingMaskIntoConstraints = false
-        
+        bottomBarPageCount.textColor = .darkText
+        bottomBarPageCount.sizeToFit()
+
         let bottomBarShareButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareButtonPressed))
-        let bottomBarJumpToPageButton = UIBarButtonItem(title: "Jump To", style: .plain, target: nil, action: #selector(jumpToPagePressed))
+        let bottomBarJumpToPageButton = UIBarButtonItem(title: "Jump To", style: .plain, target: self, action: #selector(jumpToPagePressed))
+        let bottomBarItemPageNumber = UIBarButtonItem(customView: bottomBarPageCount)
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        bottomBar.setItems([bottomBarShareButton, flexibleSpace, bottomBarItemPageNumber, flexibleSpace, bottomBarJumpToPageButton], animated: false)
-        
+        bottomBar.setItems([bottomBarShareButton, flexibleSpace,
+                            bottomBarItemPageNumber, flexibleSpace,
+                            bottomBarJumpToPageButton], animated: false)
+
         addSubview(bottomBar)
         bottomBar.snp.makeConstraints() { make in
             make.edges.equalToSuperview()
@@ -76,9 +84,10 @@ class SimplePDFBottomBarView: UIView {
     @objc private func jumpToPagePressed() {
         delegate?.onJumpToPagePressed(self)
     }
-    
+
     private func updatePageNumberView() {
         bottomBarPageCount.text = "\(String(currentPage)) of \(String(totalPages))"
+        bottomBarPageCount.sizeToFit()
     }
     
 }

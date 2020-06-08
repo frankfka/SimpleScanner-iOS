@@ -16,7 +16,7 @@ public protocol SimplePDFViewOnDismissDelegate: AnyObject {
 public class SimplePDFViewController: UIViewController {
     
     // Views
-    private let pdfView: SimplePDFViewer = SimplePDFViewer()
+    private let pdfView: SimplePDFView = SimplePDFView()
     private let topBar: SimplePDFTopBarView = SimplePDFTopBarView()
     private let bottomBar: SimplePDFBottomBarView = SimplePDFBottomBarView()
     
@@ -147,19 +147,19 @@ extension SimplePDFViewController: SimplePDFTopBarDelegate, SimplePDFBottomBarAc
         showJumpToPageDialog(for: pdf)
     }
     
-    internal func didLoadSuccessfully(_ sender: SimplePDFViewer) {
+    internal func didLoadSuccessfully(_ sender: SimplePDFView) {
         self.pdf = sender.pdf
         bottomBar.enabled = true
         bottomBar.totalPages = pdf?.pageCount ?? 1
         bottomBar.currentPage = sender.currentPageNumber
     }
     
-    internal func didLoadWithError(_ sender: SimplePDFViewer) {
+    internal func didLoadWithError(_ sender: SimplePDFView) {
         print("PDF Loaded with error")
         bottomBar.enabled = false // Just to be sure
     }
     
-    internal func onPageChange(_ sender: SimplePDFViewer) {
+    internal func onPageChange(_ sender: SimplePDFView) {
         self.currentPage = sender.currentPageNumber
         bottomBar.currentPage = sender.currentPageNumber
     }

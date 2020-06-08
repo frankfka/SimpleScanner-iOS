@@ -34,12 +34,16 @@ class SimplePDFTopBarView: UIView {
     init() {
         super.init(frame: CGRect.zero)
         
-        let topBarDone = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: nil, action: #selector(doneButtonTapped))
+        let topBarDone = UIBarButtonItem(
+            barButtonSystemItem: UIBarButtonItem.SystemItem.done,
+            target: self,
+            action: #selector(doneButtonTapped)
+        )
         
         topBarItems.title = title
         topBarItems.rightBarButtonItem = topBarDone
         topBar.setItems([topBarItems], animated: false)
-        topBar.backgroundColor = .white
+        topBar.barTintColor = .white
         topBar.isTranslucent = false
         
         addSubview(topBar)

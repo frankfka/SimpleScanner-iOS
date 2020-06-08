@@ -119,8 +119,8 @@ class PDFCollectionViewCell: UICollectionViewCell {
         showMore.snp.makeConstraints { (make) in
             make.left.equalTo(textViews.snp.right)
             make.right.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-ViewConstants.CollectionViewSubviewPadding * 2)
-            make.top.equalTo(thumbnailView.snp.bottom).offset(ViewConstants.CollectionViewSubviewPadding * 2)
+            make.bottom.equalToSuperview().offset(-ViewConstants.CollectionViewSubviewPadding * 3)
+            make.top.equalTo(thumbnailView.snp.bottom).offset(ViewConstants.CollectionViewSubviewPadding * 3)
             make.width.equalTo(showMore.snp.height)
         }
         thumbnailView.isUserInteractionEnabled = true
